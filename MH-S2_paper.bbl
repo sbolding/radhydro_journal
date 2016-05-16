@@ -1,0 +1,180 @@
+\begin{thebibliography}{21}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\href}[2]{#2}
+\providecommand{\path}[1]{#1}
+\providecommand{\DOIprefix}{doi:}
+\providecommand{\ArXivprefix}{arXiv:}
+\providecommand{\URLprefix}{URL: }
+\providecommand{\Pubmedprefix}{pmid:}
+\providecommand{\doi}[1]{\href{http://dx.doi.org/#1}{\path{#1}}}
+\providecommand{\Pubmed}[1]{\href{pmid:#1}{\path{#1}}}
+\providecommand{\bibinfo}[2]{#2}
+\ifx\xfnm\relax \def\xfnm[#1]{\unskip,\space#1}\fi
+%Type = Article
+\bibitem[{McClarren et~al.(2004)McClarren, Evans, Lowrie, and
+  Densmore}]{mcclarren}
+\bibinfo{author}{R.~G. McClarren}, \bibinfo{author}{T.~M. Evans},
+  \bibinfo{author}{R.~B. Lowrie}, \bibinfo{author}{J.~D. Densmore},
+\newblock \bibinfo{title}{Semi-{I}mplicit {T}ime {I}ntegration for {P}n
+  {T}hermal {R}adiative {T}ransfer},
+\newblock \bibinfo{journal}{Journal of Computational Physics}
+  \bibinfo{volume}{196} (\bibinfo{year}{2004}) \bibinfo{pages}{566--590}.
+%Type = Article
+\bibitem[{Lowrie(2004)}]{lowrie2}
+\bibinfo{author}{R.~B. Lowrie},
+\newblock \bibinfo{title}{A {C}omparison of {I}mplicit {T}ime {I}ntegration
+  {M}ethods for {N}onlinear {R}elaxation and {D}iffusion},
+\newblock \bibinfo{journal}{Journal of Computational Physics}
+  \bibinfo{volume}{196} (\bibinfo{year}{2004}) \bibinfo{pages}{566--590}.
+%Type = Article
+\bibitem[{Knoll et~al.(2007)Knoll, Lowrie, and Morel}]{knoll}
+\bibinfo{author}{D.~A. Knoll}, \bibinfo{author}{R.~B. Lowrie},
+  \bibinfo{author}{J.~E. Morel},
+\newblock \bibinfo{title}{Numerical {A}nalysis of {T}ime {I}ntegration {E}rrors
+  for {N}onequilibrium {R}adiation {D}iffusion},
+\newblock \bibinfo{journal}{Journal of Computational Physics}
+  \bibinfo{volume}{226} (\bibinfo{year}{2007}) \bibinfo{pages}{1332--1347}.
+%Type = Article
+\bibitem[{Olson(2009)}]{olson}
+\bibinfo{author}{G.~L. Olson},
+\newblock \bibinfo{title}{Second-{O}rder {T}ime {E}volution of {P}n {E}quations
+  for {R}adiation {T}ransport},
+\newblock \bibinfo{journal}{Journal of Computational Physics}
+  \bibinfo{volume}{228} (\bibinfo{year}{2009}) \bibinfo{pages}{3027--3083}.
+%Type = Article
+\bibitem[{Axelrod et~al.(1984)Axelrod, Dubois, and Jr.}]{axelrod}
+\bibinfo{author}{T.~S. Axelrod}, \bibinfo{author}{P.~F. Dubois},
+  \bibinfo{author}{C.~E.~R. Jr.},
+\newblock \bibinfo{title}{An {I}mplicit {S}cheme for {C}alculating {T}ime- and
+  {F}equency-{D}ependent {F}lux {L}imited {R}adiation {D}iffusion in {O}ne
+  {D}imension},
+\newblock \bibinfo{journal}{Journal of Computational Physics}
+  \bibinfo{volume}{54} (\bibinfo{year}{1984}) \bibinfo{pages}{205--220}.
+%Type = Article
+\bibitem[{Stone and Mihalas(1992)}]{stone}
+\bibinfo{author}{J.~M. Stone}, \bibinfo{author}{D.~Mihalas},
+\newblock \bibinfo{title}{Upwind {M}onotonic {I}nterpolation {M}ethods for the
+  {S}olution of the {T}ime {D}ependent {R}adiative {T}ransfer {E}quation},
+\newblock \bibinfo{journal}{Journal of Computational Physics}
+  \bibinfo{volume}{100} (\bibinfo{year}{1992}) \bibinfo{pages}{402--408}.
+%Type = Article
+\bibitem[{Brown et~al.(2005)Brown, Shumaker, and Woodward}]{brown}
+\bibinfo{author}{P.~N. Brown}, \bibinfo{author}{D.~E. Shumaker},
+  \bibinfo{author}{C.~S. Woodward},
+\newblock \bibinfo{title}{Fully {I}mplicit {S}olution of {L}arge-{S}cale
+  {N}on-equilibrium {R}adiation {D}iffusion with {H}igh {O}rder {T}ime
+  {I}ntegration},
+\newblock \bibinfo{journal}{Journal of Computational Physics}
+  \bibinfo{volume}{204} (\bibinfo{year}{2005}) \bibinfo{pages}{760--783}.
+%Type = Book
+\bibitem[{Toro(1999)}]{toro}
+\bibinfo{author}{E.~Toro}, \bibinfo{title}{Riemann {S}olvers and {N}umerical
+  {M}ethods for {F}luid {D}ynamics: A {P}ractical {I}ntroduction},
+  \bibinfo{publisher}{Springer}, \bibinfo{year}{1999}.
+%Type = Article
+\bibitem[{Lowrie et~al.(1999)Lowrie, Morel, and Hittinger}]{lowrie}
+\bibinfo{author}{R.~B. Lowrie}, \bibinfo{author}{J.~E. Morel},
+  \bibinfo{author}{J.~A. Hittinger},
+\newblock \bibinfo{title}{The {C}oupling of {R}adiation and {H}ydrodynamics},
+\newblock \bibinfo{journal}{Astrophysics Journal} \bibinfo{volume}{521}
+  (\bibinfo{year}{1999}) \bibinfo{pages}{432--450}.
+%Type = Article
+\bibitem[{Bates et~al.(2001)Bates, Knoll, Rider, Lowrie, and Mousseau}]{bates}
+\bibinfo{author}{J.~W. Bates}, \bibinfo{author}{D.~A. Knoll},
+  \bibinfo{author}{W.~J. Rider}, \bibinfo{author}{R.~B. Lowrie},
+  \bibinfo{author}{V.~A. Mousseau},
+\newblock \bibinfo{title}{On {C}onsistent {T}ime-{I}ntegration {M}ethods for
+  {R}adiation {H}ydrodynamics in the {E}quilibrium {D}iffusion {L}imit:
+  {L}ow-{E}nergy-{D}ensity {R}egime},
+\newblock \bibinfo{journal}{Journal of Computational Physics}
+  \bibinfo{volume}{167} (\bibinfo{year}{2001}) \bibinfo{pages}{99--130}.
+%Type = Article
+\bibitem[{Dai and Woodward(1998)}]{dai}
+\bibinfo{author}{W.~Dai}, \bibinfo{author}{P.~R. Woodward},
+\newblock \bibinfo{title}{Numerical {S}imulations for {R}adiation
+  {H}ydrodynamics. {I.} {D}iffusion {L}imit},
+\newblock \bibinfo{journal}{Journal of Computational Physics}
+  \bibinfo{volume}{142} (\bibinfo{year}{1998}) \bibinfo{pages}{182--207}.
+%Type = Article
+\bibitem[{Sekora and Stone(2009)}]{sekora}
+\bibinfo{author}{M.~Sekora}, \bibinfo{author}{J.~Stone},
+\newblock \bibinfo{title}{A {H}igher {O}rder {G}odunov {M}ethod for {R}adiation
+  {H}ydrodynamics: {R}adiation {S}ubsystem},
+\newblock \bibinfo{journal}{Communication in Applied and Computational
+  Mathematics} \bibinfo{volume}{4} (\bibinfo{year}{2009})
+  \bibinfo{pages}{135--152}.
+%Type = Article
+\bibitem[{Kadioglu(2010{\natexlab{a}})}]{kadioglu}
+\bibinfo{author}{S.~Y. Kadioglu},
+\newblock \bibinfo{title}{A {S}econd {O}rder {S}elf-{C}onsistent {IMEX}
+  {M}ethod for {R}adiation {H}ydrodynamics},
+\newblock \bibinfo{journal}{Journal of Computational Physics}
+  \bibinfo{volume}{229} (\bibinfo{year}{2010}{\natexlab{a}})
+  \bibinfo{pages}{8313--8332}.
+%Type = Article
+\bibitem[{Kadioglu(2010{\natexlab{b}})}]{kadioglu2}
+\bibinfo{author}{S.~Y. Kadioglu},
+\newblock \bibinfo{title}{A {F}ully {S}econd {O}rder {I}mplicit/{E}xplicit
+  {T}ime {I}ntegration {T}echnique for {H}ydrodynamics {P}lus {N}onlinear
+  {H}eat {C}onduction {P}roblems},
+\newblock \bibinfo{journal}{Journal of Computational Physics}
+  \bibinfo{volume}{9} (\bibinfo{year}{2010}{\natexlab{b}})
+  \bibinfo{pages}{3237--3249}.
+%Type = Article
+\bibitem[{Bank et~al.(1985)Bank, Coughran, Fichtner, Grosse, Rose, and
+  Smith}]{bank}
+\bibinfo{author}{R.~E. Bank}, \bibinfo{author}{W.~M. Coughran, Jr.},
+  \bibinfo{author}{W.~Fichtner}, \bibinfo{author}{E.~H. Grosse},
+  \bibinfo{author}{D.~J. Rose}, \bibinfo{author}{R.~K. Smith},
+\newblock \bibinfo{title}{Transient {S}imulation of {S}ilicon {D}evices and
+  {C}ircuits},
+\newblock \bibinfo{journal}{IEEE Transactions on Computer-Aided Design of
+  Integrated Circuits and Systems} \bibinfo{volume}{4} (\bibinfo{year}{1985})
+  \bibinfo{pages}{436--451}.
+%Type = Article
+\bibitem[{Edwards and Morel(2011)}]{EM2011}
+\bibinfo{author}{J.~D. Edwards}, \bibinfo{author}{J.~E. Morel},
+\newblock \bibinfo{title}{Nonlinear {V}ariants of the {TR}/{BDF}2 {M}ethod for
+  {T}hermal {R}adiative {D}iffusion},
+\newblock \bibinfo{journal}{Journal of Computational Physics}
+  \bibinfo{volume}{230} (\bibinfo{year}{2011}) \bibinfo{pages}{1198--1214}.
+%Type = Article
+\bibitem[{Larsen et~al.(1987)Larsen, Morel, and W.~F.~Miller}]{larsenmorel}
+\bibinfo{author}{E.~W. Larsen}, \bibinfo{author}{J.~E. Morel},
+  \bibinfo{author}{J.~W.~F.~Miller},
+\newblock \bibinfo{title}{Asymptotic {S}olutions of {N}umerical {T}ransport
+  {P}roblems in {O}ptically {T}hick, {D}iffusive {R}egimes},
+\newblock \bibinfo{journal}{Journal of Computational Physics}
+  \bibinfo{volume}{69} (\bibinfo{year}{1987}) \bibinfo{pages}{283--324}.
+%Type = Article
+\bibitem[{Lowrie and Morel(2001)}]{lowriemorel}
+\bibinfo{author}{R.~B. Lowrie}, \bibinfo{author}{J.~E. Morel},
+\newblock \bibinfo{title}{Issues with {H}igh-{R}esolution {G}odunov {M}ethods
+  for {R}adiation {H}ydrodynamics},
+\newblock \bibinfo{journal}{Journal of Quantitative Spectroscopy \& Radiative
+  Transfer} \bibinfo{volume}{69} (\bibinfo{year}{2001})
+  \bibinfo{pages}{475--489}.
+%Type = Article
+\bibitem[{Wang(2007)}]{zjwang}
+\bibinfo{author}{Z.~J. Wang},
+\newblock \bibinfo{title}{High-order {M}ethods for the {E}uler and
+  {N}avier–{S}tokes {E}quations on {U}nstructured {G}rids},
+\newblock \bibinfo{journal}{Progress in Aerospace Science} \bibinfo{volume}{43}
+  (\bibinfo{year}{2007}) \bibinfo{pages}{1--41}.
+%Type = Article
+\bibitem[{Adams(2001)}]{adams}
+\bibinfo{author}{M.~L. Adams},
+\newblock \bibinfo{title}{Discontinuous {F}inite {E}lement {T}ransport
+  {S}olutions in {T}hick {D}iffusive {P}roblems},
+\newblock \bibinfo{journal}{Nuclear Science and Engineering}
+  \bibinfo{volume}{137} (\bibinfo{year}{2001}) \bibinfo{pages}{298--333}.
+%Type = Article
+\bibitem[{McClarren and Lowrie(2008)}]{mclow2008}
+\bibinfo{author}{R.~G. McClarren}, \bibinfo{author}{R.~B. Lowrie},
+\newblock \bibinfo{title}{The {E}ffects of {S}lope {L}imiting on {A}symptotic
+  {P}reserving {N}umerical {M}ethods for {H}yperbolic {C}onservation {L}aws},
+\newblock \bibinfo{journal}{Journal of Computational Physics}
+  \bibinfo{volume}{227} (\bibinfo{year}{2008}) \bibinfo{pages}{9711--9726}.
+
+\end{thebibliography}
