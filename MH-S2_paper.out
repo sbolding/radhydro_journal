@@ -1,18 +1,23 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Alternate Form of TBDF2 Method}{}% 2
-\BOOKMARK [1][-]{section.3}{Overview of the Radiation-Hydrodynamics Method}{}% 3
-\BOOKMARK [2][-]{subsection.3.1}{Diffusion Limit}{section.3}% 4
-\BOOKMARK [2][-]{subsection.3.2}{Slope limiting}{section.3}% 5
-\BOOKMARK [2][-]{subsection.3.3}{Alternate Form of TBDF2 Method}{section.3}% 6
-\BOOKMARK [1][-]{appendix.A}{Details of the Radiation-Hydrodynamics Method}{}% 7
-\BOOKMARK [1][-]{appendix.B}{The Discretized Equations}{}% 8
-\BOOKMARK [2][-]{subsection.B.1}{MUSCL-Hancock Equations}{appendix.B}% 9
-\BOOKMARK [2][-]{subsection.B.2}{Fluid Momentum Source Update Equation}{appendix.B}% 10
-\BOOKMARK [2][-]{subsection.B.3}{Fluid Energy Source Update Equation}{appendix.B}% 11
-\BOOKMARK [2][-]{subsection.B.4}{Using Radiation Internal Energy Slopes}{appendix.B}% 12
-\BOOKMARK [2][-]{subsection.B.5}{S-2 Equations}{appendix.B}% 13
-\BOOKMARK [3][-]{subsubsection.B.5.1}{Steady-State}{subsection.B.5}% 14
-\BOOKMARK [3][-]{subsubsection.B.5.2}{Crank-Nicolson}{subsection.B.5}% 15
-\BOOKMARK [3][-]{subsubsection.B.5.3}{TR/BDF-2}{subsection.B.5}% 16
-\BOOKMARK [2][-]{subsection.B.6}{Linearization of Equations for General Temporal Discretization}{appendix.B}% 17
-\BOOKMARK [1][-]{appendix.C}{Conservation}{}% 18
+\BOOKMARK [1][-]{section.2}{Overview of the Radiation-Hydrodynamics Method}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Diffusion Limit}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Slope limiting}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Alternate Form of TBDF2 Method}{section.2}% 5
+\BOOKMARK [1][-]{section.3}{Results for the Method of Manufactured Solutions}{}% 6
+\BOOKMARK [1][-]{section.4}{Second-Order Accuracy}{}% 7
+\BOOKMARK [2][-]{subsection.4.1}{Streaming Limit}{section.4}% 8
+\BOOKMARK [1][-]{section.5}{Results for Radiation-Hydrodynamic Shocks}{}% 9
+\BOOKMARK [2][-]{subsection.5.1}{Radiative Shock Solutions}{section.5}% 10
+\BOOKMARK [1][-]{section.6}{Conclusions and Future Work}{}% 11
+\BOOKMARK [1][-]{appendix.A}{Details of the Radiation-Hydrodynamics Method}{}% 12
+\BOOKMARK [1][-]{appendix.B}{The Discretized Equations}{}% 13
+\BOOKMARK [2][-]{subsection.B.1}{MUSCL-Hancock Equations}{appendix.B}% 14
+\BOOKMARK [2][-]{subsection.B.2}{Fluid Momentum Source Update Equation}{appendix.B}% 15
+\BOOKMARK [2][-]{subsection.B.3}{Fluid Energy Source Update Equation}{appendix.B}% 16
+\BOOKMARK [2][-]{subsection.B.4}{Using Radiation Internal Energy Slopes}{appendix.B}% 17
+\BOOKMARK [2][-]{subsection.B.5}{S-2 Equations}{appendix.B}% 18
+\BOOKMARK [3][-]{subsubsection.B.5.1}{Steady-State}{subsection.B.5}% 19
+\BOOKMARK [3][-]{subsubsection.B.5.2}{Crank-Nicolson}{subsection.B.5}% 20
+\BOOKMARK [3][-]{subsubsection.B.5.3}{TR/BDF-2}{subsection.B.5}% 21
+\BOOKMARK [2][-]{subsection.B.6}{Linearization of Equations for General Temporal Discretization}{appendix.B}% 22
+\BOOKMARK [1][-]{appendix.C}{Conservation}{}% 23
