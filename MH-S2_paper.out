@@ -3,12 +3,12 @@
 \BOOKMARK [2][-]{subsection.2.1}{Diffusion Limit}{section.2}% 3
 \BOOKMARK [2][-]{subsection.2.2}{Slope limiting}{section.2}% 4
 \BOOKMARK [2][-]{subsection.2.3}{Alternate Form of TBDF2 Method}{section.2}% 5
-\BOOKMARK [1][-]{section.3}{Results for the Method of Manufactured Solutions}{}% 6
-\BOOKMARK [1][-]{section.4}{Second-Order Accuracy}{}% 7
-\BOOKMARK [2][-]{subsection.4.1}{Streaming Limit}{section.4}% 8
-\BOOKMARK [1][-]{section.5}{Results for Radiation-Hydrodynamic Shocks}{}% 9
-\BOOKMARK [2][-]{subsection.5.1}{Radiative Shock Solutions}{section.5}% 10
-\BOOKMARK [1][-]{section.6}{Conclusions and Future Work}{}% 11
+\BOOKMARK [1][-]{section.3}{Second-Order Accuracy for the Method of Manufactured Solutions}{}% 6
+\BOOKMARK [2][-]{subsection.3.1}{Accuracy in the Diffusion Limit}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.2}{Streaming Limit}{section.3}% 8
+\BOOKMARK [1][-]{section.4}{Results for Radiation-Hydrodynamic Shocks}{}% 9
+\BOOKMARK [2][-]{subsection.4.1}{Radiative Shock Solutions}{section.4}% 10
+\BOOKMARK [1][-]{section.5}{Conclusions and Future Work}{}% 11
 \BOOKMARK [1][-]{appendix.A}{Details of the Radiation-Hydrodynamics Method}{}% 12
 \BOOKMARK [1][-]{appendix.B}{The Discretized Equations}{}% 13
 \BOOKMARK [2][-]{subsection.B.1}{MUSCL-Hancock Equations}{appendix.B}% 14
