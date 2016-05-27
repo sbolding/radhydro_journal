@@ -904,202 +904,54 @@ Here, was can see that the wave speed of the radiation energy density is faster 
 \section{Results for Radiation-Hydrodynamic Shocks}
 \label{sec:ShockSolutions}
 
-Reproducing radiative shocks accurately, particularly in the optically thick regime, represents a challenging problem in the simulation of radiation hydrodynamics.  However, because many problems of interest include radiative shocks, it is imperative that a numerical scheme be able to meet these challenges well.  The widely used Zel'dovich and Raizer \cite{zeldovich} and Mihalas and Mihalas \cite{mihalas} provide the classic descriptions of radiative shocks.  The structure of optically thick radiative shocks, which we consider here, has been described in more detail by Drake in \cite{Drake} and by Lowrie and Edwards in \cite{lowrie3}.  In the remainder of this section, we demonstrate the capability of our rad-hydro algorithm to compute accurate radiative shock solutions by reproducing the semi-analytic shocks detailed in \cite{lowrie3} and comparing our results with those of a first-order scheme.
+Reproducing radiative shocks accurately, particularly in the optically thick
+regime, represents a challenging problem in the simulation of radiation
+hydrodynamics.  However, because many problems of interest include radiative
+shocks, it is imperative that a numerical scheme be able to meet these
+challenges well.  We will compare simulated steady state, radiative shocks to semi-analytical solutions.
+We initialize the shocks with the analytic steady state solution projected onto the cell centered meshes
+and run the simulation until steady state is reached.
+At the boundary, we compute the fluxes using our
+standard Riemann solver, setting the hydrodynamic unknowns in a ghost cell just
+to the other side of the boundary equal to the far-stream conditions.  This
+adds stability to the evolution of the shock by reinforcing the steady-state
+solution while allowing propagating waves to exit the domain.
 
-Here, we describe our procedure to generate the shocks and compare our computational results with the semi-analytic solutions.  We begin by computing the far-downstream fluid state associated with a prescribed set of far-upstream conditions.  As we previously mentioned, these far-upstream conditions, and subsequently, the radiative shock itself, are specified by the shock Mach number $M$, the parameters $\mathbb{P}$ and $\sigma_a$, and the radiative diffusivity $\kappa$, which is given by:
+%We initialize each radiative shock calculation by setting the left half of the
+%spatial domain equal to the far-upstream condition and the right half equal to
+%the downstream condition. 
 
-\be
-\lequ{kappa_def}
-\kappa = \frac{\hat{c}}{3\hat{\sigma_t}\hat{a_0}\hat{L}} \pep
-\ee
 
-The equations that describe the overall jump from the upstream to the downstream states are a modified version of the Rankine-Hugoniot conditions derived by equating the flux terms from the fluid conservation equations in the rad-hydro model.  These modified Rakine-Hugoniot conditions are given-by:
 
-\begin{subequations}
-\lequ{radhydro_jump}
-\be
-\left(\rho v\right)_0 = \left(\rho v\right)_1 \pec
-\ee
-\be 
-\left(\rho v^2+p^*\right)_0 = \left(\rho v^2+p^*\right)_1 \pec
-\ee
-\be 
-\left[\left(\rho E^*+p^*\right)v\right]_0 = \left[\left(\rho E^*+p^*\right)v\right]_1 \pec
-\ee
-\end{subequations}
-
-\noindent where
-
-\begin{subequations}
-\lequ{radhydro_jump_defns}
-\be
-p^* = p+\third \mathbb{P}T^4 \pec
-\ee
-\be
-e^* = e + \frac{1}{\rho} \mathbb{P}T^4 \pec
-\ee
-\be
-E^* = e^* + \half v^2 \pep
-\ee
-\end{subequations}
-
-In \cite{lowrie4}, Lowrie and Rauenzahn show that these equations may be manipulated algebraically to solve for $\rho_1$:
-
-\be
-\lequ{jump_rho}
-\rho_1(T_1) = \frac{f_1(T_1)+\sqrt{f_1^2(T_1)+f_2(T_1)}}{6(\gamma-1)T_1} \pec
-\ee
-
-\noindent where
-
-\begin{subequations}
-\lequ{jump_rho_defs}
-\be
-f_1(T_1) = 3(\gamma+1)(T_1-1)-\mathbb{P}\gamma(\gamma-1)(7+T_1^4) \pec
-\ee
-\be
-f_2(T_1) = 12(\gamma-1)^2 T_1 \left[3+\gamma\mathbb{P}\left(1+7T_1^4\right)\right] \pep
-\ee
-\end{subequations}
-
-Furthermore, eliminating $v_1$ from the mass equation, substituting the result into the momentum equation, and rearranging terms, we have an equation for $T_1$:  
-
-\be
-\lequ{jump_T}
-3\rho_1(\rho_1 T_1 - 1)+\gamma\mathbb{P}\rho_1 \left(T_1^4-1\right) = 3\gamma(\rho_1-1)M_0^2 \pep
-\ee
-
-Substituting \equ{jump_rho} into \equ{jump_T}, this results in a ninth-order polynomial, which may be solved numerically for $T_1$.  We initialize this solution procedure using an estimate for $T_1$ based on $\mathbb{P}$.  For ``small'' values of $\mathbb{P}$, we initialize using:
-
-\be
-\lequ{T1_smallP}
-T_1^{est} = \frac{\left(1-\gamma+2\gamma M^2\right)\left(2+(\gamma-1)M^2\right)^2}{(\gamma+1)^2 M^2} \pep
-\ee
-
-For ``large'' values of $\mathbb{P}$, we estimate $T_1$ as:
-
-\be
-\lequ{T1_largeP}
-T_1^{est} = \sqrt[4]{\frac{8\left(\frac{M^2}{(4/9)\mathbb{P}}-1\right)}{7}} \pep
-\ee
-
-In solving for $T_1$, we note that the numerical solver does not always converge to the same final value for $T_1$ for both initial estimates.  However, for the shocks considered here, in the case when the initial estimates lead to differing values of $T_1$, the final solution for one estimate is always non-physical. So in these cases, it is obvious which converged $T_1$ value is correct. 
-
-Because our radiation-hydrodynamics method is developed in dimensional form, we must also define the characteristic values $\hat{\rho_0}$ and $\hat{T_0}$.  The remaining dimensionalized values are computed from the non-dimensional parameters as follows:
-
-\begin{subequations}
-\label{shock_dim_defs}
-\be
-\hat{\rho_1} = \rho_1 \hat{\rho_0} \pec
-\ee
-\be
-\hat{T_1} = T_1 \hat{T_0} \pec
-\ee
-\be
-\hat{a_0} = \sqrt{\frac{\hat{\alpha_r} \hat{T_0}^4}{\hat{\rho_0} \mathbb{P}}} \pec
-\ee
-\be
-\hat{v_0} = M \hat{a_0} \pec
-\ee
-\be
-\hat{v_1} = v_1 \hat{a_0} \pec
-\ee
-\be
-C_v = \frac{\hat{a_0}^2}{\hat{T_0}\gamma\left(\gamma-1\right)} \pec
-\ee
-\be
-\hat{\sigma_t} = \frac{c}{3\kappa\hat{a_0}} \pec
-\ee
-\be
-\hat{\sigma_a} = \sigma_a \frac{\hat{a_0}}{c} \pep
-\ee
-\end{subequations}
-
-We initialize each radiative shock calculation by setting the left half of the spatial domain equal to the far-upstream condition and the right half equal to the downstream condition.  At the boundary, we compute the fluxes using our standard Riemann solver, setting the hydrodynamic unknowns in a ghost cell just to the other side of the boundary equal to the far-stream conditions.  This adds stability to the evolution of the shock by reinforcing the steady-state solution while allowing \URL{propagating} waves to exit the domain.  \fig{hydro_boundary_illustration} illustrates this concept for the right boundary.  Here, we set the left unknown in an exterior ghost cell equal to the far-downstream conditions, $U_{downstream}$, and compute the boundary advection flux, $F_{N+1/2}$, using our Riemann solver.
-
-\begin{figure}[ht!]
-%\begin{spacing}{1.0}
-\centering
-%\includegraphics[scale=0.70]{./figures/Hydro_Boundary_Illustration.png}
-\caption{\bf Illustration of the advection boundary conditions for the radiative shock calculations.} 
-\lfig{hydro_boundary_illustration}
-%\end{spacing}
-\end{figure}
-
-Because sharp slopes in LDFEMs can cause negativities in edge values, we monitor for negativities in the fluid temperature.  If a negative temperature is detected, we set all the slopes in that cell to zero so that the edge values are equal to the cell-averages.  This preserves energy conservation while eliminating non-physical temperatures at cell-edges.  
-
-%\subsubsection{Time Step Control}
-%\label{time_step_control_rh}
- 
-To compute the time steps during the calculation, we use an adaptive time step control scheme based on a user-specified ``target temperature change'', $\Delta T_{targ}$.  Again, for a given time step, the maximum relative change is computed using:
-\be
-\Delta T=2\max_i\frac{\abs{T_i^{n+1}-T_i^n}}{T_i^{n+1}+T_i^n} \pep
-\lequ{max_delT_eqn_rh}
-\ee
-
-However, because we use an IMEX scheme to solve our rad-hydro system, we must also limit the time step according to the Courant limit associated with the hydrodynamic advection terms.  We compute this limit by determining the maximum signal velocity associated with the system and define the maximum hydrodynamic time step to be:
-
-\be
-\lequ{courant_limit}
-\Delta t_H = CFL\Delta x S_{max} \pec
-\ee
-
-\noindent where $S_{max}$ is the maximum signal velocity, and $CFL$ is the user-defined Courant condition number such that $0\le C \le 1$.  We use the following estimate for $S_{max}$ outlined in \cite{toro}:
-
-\be
-\lequ{S_max}
-S_{max} = \max_{i\in \bracket{1,N}}\bracet{\abs{u_i-a_i},\abs{u_i+a_i}} \pec
-\ee
-
-\noindent where $N$ is the number of cells, $u_i$ is the velocity in cell i, and $a_i$ is the speed of sound in cell i.  We then compute the time step as follows:
-
-\be
-\Delta t^{n+1}=\min\fn{\frac{\Delta T_{targ}}{\Delta T}\Delta t^{n}, \xi \Delta t^n, \Delta t_H, t-t_{fin}} \pep
-\lequ{time_control_rh}
-\ee
-
-The second term ensures that the time step doesn't grow too rapidly by imposing a maximum allowed time step change, $\xi$, and the fourth term forces the final time step to end the calculation at $t_{fin}$.  In order to ensure that the temperature doesn't vary too much, $\Delta T$ is also compared with a maximum allowed temperature change, $\Delta T_{max}$.  If $\Delta T > \Delta T_{max}$, then the time step $\Delta t^{n+1/2}$ is reduced by a factor of 1/3, and the calculation is repeated from $t_n$.  In our calculations, we set $CFL = 0.3$, $\Delta T_{targ} = 1.01$, $\Delta T_{max} = 1.012$, and $\xi = 1.5$.
-
-\subsection{Radiative Shock Solutions}
-\label{sec:radshocksols}
-
-We test our algorithm over a range of the radiative shocks presented in \cite{lowrie3}, which incorporate a variety of structural features.  For each of these shocks, we set $\mathbb{P} = 1e-4$, $\gamma = 5/3$, $\kappa = 1$, and $\sigma_a = 1e6$, and the fluid properties are given in \ta{matl_prop}. 
+We test our algorithm over a range of the radiative shocks presented in
+\cite{lowrie3}, which incorporate a variety of structural features.  For each of these shocks, we set $\gamma = 5/3$,
+$c_v=0.14472799784454$ Jks keV$^{-1}$ g$^{-1}$ (1 Jk$=10^9$ J), $\sigma_a = 577.35$ cm$^{-1}$, and the fluid properties
+are given in \ta{matl_prop}. The reference, unshocked, ambient temperature is $0.1$ keV.  The first shock is a mach 1.2
+shock.  The dimensionalized parameters are provided in Table~\ref{ta:Mach105_initconds}
 
 %We test our algorithm using two of the radiative shocks presented in \cite{lowrie3}.  The Mach 2 shock solution shows the full complexity in the shock structure, and the Mach 50 shock is the most computationally challenging to solve.  For each of these shocks, we set $\mathbb{P} = 1e-4$, $\gamma = 5/3$, $\kappa = 1$, and $\sigma_a = 1e6$, and the fluid properties are given in \ta{matl_prop}. 
 
-\begin{table}
-\centering
-\caption{\bf fluid properties for radiative shock calculations.}
-\lta{matl_prop}
-\begin{tabular}{|c|c|}
-\hline
-$\hat{\sigma_a}$ & 3.9071164263502112e+002 \\
-$\hat{\sigma_t}$ & 8.5314410158161809e+002 \\
-$\hat{C_v}$ & 1.2348000000000001e-001 \\
-\hline
-\end{tabular}
-\end{table}
 
 %\rev{We begin by reproducing the Mach 1.05 shock, which has no hydrodynamic shock and no ISP.  \ta{mach105_initconds} details the initial fluid properties, and the final time of the calculation is 2.5 shakes.  Computationally, this is the easiest of the shocks to compute, since the small difference between the upstream and downstream values lends to a smooth transition period from the initial conditions to the steady-state solution.  As we see in \fig{mach105_rho} for the density and \fig{mach105_T} for the fluid and radiation temperatures, our results match the semi-analytic solutions well.  Here, we can see that the fluid properties are continuous, due to the lack of a hydrodynamic shock, and the maximum fluid temperature never exceeds the far-downstream temperature, since there is no ISP.} 
 
-%\begin{table}
-%\centering
-%\caption{\bf Mach 1.05 initial conditions.}
-%\lta{mach105_initconds}
-%\begin{tabular}{|c|c|c|}
-%\hline
-% & Pre-shock & Post-shock \\
-%\hline
-%$\hat{\rho}$ & 1.0000000000000000e+00 & 1.0749588725963066e+000 \\
-%$\hat{u}$ & 1.2298902390050911e-001 & 1.1441277153558302e-001 \\
-%$\hat{T}$ & 1.0000000000000001e-001 & 1.0494545175154467e-001 \\
-%$\hat{\rho} \hat{u}$ & 1.2298902390050911e-001 & 1.2298902390050913e-001 \\
-%$\hat{E}$ & 1.9911150000000002e-002 & 2.0965788801187071e-002 \\
-%$\hat{E_r}$ & 1.3720000000000002e-006 & 1.6642117992569650e-006 \\
-%$4/3 \hat{E} \hat{u}$ & 2.2498792105533135e-007 & 2.5387611250027822e-007 \\
-%\hline
-%\end{tabular}
-%\end{table}
+\begin{table}
+\centering
+\caption{\bf Mach 1.05 initial conditions.}
+\lta{mach105_initconds}
+\begin{tabular}{|c|c|c|}
+\hline
+ & Pre-shock & Post-shock \\
+\hline
+$\hat{\rho}$ & 1.0000000000000000e+00 & 1.0749588725963066e+000 \\
+$\hat{u}$ & 1.2298902390050911e-001 & 1.1441277153558302e-001 \\
+$\hat{T}$ & 1.0000000000000001e-001 & 1.0494545175154467e-001 \\
+$\hat{\rho} \hat{u}$ & 1.2298902390050911e-001 & 1.2298902390050913e-001 \\
+$\hat{E}$ & 1.9911150000000002e-002 & 2.0965788801187071e-002 \\
+$\hat{E_r}$ & 1.3720000000000002e-006 & 1.6642117992569650e-006 \\
+$4/3 \hat{E} \hat{u}$ & 2.2498792105533135e-007 & 2.5387611250027822e-007 \\
+\hline
+\end{tabular}
+\end{table}
 
 %\begin{figure}[ht!]
 %%\begin{spacing}{1.0}

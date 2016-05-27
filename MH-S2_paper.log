@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  20 MAY 2016 10:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  26 MAY 2016 22:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -322,11 +322,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip50
 )
-(./MH-S2_paper.aux
-
-LaTeX Warning: Label `sec:OrderAccuracy' multiply defined.
-
-)
+(./MH-S2_paper.aux)
 \openout1 = `MH-S2_paper.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 407.
@@ -343,7 +339,8 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 407.
 LaTeX Font Info:    ... okay on input line 407.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 407.
 LaTeX Font Info:    ... okay on input line 407.
- (/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
+
+(/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count126
 \scratchdimen=\dimen127
@@ -428,7 +425,7 @@ Package natbib Warning: Citation `mcclarren2' on page 10 undefined on input lin
 e 849.
 
 [10]
-<figures/MMS_diffusion_limit_solution.pdf, id=277, 672.5125pt x 534.99875pt>
+<figures/MMS_diffusion_limit_solution.pdf, id=276, 672.5125pt x 534.99875pt>
 File: figures/MMS_diffusion_limit_solution.pdf Graphic file (type pdf)
 
 <use figures/MMS_diffusion_limit_solution.pdf>
@@ -436,7 +433,7 @@ Package pdftex.def Info: figures/MMS_diffusion_limit_solution.pdf used on input
  line 879.
 (pdftex.def)             Requested size: 390.0pt x 310.25867pt.
 
-<figures/MMS_diffusion_limit_convergence.pdf, id=278, 706.64pt x 496.85625pt>
+<figures/MMS_diffusion_limit_convergence.pdf, id=277, 706.64pt x 496.85625pt>
 File: figures/MMS_diffusion_limit_convergence.pdf Graphic file (type pdf)
 
 <use figures/MMS_diffusion_limit_convergence.pdf>
@@ -446,135 +443,112 @@ put line 886.
  [11 <./figures/MMS_diffusion_limit_solution.pdf>] [12 <./figures/MMS_diffusion
 _limit_convergence.pdf>]
 
-Package natbib Warning: Citation `zeldovich' on page 13 undefined on input line
- 907.
+Package natbib Warning: Citation `lowrie3' on page 13 undefined on input line 9
+27.
 
 
-Package natbib Warning: Citation `mihalas' on page 13 undefined on input line 9
-07.
+LaTeX Warning: Reference `ta:Mach105_initconds' on page 13 undefined on input l
+ine 930.
 
 
-Package natbib Warning: Citation `Drake' on page 13 undefined on input line 907
+LaTeX Warning: Reference `ta:mach12_initconds' on page 13 undefined on input li
+ne 976.
+
+
+LaTeX Warning: Reference `fi:mach12_rho' on page 13 undefined on input line 976
 .
 
 
-Package natbib Warning: Citation `lowrie3' on page 13 undefined on input line 9
-07.
+LaTeX Warning: Reference `fi:mach12_T' on page 13 undefined on input line 976.
 
 
-Package natbib Warning: Citation `lowrie3' on page 13 undefined on input line 9
-07.
+Package natbib Warning: Citation `edwardsthesis' on page 13 undefined on input 
+line 979.
 
-[13]
-
-Package natbib Warning: Citation `lowrie4' on page 14 undefined on input line 9
-46.
-
-[14] [15] [16]
-
-Package natbib Warning: Citation `lowrie3' on page 17 undefined on input line 1
-066.
-
-
-LaTeX Warning: Reference `ta:mach12_initconds' on page 17 undefined on input li
-ne 1124.
-
-
-LaTeX Warning: Reference `fi:mach12_rho' on page 17 undefined on input line 112
-4.
-
-
-LaTeX Warning: Reference `fi:mach12_T' on page 17 undefined on input line 1124.
-
-
-
-Package natbib Warning: Citation `edwardsthesis' on page 17 undefined on input 
-line 1127.
-
-<figures/mach2_shock_T.pdf, id=406, 517.16013pt x 407.8741pt>
+[13] <figures/mach2_shock_T.pdf, id=357, 517.16013pt x 407.8741pt>
 File: figures/mach2_shock_T.pdf Graphic file (type pdf)
 
 <use figures/mach2_shock_T.pdf>
-Package pdftex.def Info: figures/mach2_shock_T.pdf used on input line 1163.
+Package pdftex.def Info: figures/mach2_shock_T.pdf used on input line 1015.
 (pdftex.def)             Requested size: 390.0pt x 307.58519pt.
 
 
-LaTeX Warning: Reference `ta:mach2_initconds' on page 17 undefined on input lin
-e 1170.
+LaTeX Warning: Reference `ta:mach2_initconds' on page 14 undefined on input lin
+e 1022.
 
 
-LaTeX Warning: Reference `fi:mach2_rho' on page 17 undefined on input line 1170
+LaTeX Warning: Reference `fi:mach2_rho' on page 14 undefined on input line 1022
 .
 
 
-LaTeX Warning: Reference `fi:mach2_T' on page 17 undefined on input line 1170.
+LaTeX Warning: Reference `fi:mach2_T' on page 14 undefined on input line 1022.
 
 
-LaTeX Warning: Reference `fi:mach2_spike' on page 17 undefined on input line 11
-70.
+LaTeX Warning: Reference `fi:mach2_spike' on page 14 undefined on input line 10
+22.
 
-[17] [18] (./MH-S2_paper.bbl [19 <./figures/mach2_shock_T.pdf>] [20]
+[14] [15 <./figures/mach2_shock_T.pdf>] (./MH-S2_paper.bbl [16] [17]
 Missing character: There is no – in font cmr12!
-) [21]
-Overfull \hbox (7.66393pt too wide) in paragraph at lines 1192--1195
+) [18]
+Overfull \hbox (7.66393pt too wide) in paragraph at lines 1044--1047
 []\OT1/cmr/m/n/12 Here we give a de-tailed de-scrip-tion of our radiation-hydro
 dynamics method.
  []
 
 
-Overfull \hbox (68.03177pt too wide) in paragraph at lines 1196--1206
+Overfull \hbox (68.03177pt too wide) in paragraph at lines 1048--1058
  [] 
  []
 
 
-Overfull \hbox (0.45308pt too wide) in paragraph at lines 1230--1238
+Overfull \hbox (0.45308pt too wide) in paragraph at lines 1082--1090
 \OT1/cmr/m/n/12 pre-dic-tor is per-formed to ob-tain $\OT1/cmr/bx/n/12 H[]$\OT1
 /cmr/m/n/12 , the ho-mo-ge-neous hy-drodyam-
  []
 
 
-Overfull \hbox (9.5002pt too wide) in paragraph at lines 1251--1259
+Overfull \hbox (9.5002pt too wide) in paragraph at lines 1103--1111
 \OT1/cmr/m/n/12 Eval-u-a-tion of the den-si-ties and ve-loc-i-ties at the edges
  is achieved
  []
 
-[22
+[19
 
-] [23]
+] [20]
 
-Package natbib Warning: Citation `ref???' on page 24 undefined on input line 13
-61.
+Package natbib Warning: Citation `ref???' on page 21 undefined on input line 12
+13.
 
-[24] [25] [26] [27]
+[21] [22] [23] [24]
 
-LaTeX Warning: Reference `eq:S2Q' on page 28 undefined on input line 1526.
+LaTeX Warning: Reference `eq:S2Q' on page 25 undefined on input line 1378.
 
-[28] [29]
-Overfull \hbox (6.3831pt too wide) detected at line 1626
+[25] [26]
+Overfull \hbox (6.3831pt too wide) detected at line 1478
  []$[] \OT1/cmr/m/n/12 + [] [][] + [] [][] + [] [][] \OML/cmm/m/it/12 ;$ []  
  []
 
-[30]
+[27]
 
-LaTeX Warning: Reference `eq:vel_update' on page 31 undefined on input line 166
-2.
+LaTeX Warning: Reference `eq:vel_update' on page 28 undefined on input line 151
+4.
 
 
-Overfull \hbox (2.67111pt too wide) in paragraph at lines 1657--1665
+Overfull \hbox (2.67111pt too wide) in paragraph at lines 1509--1517
 \OT1/cmr/m/n/12 After solv-ing for $\OMS/cmsy/m/n/12 E[]$\OT1/cmr/m/n/12 , a ne
 w in-ter-nal en-ergy can be es-ti-mated us-ing Eq. []
  []
 
-[31] [32]
+[28] [29]
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1739.
-[33]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1739.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1591.
+[30]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1591.
  (./MH-S2_paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1739.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1739.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1591.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1591.
 
 
 
@@ -583,34 +557,25 @@ Package rerunfilecheck Warning: File `MH-S2_paper.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `MH-S2_paper.out':
-(rerunfilecheck)             Before: ECF73AA82E60F0EA3F43385EE749F87B;1672
-(rerunfilecheck)             After:  75B2B4A0B79F803A7B62E665A420DBE9;1710.
+(rerunfilecheck)             Before: 75B2B4A0B79F803A7B62E665A420DBE9;1710
+(rerunfilecheck)             After:  3CDB29EFD4C89FF3BDACF9BCE46F5CCE;1635.
 
 LaTeX Warning: There were undefined references.
 
 
-LaTeX Warning: There were multiply-defined labels.
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 8571 strings out of 493089
- 119763 string characters out of 6134842
- 227921 words of memory out of 5000000
- 11726 multiletter control sequences out of 15000+600000
+ 8518 strings out of 493089
+ 118999 string characters out of 6134842
+ 226903 words of memory out of 5000000
+ 11710 multiletter control sequences out of 15000+600000
  13251 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  34i,17n,32p,958b,581s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{equation.5.19} has been referenced but does not e
-xist, replaced by a fixed one
-
-pdfTeX warning (dest): name{equation.5.17} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.6} has been referenced but does not exist, 
-replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.5.1} has been referenced but does not ex
-ist, replaced by a fixed one
+pdfTeX warning (dest): name{subsection.4.1} has been referenced but does not 
+exist, replaced by a fixed one
 
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><
 /usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></
@@ -633,10 +598,10 @@ f-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2015/texmf
 dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texlive/2015/texmf-di
 st/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2015/texm
 f-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on MH-S2_paper.pdf (33 pages, 493279 bytes).
+Output written on MH-S2_paper.pdf (30 pages, 478722 bytes).
 PDF statistics:
- 699 PDF objects out of 1000 (max. 8388607)
- 598 compressed objects within 6 object streams
- 225 named destinations out of 1000 (max. 500000)
+ 639 PDF objects out of 1000 (max. 8388607)
+ 541 compressed objects within 6 object streams
+ 188 named destinations out of 1000 (max. 500000)
  200 words of extra memory for PDF output out of 10000 (max. 10000000)
 
