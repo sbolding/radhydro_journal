@@ -1,4 +1,4 @@
-\begin{thebibliography}{21}
+\begin{thebibliography}{23}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\href}[2]{#2}
@@ -170,11 +170,27 @@
 \newblock \bibinfo{journal}{Nuclear Science and Engineering}
   \bibinfo{volume}{137} (\bibinfo{year}{2001}) \bibinfo{pages}{298--333}.
 %Type = Article
-\bibitem[{McClarren and Lowrie(2008)}]{mclow2008}
+\bibitem[{McClarren and Lowrie(2008{\natexlab{a}})}]{mclow2008}
 \bibinfo{author}{R.~G. McClarren}, \bibinfo{author}{R.~B. Lowrie},
 \newblock \bibinfo{title}{The {E}ffects of {S}lope {L}imiting on {A}symptotic
   {P}reserving {N}umerical {M}ethods for {H}yperbolic {C}onservation {L}aws},
 \newblock \bibinfo{journal}{Journal of Computational Physics}
-  \bibinfo{volume}{227} (\bibinfo{year}{2008}) \bibinfo{pages}{9711--9726}.
+  \bibinfo{volume}{227} (\bibinfo{year}{2008}{\natexlab{a}})
+  \bibinfo{pages}{9711--9726}.
+%Type = Article
+\bibitem[{McClarren and Lowrie(2008{\natexlab{b}})}]{mcclarren2}
+\bibinfo{author}{R.~G. McClarren}, \bibinfo{author}{R.~B. Lowrie},
+\newblock \bibinfo{title}{Manufactured {S}olutions for the {P}1
+  {R}adiation-{H}ydrodynamics {E}quations},
+\newblock \bibinfo{journal}{Journal of Quantitative Spectroscopy \& Radiative
+  Transfer} \bibinfo{volume}{109} (\bibinfo{year}{2008}{\natexlab{b}})
+  \bibinfo{pages}{2590--2602}.
+%Type = Article
+\bibitem[{Lowrie and Edwards(2008)}]{lowrie3}
+\bibinfo{author}{R.~B. Lowrie}, \bibinfo{author}{J.~D. Edwards},
+\newblock \bibinfo{title}{Radiative {S}hock {S}olutions with {G}rey
+  {N}on-equilibrium {D}iffusion},
+\newblock \bibinfo{journal}{Shock Waves} \bibinfo{volume}{18}
+  (\bibinfo{year}{2008}) \bibinfo{pages}{129--143}.
 
 \end{thebibliography}

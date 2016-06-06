@@ -51,6 +51,9 @@
 \usepackage{etoolbox} % for toggles
 \usepackage[colorlinks]{hyperref}
 
+%% Send all the pictures to the end of the document
+\usepackage[nolists, nomarkers]{endfloat}
+
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
 
@@ -231,8 +234,8 @@
 \newcommand{\mA}{\mathbf{A}}
 \newcommand{\mB}{\mathbf{B}}
 \newcommand{\mC}{\mathbf{C}}
-\newcommand{\E}{\mathcal{E}}
-\newcommand{\F}{\mathcal{F}}
+\newcommand{\E}{{E_r}}
+\newcommand{\F}{{F_r}}
 \newcommand{\Q}{\mathcal{Q}}
 \newcommand{\U}{\mathbf{U}}
 \renewcommand{\H}{\mathbf{H}}
@@ -574,7 +577,7 @@ p=\rho e (\gamma -1)
 \ee
 \be
 T = \frac{e}{C_v} \pec
-\lequ{matemp}
+\lequ{mattemp}
 \ee
 \end{subequations}
 where $\gamma$ is the adiabatic index, and $C_v$ is the specific heat.  However, our method is compatible with any valid EOS. 
@@ -793,23 +796,26 @@ second cycle corrector step.
 \section{Second-Order Accuracy for the Method of Manufactured Solutions}
 \label{sec:OrderAccuracy}
 
-To demonstrate that our method is second-order accurate in space and time, we use the method of manufactured solutions (MMS).  
-With MMS, we assume a functional form of the exact solution and  derive an extraneous sources for each equation that ensure the
-equations are satisfied analytically.  By comparing our solution to the problem with these extraneous sources to the exact solution as we refine the
-solution in space and time, we can examine the behavior of the error to determine order-accuracy.  
-
+To demonstrate that our method is second-order accurate in space and time, we use the method of manufactured solutions (MMS).    
+With MMS, we assume a functional form of the exact solution and  derive extraneous sources for each equation that ensure the
+equations are satisfied analytically.  We compare our numerical solution to the MMS problem to the exact solution as we refine the
+solution in space and time to examine to determine the order-accuracy of the algorithm.  
 Two MMS problems, one for the streaming limit and one for the equilibrium diffusion limit, were taken from \cite{mcclarren2}.  These
 solutions are composed of a combination of trigonometric functions with periodic boundary conditions.  The solutions in~\cite{mcclarren2}
 were modified to account for our S$_2$ model versus the P$_1$ radiation model. Additionally, our algorithm was implemented in a
-dimensionalized code. The redimensionalization from non-dimensional equations is does not produce a unique solution.  Thus, we choose the
-necessary additional material properties and constants  and take care to ensure our solution is in the appropriate limit. 
+dimensionalized code, whereas the test problems are nondimensional. 
 
 An extraneous source is added
-to each equation in Eq.~\eqref{radhydro_system}. The analytic,
-functional forms of  sources are determined from the resulting equations using symbolic computations, based on the chosen solution forms.
-These sources are then included in the discretized equations by evaluating moments of the sources with quadrature.  To
-ensure proper convergence, we have used higher-order quadratures to compute the spatial integrals of the lumped sources.  The sources are
-evaluated with the same time discretization as the algorithm.  
+to each equation in Eq.~\eqref{radhydro_system} to test the MMS problems. The analytic,
+dimensionalized forms of  sources are determined from the resulting equations using symbolic computations, based on the chosen functional solution.
+These sources are then included in the discretized equations by evaluating spatial moments of the sources with high-accuracy quadrature.  The sources are
+evaluated with the same time discretization of the appropriate step in the algorithm.  
+We quantify the error between exact and numerical solutions using a relative L$_2$ norm of cell-averaged quantities, defined as
+\begin{equation}
+    \left.  L^{\mathrm{rel}}_2(u) = \sqrt{\sum\limits_i^{N_x} \left(u_i - u_i^{\text{ex}} \right)^2 \Delta x_i} \middle / 
+    \sqrt{\sum\limits_i^{N_x} \left(u_i^{\text{ex}}\right)^2 \Delta x_i}  \right.
+\end{equation}
+where $u$ is the quantity of interest and $u_i^{\text{ex}}$ is the analytic solution averaged over the $i$-th spatial cell.  
 
 %To execute an MMS problem, extraneous source terms are added to the
 %system as follows:
@@ -832,195 +838,226 @@ evaluated with the same time discretization as the algorithm.
 %\end{subequations}
 \subsection{Accuracy in the Diffusion Limit}
 
-For the diffusion limit problem, the following solutions were prescribed
-for the hydrodynamic solution:
+We have converted the nondimensional solutions in~\cite{mcclarren2} to be compatible with our dimensionalized code.  The
+problems are prescribed with two non-dimensional parameters
+\begin{equation}
+    \label{eq:ndim_params}
+    \begin{matrix}
+        \mathbb{P} = {\displaystyle \frac{a T_{\infty}^4}{\rho_{\infty} a_\infty^2} }, &  
+        \mathbb{C} = {\displaystyle \frac{c}{a_\infty} },
+    \end{matrix}
+\end{equation}
+where $a_\infty$, $T_{\infty}$, and $\rho_{\infty}$ are the reference sound speed, material temperature, and density, respectively.
+There is not a unique mapping from the
+nondimensional solutions to a dimensional form.  Thus, it is necessary to choose additional dimensional material parameters.  We have chosen in our redimensionalization process to specify a reference material
+density that
+produces solutions with reasonable magnitudes. 
+The values for cross sections, $\gamma$, $\mathbb{P}$, and $\mathbb{C}$ are taken from~\cite{mcclarren2}.
+We then determine $C_v$ and the remaining reference
+scalings from Eq.~\eqref{eq:ndim_params}, Eq.~\eqref{eq:pressure}, and Eq.~\eqref{eq:mattemp}. The non-dimensional solutions are
+redimensionalized by multiplying each variable by the appropriate reference scaling.
+
+For the diffusion limit problem, the following dimensionalized solutions were prescribed for the hydrodynamic solution:
 \begin{subequations}
-\begin{equation}
-  \rho = A\left(\sin(Bx - Ct) + 2\right) \pec
-\end{equation}
-\begin{equation}
-  u = A\left(\cos(Bx - Ct) + 2\right) \pec
-\end{equation}
-\begin{equation}
-  p = A\alpha\left(\cos(Bx - Ct) + 2\right) \pec
-\end{equation}
+   \begin{equation} 
+      \rho = \rho_{\infty}\left(\sin(x - t) + 2\right) \pec
+   \end{equation} 
+   \begin{equation}
+       u = {a_\infty}\frac{M}{2}\left(\cos(x - t) + 2\right) \pec 
+   \end{equation} 
+   \begin{equation} 
+       p = \rho_\infty a_\infty^2 \alpha\left(\cos(x - t) + 2\right) ,
+   \end{equation}
 \end{subequations}
-where $A$, $B$, and $C$ are constants to be chosen.
-As stated in \cite{mcclarren2}, the radiation energy density and flux
-are the following in the equilibrium diffusion limit:
+where $\alpha$ and $M$ are constants.  The factor $M/2$ was introduced to ensure
+that the material velocity is below sound speed.
+Using the perfect gas equation of state relations (Eq.~\eqref{eq:mattemp} and~\eqref{eq:pressure}), an expression for material temperature $T$ can be derived.
+ The dimensionalized radiation energy density and flux are the following in the equilibrium diffusion limit:
 \begin{subequations}
-\begin{equation}
-  \E = T^4 \pec
-\end{equation}
-\begin{equation}
-  \F = \frac{1}{3\sigma}\partial_x T^4 + \frac{4}{3}\frac{u}{\mathbb{C}}T^4 \pec
-\end{equation}
+   \begin{equation} 
+     \E = aT^4 \pec
+   \end{equation}
+   \begin{equation} 
+       \F = \frac{1}{3\sigma_t}\dxdy{}{x} a c T^4 +
+\frac{4}{3} a T^4u 
+\pec \end{equation} 
 \end{subequations}
-where $\mathbb{C}$ is a non-dimensional parameter.
-Using the ideal gas equation of state relations, an expression
-for temperature $T$ can be derived and substituted into these equations,
-using a specific heat $c_v$ such that
-\begin{equation}
-  T = \frac{\gamma p}{\rho} \pep
-\end{equation}
-Symbolic manipulation can be used to derive the MMS sources
-$Q^\rho$, $Q^{\rho u}$, $Q^E$, and $Q^{\pm}$; the resulting expressions
-are omitted here due to their complexity and length. The values chosen
-for the constants/non-dimensional parameters are $A=B=C=1$, $\alpha=0.5$,
-$\gamma=\frac{5}{3}$, and $\mathbb{C}=\sigma=1000$.
-Figure \ref{fig:MMS_diffusion_limit_solution} compares the computed hydrodynamic
-solutions with the exact solutions for this problem,
-and Figure \ref{fig:MMS_diffusion_limit_convergence} shows
-that 2nd-order convergence is achieved
-(shown here for internal energy).
+Eqs.~\eqref{eq:Erad} and~\eqref{eq:flux} are used to derive corresponding expressions for $\psi^+$ and $\psi^-$ from the above expressions.
+Symbolic manipulation can then be used to derive the analytic MMS sources for each equation by substituting the solution into the left side
+of Eq.~\eqref{eq:radhydro_system}.
+
+Following~\cite{mcclarren2}, we explore convergence of the solution as the cell optical thickness $\tau=\sigma \Delta x$ and
+$\mathbb{C}/\Delta x$ remain constant.  This is to ensure that the solution remains diffusive, which would expose inaccuracy in methods that
+do not preserve the diffusion limit.  As in~\cite{mcclarren2}, we use $\sigma=10^5\frac{N_x}{20}$ (cm$^{-1}$) and $\mathbb{C}=10^5\frac{N_x}{20}$,
+where $N_x$ is the number of spatial cells for each simulation.  The remaining problem specifications are $\rho_{\infty}=1$ g cm$^{-3}$,
+$\alpha=0.5$, $M=0.9$, $\mathbb{P}=0.001$, 
+and $\gamma=\frac{5}{3}$.    It is noted that because of how we have dimensionalized the solutions, the magnitude of reference parameters, and
+thus the solution, must change as $\mathbb{C}$ is modified.  However, since our error norm is defined relative to the solution
+norm, we observe the proper
+convergence order. The simulation end time is $2\pi$ sh. The initial $\Delta t$ is chosen based on a CFL condition of 0.6 to ensure stability
+of the MH algorithm. We
+then uniformly refine in space and time to demonstrate convergence in the two variables.  It is worth noting that our initial time step size is chosen based on
+the CFL condition given in Eq.~\eqref{???}NEED CFL EQUATION SOMEWHERE, which is based on material velocity speeds.  This is a much larger and more physically reasonable
+time step size for an IMEX scheme than those in~\cite{mcclarren2}, which based the CFL on a non-dimensional speed of light.   The nonlinear
+convergence of each implicit solve is set to 1.E-10 for all remaining simulations.
+
+Figures~\ref{fig:diff_limit_e} and~\ref{fig:diff_limit_mom} plots the error convergence as a function of $\Delta x$ and $\Delta t$ for
+internal energy and momentum, respectively.  As demonstrated, the algorithm is second-order accurate in space and time for the equilibrium diffusion limit problem.  Although not plotted here,
+second-order convergence
+was verified for $\E$, $\F$, and the other conserved and primitive hydrodynamic unknowns.
 
 \begin{figure}[ht]
    \centering
-   \includegraphics[width=\textwidth]{figures/MMS_diffusion_limit_solution.pdf}
-   \caption{Hydrodynamic solution for the equilibrium diffusion limit MMS problem}
-   \label{fig:MMS_diffusion_limit_solution}
+   \includegraphics[width=\textwidth]{figures/MMS_diffusion_limit_e_convergence.pdf}
+   \caption{Convergence of internal energy $e$ in space for the equilibrium diffusion limit MMS problem}
+   \label{fig:diff_limit_e}
 \end{figure}
-
 \begin{figure}[ht]
    \centering
-   \includegraphics[width=\textwidth]{figures/MMS_diffusion_limit_convergence.pdf}
-   \caption{Convergence of internal energy for the equilibrium diffusion limit MMS problem}
-   \label{fig:MMS_diffusion_limit_convergence}
+   \includegraphics[width=\textwidth]{figures/MMS_diffusion_limit_rhou_convergence.pdf}
+   \caption{Convergence of momentum $\rho u$ in time for the equilibrium diffusion limit MMS problem}
+   \label{fig:diff_limit_mom}
 \end{figure}
-
-The second MMS problem corresponds to the streaming limit, in which the radiation
-and hydrodynamics are weakly coupled due to the high radiation energy propagation
-speed relative to the fluid speed. For this problem, the following MMS solutions
-are chosen:
-
-
 
 \subsection{Streaming Limit}
 
-Next, we consider the manufactured solution for the streaming limit.  In this limit, radiation streaming dominates a relatively small radiation absorption/re-emission term.  Here, we keep the re-emission term small by making the opacity relatively small so that the radiation is nearly transparent to the fluid.  Therefore, in contrast to the equilibrium diffusion limit which represents very tight coupling between the radiation and hydrodynamic components, this limit represents very weak coupling between the two.  Also, because the radiation streams much faster than the fluid, this results in a solution in which the unknowns evolve at significantly different time scales.  The functional form of the exact streaming solution is given by:
+The second MMS problem corresponds to the streaming limit, in which the radiation
+and hydrodynamics are weakly coupled. In this limit, radiation streaming dominates
+relatively small radiation absorption and re-emission terms.  Here, we keep the re-emission term small by making the opacity
+relatively small so that the radiation is nearly transparent to the fluid.  Also, because the radiation streams much faster than the fluid, this
+results in a solution in which the unknowns evolve at significantly different time scales.  The functional form of the streaming solutions
+are
+\begin{subequations}
+   \begin{equation} 
+      \rho = \rho_{\infty}\left(\sin(x - t) + 2\right) \pec
+   \end{equation} 
+   \begin{equation}
+       u = {a_\infty} M\left(\cos(x - t) + 2\right) \pec 
+   \end{equation} 
+   \begin{equation} 
+       p = \rho_\infty a_\infty^2 \alpha\left(\cos(x - t) + 2\right) ,
+   \end{equation}
+    \begin{equation}
+        \E = a T^4_{\infty}    \alpha\left(\cos(x - \mathbb{C}t) + 2\right) 
+    \end{equation}
+    \begin{equation}
+        \F = a c T^4_{\infty} \alpha\left(\cos(x -  \mathbb{C}t) + 2\right) 
+    \end{equation}
+\end{subequations}
+Here, was can see that the wave speed of the radiation energy density is faster than that of the hydrodynamic unknowns
+by a factor of $\mathbb{C}$.  This solution is also defined to mimic an isothermal flow regime, in which the radiation
+varies rapidly enough that changes in the fluid temperature are suppressed. In this case, the exact solution for the
+fluid temperature is a constant.
 
-Here, was can see that the wave speed of the radiation energy density is faster than that of the hydrodynamic unknowns by a factor of $\mathbb{C}$.  This solution is also defined to mimic an isothermal flow regime, in which the radiation varies rapidly enough that changes in the fluid temperature are suppressed. In this case, the exact solution for the fluid temperature is a constant given by:
+All problem parameters are fixed and then the  space and time discretizations are refined uniformly.  The problem is fully defined
+with the parameters $\mathbb{C}=10$, $\mathbb{P}=0.1$, $\rho_{infty}=1$ g cm$^{-3}$, $\gamma=5/3$, $\sigma_a=\sigma_t=1$ cm$^{-1}$,
+$\alpha=0.5$ and $M=0.9$.  The relatively high value of $\mathbb{P}$ and low value of $\mathbb{C}$ produce a more
+difficult problem to simulate, requiring convergence of the implicit solves. As before, the initial $\Delta
+t$ is based on the CFL condition of 0.6. The simulation is performed until the initial radiation have advanced two periods, i.e., until
+$t=4\pi/10$.
+
+Figures~\ref{fig:streaming_e} and~\ref{fig:streaming_mom} plots the error convergence as a function of $\Delta x$ and $\Delta t$ for
+internal energy and momentum, respectively.  
+The convergence in the streaming
+limit is closer to 1.8 for the momentum variable. A finer time step size may be required to resolve the radiation unknowns more accurately than the
+CFL condition requires. The time step size may not yet be in the asymptotically converging region.
+
+\begin{figure}[ht]
+   \centering
+   \includegraphics[width=\textwidth]{figures/MMS_streaming_e_convergence.pdf}
+   \caption{\label{fig:streaming_e}Convergence of internal energy $e$ in space for the MMS streaming problem}
+\end{figure}
+\begin{figure}[ht]
+   \centering
+   \includegraphics[width=\textwidth]{figures/MMS_streaming_rhou_convergence.pdf}
+   \caption{\label{fig:streaming_mom}Convergence of momentum $\rho u$ in time for the MMS streaming problem}
+\end{figure}
+
 
 \section{Results for Radiation-Hydrodynamic Shocks}
 \label{sec:ShockSolutions}
 
 Reproducing radiative shocks accurately, particularly in the optically thick
 regime, represents a challenging problem in the simulation of radiation
-hydrodynamics.  However, because many problems of interest include radiative
-shocks, it is imperative that a numerical scheme be able to meet these
-challenges well.  We will compare simulated steady state, radiative shocks to semi-analytical solutions.
-We initialize the shocks with the analytic steady state solution projected onto the cell centered meshes
+hydrodynamics. A numerical scheme must be able to meet these
+challenges well.  We will compare simulated steady state, radiative shocks to semi-analytical solutions~\cite{jim???}. The
+semianalytic solutions are based on a diffusion radiation model, which is equivalent to our S$_2$ radiation model at steady state.
+To reduce simulation times, we initialize the shocks with the analytic steady state solution projected onto the cell centered meshes
 and run the simulation until steady state is reached.
 At the boundary, we compute the fluxes using our
-standard Riemann solver, setting the hydrodynamic unknowns in a ghost cell just
-to the other side of the boundary equal to the far-stream conditions.  This
-adds stability to the evolution of the shock by reinforcing the steady-state
-solution while allowing propagating waves to exit the domain.
-
+standard Riemann solver, setting the hydrodynamic unknowns on the outside of the boundary equal to the far-stream conditions.  
+Our algorithm will not be second-order globally due to the discontinuity at the shock~\cite{???}.  Thus, we are not interested in
+order-accuracy here but are ensuring our code produce accurate solutions.
 %We initialize each radiative shock calculation by setting the left half of the
 %spatial domain equal to the far-upstream condition and the right half equal to
 %the downstream condition. 
 
+We test our algorithm for two radiative shocks, similar to those presented in
+\cite{lowrie3}, which incorporate a variety of structural features.  For both shocks, we set $\gamma = 5/3$,
+$c_v=0.14472799784454$ Jks keV$^{-1}$ g$^{-1}$ (1 Jk$=10^9$ J), and $\sigma_a = 577.35$ cm$^{-1}$. 
+The problem specifications for the farstream pre and post-shock regions are provided in Table~\ref{tab:mach1.2_shock_IC}.
+and Table~\ref{tab:mach3.0_shock_IC} for the Mach 1.2 and Mach 3 shock, respectively.
+Results are generated with a CFL condition of 0.6 and $N_x=500$ spatial cells.
+
+First, we compute the Mach 1.2 shock, which has a hydrodynamic shock but no
+ISP.  Fig.~\ref{fig:mach1.2T} compare our
+results with the semi-analytic solutions for the fluid and
+radiation temperature.  We see good agreement between
+the two.  In this solution, we see a discontinuity in both the density and
+fluid temperature due to the hydrodynamic shock, and the maximum temperature is
+bounded by the far-downstream temperature, since there is no ISP to drive it
+further.
 
 
-We test our algorithm over a range of the radiative shocks presented in
-\cite{lowrie3}, which incorporate a variety of structural features.  For each of these shocks, we set $\gamma = 5/3$,
-$c_v=0.14472799784454$ Jks keV$^{-1}$ g$^{-1}$ (1 Jk$=10^9$ J), $\sigma_a = 577.35$ cm$^{-1}$, and the fluid properties
-are given in \ta{matl_prop}. The reference, unshocked, ambient temperature is $0.1$ keV.  The first shock is a mach 1.2
-shock.  The dimensionalized parameters are provided in Table~\ref{ta:Mach105_initconds}
-
-%We test our algorithm using two of the radiative shocks presented in \cite{lowrie3}.  The Mach 2 shock solution shows the full complexity in the shock structure, and the Mach 50 shock is the most computationally challenging to solve.  For each of these shocks, we set $\mathbb{P} = 1e-4$, $\gamma = 5/3$, $\kappa = 1$, and $\sigma_a = 1e6$, and the fluid properties are given in \ta{matl_prop}. 
-
-
-%\rev{We begin by reproducing the Mach 1.05 shock, which has no hydrodynamic shock and no ISP.  \ta{mach105_initconds} details the initial fluid properties, and the final time of the calculation is 2.5 shakes.  Computationally, this is the easiest of the shocks to compute, since the small difference between the upstream and downstream values lends to a smooth transition period from the initial conditions to the steady-state solution.  As we see in \fig{mach105_rho} for the density and \fig{mach105_T} for the fluid and radiation temperatures, our results match the semi-analytic solutions well.  Here, we can see that the fluid properties are continuous, due to the lack of a hydrodynamic shock, and the maximum fluid temperature never exceeds the far-downstream temperature, since there is no ISP.} 
-
-\begin{table}
+\begin{table}[ht]
+  \centering
+  \caption{Initial condition values for the Mach 1.2 radiative shock problem}
+  \label{tab:mach1.2_shock_IC}
+  \begin{tabular}{l l l l}\hline
+      \emph{Parameter} & \emph{Pre-shock Value} & \emph{Post-shock Value} & \emph{Units}\\\hline
+$\rho$ & 1.00000000e+00 & 1.29731782e+00 & g cm$^{-3}$ \\
+$u$ & 1.52172533e-01 & 1.17297805e-01 & cm sh$^{-1}$ \\
+$T$ & 1.00000000e-01 & 1.19475741e-01 & keV \\
+$E$ & 2.60510396e-02 & 3.13573034e-02 & Jks cm$^{-3}$\\
+$E_r$ & 1.37201720e-06 & 2.79562228e-06 & Jks cm$^{-3}$ \\
+$F_r$ & 0.00000000e+00 & 0.00000000e+00 & Jks cm$^{-2}$ s$^{-1}$ \\
+      \hline
+  \end{tabular}
+\end{table}
+\begin{table}[ht]
+  \centering
+  \caption{Initial condition values for the Mach 1.2 radiative shock problem}
+  \label{tab:mach3_shock_IC}
+  \begin{tabular}{l l l l}\hline
+      \emph{Parameter} & \emph{Pre-shock Value} & \emph{Post-shock Value} & \emph{Units}\\\hline
+$\rho$ & 1.00000000e+00 & 3.00185103e+00 & g cm$^{-3}$ \\
+$u$ & 3.80431331e-01 & 1.26732249e-01 & cm sh$^{-1}$ \\
+$T$ & 1.00000000e-01 & 3.66260705e-01 & keV \\
+$E$ & 8.68367987e-02 & 1.83229115e-01 & Jks cm$^{-3}$\\
+$E_r$ & 1.37201720e-06 & 2.46899872e-04 & Jks cm$^{-3}$ \\
+$F_r$ & 0.00000000e+00 & 0.00000000e+00 & Jks cm$^{-2}$ s$^{-1}$ \\
+      \hline 
+  \end{tabular}
+\end{table}
+\begin{figure}[ht!]
 \centering
-\caption{\bf Mach 1.05 initial conditions.}
-\lta{mach105_initconds}
-\begin{tabular}{|c|c|c|}
-\hline
- & Pre-shock & Post-shock \\
-\hline
-$\hat{\rho}$ & 1.0000000000000000e+00 & 1.0749588725963066e+000 \\
-$\hat{u}$ & 1.2298902390050911e-001 & 1.1441277153558302e-001 \\
-$\hat{T}$ & 1.0000000000000001e-001 & 1.0494545175154467e-001 \\
-$\hat{\rho} \hat{u}$ & 1.2298902390050911e-001 & 1.2298902390050913e-001 \\
-$\hat{E}$ & 1.9911150000000002e-002 & 2.0965788801187071e-002 \\
-$\hat{E_r}$ & 1.3720000000000002e-006 & 1.6642117992569650e-006 \\
-$4/3 \hat{E} \hat{u}$ & 2.2498792105533135e-007 & 2.5387611250027822e-007 \\
-\hline
-\end{tabular}
-\end{table}
+\includegraphics[scale=0.60]{figures/radshock_mach_1_2.pdf}
+\caption{\label{fig:mach1.2T}\bf Mach 1.2 radiative shock fluid and radiation temperatures.} 
+\end{figure}
 
-%\begin{figure}[ht!]
-%%\begin{spacing}{1.0}
-%\centering
-%\includegraphics[scale=0.60]{./figures/Mach_1p05_rho.png}
-%\caption{\bf Mach 1.05 radiative shock density.} 
-%\lfig{mach105_rho}
-%%\end{spacing}
-%\end{figure}
-
-%\begin{figure}[ht!]
-%%\begin{spacing}{1.0}
-%\centering
-%\includegraphics[scale=0.60]{./figures/Mach_1p05_T.png}
-%\caption{\bf Mach 1.05 radiative shock fluid and radiation temperatures.} 
-%\lfig{mach105_T}
-%%\end{spacing}
-%\end{figure}
-%%
-
-%\FloatBarrier
-First, we compute the Mach 1.2 shock, which has a hydrodynamic shock but no ISP.  \ta{mach12_initconds} shows the initial conditions; the final time of the calculation is 0.5 shakes.  \figs{mach12_rho} and \rfig{mach12_T} compare our results with the semi-analytic solutions for the density and fluid and radiation temperatures, respectively, and again, we see good agreement between the two.  In this solution, we see a discontinuity in both the density and fluid temperature due to the hydrodynamic shock, and the maximum temperature is bounded by the far-downstream temperature, since there is no ISP to drive it further.
-
-
-A Mach 2 radiative shock problem was taken from \cite{edwardsthesis}.
-The material properties are uniform and are given in Table
-\ref{tab:mach2_shock_material}. Initial conditions in the pre-shock
-and post-shock regions are given in Table \ref{tab:mach2_shock_IC}.
-Figure \ref{fig:mach2_shock_T} shows the numerical solution computed
-with 300 cells and a CFL of 0.6, using the van Leer slope limiter;
-the comparison to the reference solution shows excellent agreement.
-
-\begin{table}[ht]
-  \centering
-  \caption{Material property values for the Mach 2 radiative shock problem}
-  \label{tab:mach2_shock_material}
-  \begin{tabular}{l l}\hline
-    \emph{Parameter} & \emph{Value}\\\hline
-    $\sigma_a$ & 390.71164263502112\\
-    $\sigma_t$ & 853.14410158161809\\
-    $c_v$      & 0.12348\\\hline
-  \end{tabular}
-\end{table}
-
-\begin{table}[ht]
-  \centering
-  \caption{Initial condition values for the Mach 2 radiative shock problem}
-  \label{tab:mach2_shock_IC}
-  \begin{tabular}{l l l}\hline
-    \emph{Parameter} & \emph{Pre-shock Value} & \emph{Post-shock Value}\\\hline
-    $\rho$           & 1                      & 2.2860748989303659\\
-    $u$              & 0.23426480742954117    & 0.10247468599526272\\
-    $E$              & 3.9788000000000004e-2  & 7.0649692950433357e-2\\
-    $\E$             & 1.3720000000000002e-6  & 2.5560936967521927e-5\\
-    $\F$             & 0                      & 0\\\hline
-  \end{tabular}
-\end{table}
-
-\begin{figure}[ht]
-   \centering
-   \includegraphics[width=\textwidth]{figures/mach2_shock_T.pdf}
-   \caption{Comparison of Mach 2 radiative shock solution to reference solution}
-   \label{fig:mach2_shock_T}
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=0.60]{figures/radshock_mach_3_0.pdf}
+\caption{\label{fig:mach3.0T}\bf Mach 3.0 radiative shock fluid and radiation temperatures.} 
 \end{figure}
 
 
-
-The most structurally complex shock that we compute is the Mach 2 shock, which has both a hydrodynamic shock and an ISP.  The initial conditions are given by \ta{mach2_initconds}, and the final time of the calculation is 1 shake.  \figs{mach2_rho} and \rfig{mach2_T} show our results compared with the semi-analytic solutions.  In each of these figures, we can see the effects of the hydrodynamic shock, causing a discontinuity in both the fluid density and temperature.  We can also see the Zel'dovich spike, caused by the ISP embedded within the hydrodynamic shock, driving up the fluid temperature at the shock front.  This spike leads to the relaxation region downstream as the fluid temperature and radiation temperature equilibrate. \fig{mach2_spike} shows the Zel'dovich spike and relaxation region in more detail. Here, we can see that our results still show very good agreement with the semi-analytic solution.
-
+A Mach 3 shock is simulated that has both a hydrodynamic shock and an ISP.
+Fig.~\ref{fig:mach3.0T} compares our numerical material and radiation temperature with the semi-analytic solutions.  In each of these
+figures, we can see the effects of the hydrodynamic shock, causing a discontinuity in both the fluid density and
+temperature.  We can also see the Zel'dovich spike, caused by the ISP embedded within the hydrodynamic shock, driving up
+the fluid temperature at the shock front.  This spike leads to the relaxation region downstream as the fluid temperature
+and radiation temperature equilibrate. Here, we can see that our results still show very good agreement with the semi-analytic solution.
 
 
 
@@ -1028,9 +1065,20 @@ The most structurally complex shock that we compute is the Mach 2 shock, which h
 \section{Conclusions and Future Work}
 \label{sec:Conclusions}
 
-We develop a new IMEX method for solving the equations of radiation-hydrodynamics that is second-order accurate in space and time.  In addition to accuracy, we meet the goals outlined in Section \ref{sec:Introduction}: it reliably converges non-linearities, rapidly damps oscillations, incorporates modern algorithms used by the hydrodynamics and radiation transport communities, appears to have straightforward extensibility to a full radiation transport model, preserves the diffusion limit in 1D in such a way that it is expected to preserve this limit in 2D and 3D, accurately computes radiative shocks, and reduces to fundamental algorithms when the effects of coupled physics are negligible.  Thus, it represents a very useful alternative to existing methods.
+We develop a new IMEX method for solving the equations of radiation-hydrodynamics that is second-order accurate in space
+and time.  In addition to accuracy, we meet the goals outlined in Section \ref{sec:Introduction}: it reliably converges
+non-linearities, rapidly damps oscillations, incorporates modern algorithms used by the hydrodynamics and radiation
+transport communities, appears to have straightforward extensibility to a full radiation transport model, preserves the
+diffusion limit in 1D in such a way that it is expected to preserve this limit in 2D and 3D, accurately computes
+radiative shocks, and reduces to fundamental algorithms when the effects of coupled physics are negligible.  Thus, it
+represents a very useful alternative to existing methods.
 
-In future work, we recommend extending our radiation solver to incorporate a radiation transport model.  The structure of our radiation-hydrodynamics algorithm should make this extension straightforward.  Since our algorithm only requires the angle-integrated radiation energy density and radiation current, the radiation solver may, in some sense, be treated as a black box module to compute these quantities.  Of course, the angular intensities will need to be preserved across time steps.  The only significant change required for this extension would be to make the momentum updates implicit to conserve momentum as well as energy. 
+In future work, we recommend extending our radiation solver to incorporate a radiation transport model.  The structure
+of our radiation-hydrodynamics algorithm should make this extension straightforward.  Since our algorithm only requires
+the angle-integrated radiation energy density and radiation current, the radiation solver may, in some sense, be treated
+as a black box module to compute these quantities.  Of course, the angular intensities will need to be preserved across
+time steps. Momentum is already conserved by the chosen implicit statements.  It is likely not necessary to fully
+converge the nonlinear solves in the predictor steps.
 
 
 \bibliographystyle{model1-num-names}

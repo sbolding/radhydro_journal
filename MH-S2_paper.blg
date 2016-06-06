@@ -1,45 +1,50 @@
-This is BibTeX, Version 0.99c (Web2C 7.5.4)
+This is BibTeX, Version 0.99d (TeX Live 2015)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: MH-S2_paper.aux
 The style file: model1-num-names.bst
 Database file #1: References.bib
-You've used 21 entries,
+Warning--I didn't find a database entry for "jim???"
+Warning--I didn't find a database entry for "ref???"
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+You've used 23 entries,
             2910 wiz_defined-function locations,
-            743 strings with 8603 characters,
-and the built_in function-call counts, 12431 in all, are:
-= -- 949
-> -- 448
-< -- 13
-+ -- 183
-- -- 147
-* -- 1507
-:= -- 1854
-add.period$ -- 21
-call.type$ -- 21
-change.case$ -- 153
-chr.to.int$ -- 20
-cite$ -- 21
-duplicate$ -- 822
-empty$ -- 861
-format.name$ -- 208
-if$ -- 2276
-int.to.chr$ -- 2
+            756 strings with 8874 characters,
+and the built_in function-call counts, 13617 in all, are:
+= -- 1045
+> -- 486
+< -- 15
++ -- 198
+- -- 159
+* -- 1655
+:= -- 2026
+add.period$ -- 23
+call.type$ -- 23
+change.case$ -- 167
+chr.to.int$ -- 21
+cite$ -- 23
+duplicate$ -- 900
+empty$ -- 943
+format.name$ -- 230
+if$ -- 2496
+int.to.chr$ -- 3
 int.to.str$ -- 1
-missing$ -- 195
-newline$ -- 118
-num.names$ -- 84
-pop$ -- 174
+missing$ -- 213
+newline$ -- 128
+num.names$ -- 92
+pop$ -- 190
 preamble$ -- 1
-purify$ -- 154
+purify$ -- 168
 quote$ -- 0
-skip$ -- 223
+skip$ -- 242
 stack$ -- 0
-substring$ -- 710
-swap$ -- 711
+substring$ -- 782
+swap$ -- 781
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 186
+type$ -- 204
 warning$ -- 0
-while$ -- 83
+while$ -- 91
 width$ -- 0
-write$ -- 285
+write$ -- 311
+(There were 2 warnings)
