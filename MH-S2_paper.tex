@@ -603,7 +603,7 @@ both L-stable, accurate, and efficient.  In \cite{EM2011}, the near-optimal TR/B
 radiative transfer. It consists of a Crank-Nicolson step over half the time step and, using that solution, a BDF2 step over 
 the remainder of the time step.  The TR/BDF2 method has a computational cost that is roughly equivalent to that of solving two 
 Crank-Nicolson systems sequentially over each time step.  Here we introduce an alternative form of 
-of the simple TR/BDF2 method that is particularly useful for our purposes.
+of the simple TR/BDF2 method that is particularly useful for our purposes.  
 
   
 A critical issue for radiation transport spatial discretizations is the preservation of the diffusion limit.  
@@ -693,11 +693,12 @@ The second cycle proceeds as follows:
   \item Continue iteration until fluid momenta, internal energies, and radiation intensities converge.
   \end{enumerate}
 \end{enumerate}
-Note that the combination of Crank-Nicolson and BDF2 discretization results in a TR/BDF2 discretization over the full time step.  One advantage to applying 
-the full MHM over each half time step is that, if the time step size is being determined by the Courant limit, we can take twice the usual time step.  
-In this case, the cost of four radiation solves per time step per iteration is mitigated.  Alternatively, this algorithm could be viewed as a mixed,
-two-stage algorithm with alternating Crank-Nicolson and BDF2 solves over time steps (from this viewpoint, the time step sizes are governed by the standard Courant
-limit and there is only two radiation solves per time step).  
+Note that the combination of Crank-Nicolson and BDF2 discretization results in a TR/BDF2 discretization over the full time step.  We use a standard Backward Euler discretziaton for the radiation solves during the predictor stages, which only require first-order accuracy.  One
+advantage to applying the full MHM over each half time step is that, if the time step size is being determined by the Courant limit, we can
+take twice the usual time step.  In this
+case, the cost of four radiation solves per time step per iteration is mitigated.  Alternatively, this algorithm could be viewed as a mixed,
+two-stage algorithm with alternating Crank-Nicolson and BDF2 solves over time steps (from this viewpoint, the time step sizes are governed
+by the standard Courant limit and there is only two radiation solves per time step).  
 
 Our scheme is designed in such a way that, 
 if the radiation contributions to the hydrodynamics are negligible, the standard MHM solution is obtained over each half time step, and if the hydrodynamics contributions to 
@@ -745,8 +746,14 @@ The usual expression that \equ{tbdf22} replaces is
 (\mA f)^{n+1} \pec
 \lequ{tbdf23}
 \ee
-which is clearly not a conservation statement. Equation \requ{tbdf21} is used for the radiation/internal energy during the first and second 
-cycle predictor steps and the first cycle corrector step.  Equation \requ{tbdf22} is used for the radiation/internal energy during the 
+which is clearly not a conservation statement. The MHM over each half-time step require a first-order accurate predictor stage. For the radiation coupling terms during
+the predictor stages, a standard Backward Euler discretization is used, e.g.,
+\be
+\frac{2\fn{f^{n+1/2}-f^{n}}}{\Delta t} = (\mA f)^{n+1/2} \pec
+\lequ{be1}
+\ee.
+Explicitly, Eq. \requ{be1} is used for the radiation/internal energy during the first and second 
+cycle predictor steps.  Eq. and the first cycle corrector step.  Eq. \requ{tbdf22} is used for the radiation/internal energy during the 
 second cycle corrector step.
 
 %\textit{Cycle 1}
@@ -894,11 +901,13 @@ $\alpha=0.5$, $M=0.9$, $\mathbb{P}=0.001$,
 and $\gamma=\frac{5}{3}$.    It is noted that because of how we have dimensionalized the solutions, the magnitude of reference parameters, and
 thus the solution, must change as $\mathbb{C}$ is modified.  However, since our error norm is defined relative to the solution
 norm, we observe the proper
-convergence order. The simulation end time is $2\pi$ sh. The initial $\Delta t$ is chosen based on a CFL condition of 0.6 to ensure stability
+convergence order. The simulation end time is $2\pi$ sh. The initial $\Delta t$ is
+chosen based on a Courant condition of 0.6 to ensure stability
 of the MH algorithm. We
 then uniformly refine in space and time to demonstrate convergence in the two variables.  It is worth noting that our initial time step size is chosen based on
-the CFL condition given in Eq.~\eqref{???}NEED CFL EQUATION SOMEWHERE, which is based on material velocity speeds.  This is a much larger and more physically reasonable
-time step size for an IMEX scheme than those in~\cite{mcclarren2}, which based the CFL on a non-dimensional speed of light.   The nonlinear
+the Courant condition given in Eq.~\eqref{eq:cfl}, which is based on material velocity speeds.  This is a much larger and more physically reasonable
+time step size for an IMEX scheme than those in~\cite{mcclarren2}, which based the
+Courant condition on a non-dimensional speed of light.   The nonlinear
 convergence of each implicit solve is set to 1.E-10 for all remaining simulations.
 
 Figures~\ref{fig:diff_limit_e} and~\ref{fig:diff_limit_mom} plots the error convergence as a function of $\Delta x$ and $\Delta t$ for
@@ -953,14 +962,14 @@ All problem parameters are fixed and then the  space and time discretizations ar
 with the parameters $\mathbb{C}=10$, $\mathbb{P}=0.1$, $\rho_{infty}=1$ g cm$^{-3}$, $\gamma=5/3$, $\sigma_a=\sigma_t=1$ cm$^{-1}$,
 $\alpha=0.5$ and $M=0.9$.  The relatively high value of $\mathbb{P}$ and low value of $\mathbb{C}$ produce a more
 difficult problem to simulate, requiring convergence of the implicit solves. As before, the initial $\Delta
-t$ is based on the CFL condition of 0.6. The simulation is performed until the initial radiation have advanced two periods, i.e., until
+t$ is based on the Courant condition of 0.6. The simulation is performed until the initial radiation have advanced two periods, i.e., until
 $t=4\pi/10$.
 
 Figures~\ref{fig:streaming_e} and~\ref{fig:streaming_mom} plots the error convergence as a function of $\Delta x$ and $\Delta t$ for
 internal energy and momentum, respectively.  
 The convergence in the streaming
 limit is closer to 1.8 for the momentum variable. A finer time step size may be required to resolve the radiation unknowns more accurately than the
-CFL condition requires. The time step size may not yet be in the asymptotically converging region.
+Courant condition requires. The time step size may not yet be in the asymptotically converging region.
 
 \begin{figure}[ht]
    \centering
@@ -1026,7 +1035,7 @@ $F_r$ & 0.00000000e+00 & 0.00000000e+00 & Jks cm$^{-2}$ s$^{-1}$ \\
 \end{table}
 \begin{table}[ht]
   \centering
-  \caption{Initial condition values for the Mach 1.2 radiative shock problem}
+  \caption{Initial condition values for the Mach 3 radiative shock problem}
   \label{tab:mach3_shock_IC}
   \begin{tabular}{l l l l}\hline
       \emph{Parameter} & \emph{Pre-shock Value} & \emph{Post-shock Value} & \emph{Units}\\\hline
@@ -1131,10 +1140,10 @@ nonlinear solves:
 computed via Equations \eqref{eq:muscl_slopes} and \eqref{eq:muscl_differences},
 optionally applying a slope limiter.
 Then a linear-discontinuous representation of the solution is created via
-Equation \eqref{eq:edge_hydro}, and the
+Eq. \eqref{eq:edge_hydro}, and the
 the MUSCL-Hancock predictor is performed to obtain $\H^*$, the
 homogeneous hydrodyamics solution at $t^{n+\fourth}$,
-via Equation \eqref{eq:muscl_predictor}.
+via Eq. \eqref{eq:muscl_predictor}.
 
 \item \textbf{Perform nonlinear iterations.} Iteration of the
 $t^{n+\fourth}$ solution is required since the system of equations
@@ -1142,7 +1151,7 @@ is nonlinear.
 \begin{enumerate}
 \item\label{item:vel_update}
 \textbf{Update velocities.} The Crank-Nicolson discretization
-of the velocity update equation, Equation \requ{hydromCNfull},
+of the velocity update equation, Eq. \requ{hydromCNfull},
 is solved to obtain new
 velocities at cell centers, $\{u_i^{k+1}\}$. Evaluation of
 the radiation quantities $\E$ and $\F$
@@ -1167,11 +1176,6 @@ of $\delta e$ are stored for the next radiation solve.
 Cross sections that are updated if they are functions of the hydrodynamic 
 state of the fluid.
 
-\item \textbf{Check convergence.} The new solutions $\R^{k+1}$ and
-$\H^{k+1}$ are compared with the previous iteration solutions
-$\R^k$ and $\H^k$ to determine if convergence has been achieved.
-If the solutions have not converged, then the computation
-returns to Step \ref{item:vel_update}.
 \end{enumerate}
 \end{enumerate}
 
@@ -1179,7 +1183,7 @@ returns to Step \ref{item:vel_update}.
 
 \item \textbf{Perform Cycle 1 Corrector.} This step proceeds
 just as the predictor step, except that the MUSCL-Hancock
-corrector step given by Equation \eqref{eq:muscl_corrector} is used instead of the MUSCL-Hancock predictor
+corrector step given by Eq. \eqref{eq:muscl_corrector} is used instead of the MUSCL-Hancock predictor
 step, and the step goes from $t^n$ to $t^{n+\half}$ instead
 of $t^n$ to $t^{n+\fourth}$. No new hydrodynamic slopes are computed;
 evaluation of edge densities and velocities use
@@ -1210,8 +1214,7 @@ from $t^{n+\half}$ to $t^{n+1}$, and the time discretization
 of the equations is a form of TR/BDF-2
 instead of Crank-Nicolson, so values at $t^n$
 are used in the temporal discretization. Slopes
-$\Delta^{n+\half}$ and $\delta e^{n+\frac{3}{4}}$ (CURRENTLY WE JUST USE $\delta
-e^{n+\half}$, NEED TO CHECK THIS) are again
+$\Delta^{n+\half}$ and $\delta e^{n+\frac{3}{4}}$  are again
 used to evaluate edge quantities. At the end
 of the cycle, the new internal energy slopes $\delta e^{n+1}$
 are saved for the next cycle.
@@ -1226,26 +1229,40 @@ are saved for the next time step.
 \end{enumerate}
 
 %===============================================================================
-\section{The Discretized Equations}\lsec{full}
-%===============================================================================
-%===============================================================================
-\subsection{MUSCL-Hancock Equations}
-%===============================================================================
+\section{The Time-Discretized Equations}\lsec{full}
 
-The homogeneous Euler equations may be expressed in conservative form as
+In this section, we detail each of the equations for the MH solver and implicit radiation solves. We will use a $*$ superscript to denote
+the intermediate states of variables resulting from the operator-splitting treatment of the radiation and hydrodynamic operators.  The MH solver advances hydrodynamic unknowns from a previous time step to an intermediate state
+denoted by $*$.  The radiation implicit solves then advance from the state $*$ to the appropriate time.
+
+Using a standard estimate of numerical wave speeds~\cite{toro}, our time step size for the $n$-th time
+step is estimated as
+\begin{equation}\label{eq:cfl}
+    \Delta t^n = \max_{i} 2\text{CFL} \max_{i}\left(|u_i| + |a_{i,\infty}|\right))
+\end{equation}
+where CFL is a chosen parameter, $\Delta t$ is the full time step, and $u_i$ and $a_{i,\infty}$ are the fluid velocity
+and sound speed for each cell $i$.
+
+%===============================================================================
+%===============================================================================
+\subsection{MUSCL-Hancock Predictor Step: $t^n$ to $t^{n+1/4}$}
+%================================================================== 
+The MH solver handles the fluid advection portion of the equations by advancing the homogeneous Euler equations
+in time.   The homogeneous Euler equations may be expressed in conservative form as
 \begin{equation}
   \dydt{\H} + \nabla\cdot\Flux(\H) = \mathbf{0} \pec
 \end{equation}
 where $\H$ is a vector of the conservative unknowns
-and $\Flux(\H)$ is the flux associated with each:
+and $\Flux(\H)$ is the flux associated with each, i.e.,
 \begin{equation}
   \H=\left[\begin{array}{c}\rho\\\rho u\\E\end{array}\right] \pec\qquad
   \Flux(\H)=\left[\begin{array}{c}\rho u\\
   \rho u^2 + p\\
   (E+p)u\end{array}\right] \pep
 \end{equation}
-The first half of a MUSCL-Hancock step $t^n\rightarrow t^n+\dt$
-starts by constructing a linear representation of the solution
+There are two MH steps, per time step. Thus, the first predictor step advances the hydrodynamic unknowns
+from $H^{n}$ to $H^{*n+1/4}$.
+The predictor step begins by constructing a linear representation of the solution
 using slopes $\Delta_i^n$:
 \begin{equation}\label{eq:muscl_slopes}
   \Delta_i^n = \half\Delta\H_{i-\half}^n + \half\Delta\H_{i+\half}^n \pec
@@ -1254,31 +1271,31 @@ using slopes $\Delta_i^n$:
   \Delta\H_{i-\half}^n = \H_i^n - \H_{i-1}^n \pec\quad
   \Delta\H_{i+\half}^n = \H_{i+1}^n - \H_i^n \pec
 \end{equation}
-These slopes are optionally limited via slope limiters $\xi_i$:
+These slopes are optionally limited via a factor $\xi_i$:
 \begin{equation}
   \bar{\Delta}_i = \xi_i \Delta_i \pep
 \end{equation}
 We have chosen to use the double-minmod slope limiter~\cite{ref???}.
-If no slope limiter is used, then $\xi_i=1$. The linear representation
-of the solution is built as
+The linear representation
+of the solution within each cell is constructed as
 \begin{equation}\label{eq:edge_hydro}
   \H\iL^n = \H_i^n - \frac{\bar{\Delta}_i^n}{2} \pec
   \quad
   \H\iR^n = \H_i^n + \frac{\bar{\Delta}_i^n}{2} \pec
 \end{equation}
-This representation is then evolved by half a time step:
-\hydroPredictor{n}{n+\half}{\half}{\label{eq:muscl_predictor}}
-The second half of a MUSCL-Hancock step employs a Riemann solver
-to compute the fluxes at time $n+\half$:
-\hydroCorrector{n}{n+\half}{n+1}{}{\label{eq:muscl_corrector}}
+This representation is then evolved by a quarter of a time step:
+\hydroPredictor{n}{*n+\fourth}{\fourth}{\label{eq:muscl_predictor}}
 
-%===============================================================================
-%\subsubsection{Slope Limiters}\label{sec:slope_limiters}
-%===============================================================================
-%See Jarrod's memo.
+\subsection{MUSCL-Hancock Corrector Step: $t^n$ to $t^{n+1/2}$}
+
+The second cycle of a MUSCL-Hancock step employs a Riemann solver
+to compute the fluxes at the intermediate point of the time step:
+\hydroCorrector{n}{n+\fourth}{*n+\half}{}{\label{eq:muscl_corrector}}
+where the fluxes are computed using an HLLC approximate Riemann solver~\cite{toro}
+based on the two states from each linear extrapolation to that edge.
 
 %-------------------------------------------------------------------------------
-\subsection{Fluid Momentum Source Update Equation}
+\subsection{Fluid Momentum Source Update Equations}
 %-------------------------------------------------------------------------------
 The Crank-Nicolson discretization of the velocity update equation is the
 following:
@@ -1286,7 +1303,7 @@ following:
 The BDF2 discretization of the velocity update equation is the
 following:
 \momentumUpdateBDFTwo{n-1}{n}{}{_i}{\lequ{hydromBDF2full}}
-The momentum source terms in these equations are computed by taking the linear
+The cell-averaged momentum source terms in these equations are computed by taking the linear
 average of the momentum source expressions evaluated at the edges, e.g., 
 \begin{multline}
    \left[\frac{\sigma_t}{c}\left(\F - \frac{4}{3}\E u\right)\right]_i =
@@ -1302,8 +1319,8 @@ The energy source update equations are evaluated at the edges and thus hydrodyna
 quantities need to be evaluated at the edges. The stored solution values
 consist of the cell average unknowns for the conservative variables $[\rho,\rho u,E]$
 and their slopes $\Delta$, which come from the predictor step of MUSCL-Hancock,
-as given by Equation \eqref{eq:muscl_slopes}. Evaluation of edge densities is achieved
-by applying the slopes as given by Equation \eqref{eq:edge_hydro}:
+as given by Eq. \eqref{eq:muscl_slopes}. Evaluation of edge densities is achieved
+by applying the slopes as given by Eq. \eqref{eq:edge_hydro}:
 \begin{equation}
    \rho\iL^k = \rho_i^k - \frac{\Delta\rho_i^n}{2} \pep
 \end{equation}
@@ -1423,7 +1440,7 @@ and the cell average and edge fluxes are defined as
 \subsubsection{Steady-State}\lsec{S2ssdisc}
 %===============================================================================
 Using an LLD discretization, the steady-state S$_2$ equations, obtained by
-dropping the $\dydt{\Psi^\pm}$ term in Equation \requ{S2Q}, become
+dropping the $\dydt{\Psi^\pm}$ term in Eq. \requ{S2Q}, become
 \begin{equation}\lequ{S2ssL}
   \frac{2\mu^\pm}{h_i}\fn{\Psi^{\pm,k+1}_i - \Psi^{\pm,k+1}_{i-\half}}
   +\sigma_{t,i,L}^k\Psi\iL^{\pm,k+1}
@@ -1568,14 +1585,14 @@ update $p^{n+1}$.
 %===============================================================================
 In the homogeneous hydrodynamics case (where there is no coupling to radiation),
 one can arrive at a conservation statement for a time step for each conserved
-quantity $H$ by summing the MUSCL-Hancock update equation, Equation
+quantity $H$ by summing the MUSCL-Hancock update equation, Eq.
 \eqref{eq:muscl_corrector}, multiplied by cell volume $h_i$, for all elements:
 \begin{equation}
    \sum\limits_i h_i H_i^* = \sum\limits_i h_i H_i^n
    + \Delta t^n\left(F_{\half}^{H,n+\half} - F_{N+\half}^{H,n+\half}\right) \pep
 \end{equation}
 The conservation statement for the momentum source update, obtained for
-Crank-Nicolson by summing Equation \eqref{eq:hydromCNfull} multiplied by cell
+Crank-Nicolson by summing Eq. \eqref{eq:hydromCNfull} multiplied by cell
 volume $h_i$ for all elements, is
 \begin{equation}
    \sum\limits_i h_i \rho_i^* u_i^{k+1} = \sum\limits_i h_i (\rho u)_i^*
