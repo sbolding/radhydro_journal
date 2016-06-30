@@ -1276,6 +1276,7 @@ using reconstructed slopes $\Delta_i^n$:
 \end{equation}
 The slopes are modified using a double-minmod slope
 limiter to ensure positivity and stability~\cite{NEED_SLOPE_LIMITER_REFERENCE???}.
+ #Implemented from McClarren Lowrie paper in JCP 227 (2008) 9711-9726
 A linear representation
 of the solution within each cell is then constructed as
 \begin{equation}\label{eq:edge_hydro}

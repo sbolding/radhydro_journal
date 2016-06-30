@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.28)  30 JUN 2016 09:17
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.28)  30 JUN 2016 09:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -421,15 +421,39 @@ ynamics model
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6]
-[7] [8] [9]
+[7]
+
+LaTeX Warning: Reference `sec:e_slopes' on page 8 undefined on input line 718.
+
+[8] [9]
 
 LaTeX Warning: Reference `radhydro_system' on page 10 undefined on input line 8
 16.
 
-[10] [11]
+[10]
+
+LaTeX Warning: Reference `eq:cfl' on page 11 undefined on input line 908.
+
+[11]
+
+LaTeX Warning: Reference `fig:diff_limit_e' on page 12 undefined on input line 
+913.
+
+
+LaTeX Warning: Reference `fig:diff_limit_mom' on page 12 undefined on input lin
+e 913.
+
 \openout4 = `MH-S2_paper.fff'.
 
- (MH-S2_paper.fff) [12]
+(MH-S2_paper.fff) [12]
+
+LaTeX Warning: Reference `fig:streaming_e' on page 13 undefined on input line 9
+68.
+
+
+LaTeX Warning: Reference `fig:streaming_mom' on page 13 undefined on input line
+ 968.
+
 
 Package natbib Warning: Citation `jim???' on page 13 undefined on input line 99
 2.
@@ -438,13 +462,26 @@ Package natbib Warning: Citation `jim???' on page 13 undefined on input line 99
 Package natbib Warning: Citation `???' on page 13 undefined on input line 998.
 
 
+LaTeX Warning: Reference `tab:mach1.2_shock_IC' on page 13 undefined on input l
+ine 1007.
+
+
 LaTeX Warning: Reference `tab:mach3.0_shock_IC' on page 13 undefined on input l
 ine 1008.
 
 [13]
+
+LaTeX Warning: Reference `fig:mach1.2T' on page 14 undefined on input line 1012
+.
+
 \openout5 = `MH-S2_paper.ttt'.
 
- (MH-S2_paper.ttt) [14] (./MH-S2_paper.bbl [15]
+(MH-S2_paper.ttt)
+
+LaTeX Warning: Reference `fig:mach3.0T' on page 14 undefined on input line 1065
+.
+
+[14] (./MH-S2_paper.bbl [15]
 Missing character: There is no – in font cmr12!
  [16]) [17]
 Overfull \hbox (7.66393pt too wide) in paragraph at lines 1101--1104
@@ -458,47 +495,111 @@ Overfull \hbox (68.03177pt too wide) in paragraph at lines 1105--1115
  []
 
 
-Overfull \hbox (9.5002pt too wide) in paragraph at lines 1160--1168
-\OT1/cmr/m/n/12 Eval-u-a-tion of the den-si-ties and ve-loc-i-ties at the edges
- is achieved
- []
+LaTeX Warning: Reference `eq:muscl_slopes' on page 18 undefined on input line 1
+140.
+
+
+LaTeX Warning: Reference `eq:muscl_differences' on page 18 undefined on input l
+ine 1140.
+
+
+LaTeX Warning: Reference `eq:edge_hydro' on page 18 undefined on input line 114
+3.
+
+
+LaTeX Warning: Reference `eq:muscl_predictor' on page 18 undefined on input lin
+e 1146.
+
+
+LaTeX Warning: Reference `eq:hydromCNfull' on page 18 undefined on input line 1
+154.
+
+
+LaTeX Warning: Reference `eq:S2CNfullL' on page 18 undefined on input line 1161
+.
+
+
+LaTeX Warning: Reference `eq:S2CNfullR' on page 18 undefined on input line 1161
+.
+
+
+LaTeX Warning: Reference `sec:linearization' on page 18 undefined on input line
+ 1162.
+
+
+LaTeX Warning: Reference `sec:e_slopes' on page 18 undefined on input line 1167
+.
 
 [18
 
-] [19]
+]
+
+LaTeX Warning: Reference `sec:linearization' on page 19 undefined on input line
+ 1171.
+
+
+LaTeX Warning: Reference `eq:muscl_corrector' on page 19 undefined on input lin
+e 1186.
+
+[19]
 
 Package natbib Warning: Citation `NEED_SLOPE_LIMITER_REFERENCE???' on page 20 u
 ndefined on input line 1278.
 
 [20]
 
-LaTeX Warning: Reference `' on page 21 undefined on input line 1290.
+LaTeX Warning: Reference `' on page 21 undefined on input line 1291.
 
-[21] [22] [23] [24]
+[21]
 
-LaTeX Warning: Reference `eq:S2Q' on page 25 undefined on input line 1446.
+LaTeX Warning: Reference `eq:muscl_slopes' on page 22 undefined on input line 1
+334.
+
+
+LaTeX Warning: Reference `eq:edge_hydro' on page 22 undefined on input line 133
+5.
+
+
+LaTeX Warning: Reference `sec:e_slopes' on page 22 undefined on input line 1350
+.
+
+[22]
+
+LaTeX Warning: Reference `sec:linearization' on page 23 undefined on input line
+ 1377.
+
+[23] [24]
+
+LaTeX Warning: Reference `eq:S2Q' on page 25 undefined on input line 1455.
 
 [25] [26]
-Overfull \hbox (31.05615pt too wide) detected at line 1546
+Overfull \hbox (31.05615pt too wide) detected at line 1555
  []$[] \OT1/cmr/m/n/12 + [] [][] + [] [][] + [] [][] \OML/cmm/m/it/12 ;$ []  
  []
 
+[27]
 
-LaTeX Warning: Reference `eq:vel_update' on page 27 undefined on input line 158
-2.
+LaTeX Warning: Reference `eq:energy_update' on page 28 undefined on input line 
+1588.
 
 
-Overfull \hbox (8.53409pt too wide) in paragraph at lines 1577--1585
-\OT1/cmr/m/n/12 After solv-ing for $[][]$, a new in-ter-nal en-ergy can be es-t
-i-mated us-ing Eq. []
- []
+LaTeX Warning: Reference `eq:vel_update' on page 28 undefined on input line 159
+1.
 
-[27] [28]
+
+LaTeX Warning: Reference `eq:muscl_corrector' on page 28 undefined on input lin
+e 1601.
+
+
+LaTeX Warning: Reference `eq:hydromCNfull' on page 28 undefined on input line 1
+607.
+
+[28]
 
 Package natbib Warning: There were undefined citations.
 
 AED endfloat: Processing end Figures and Tables [29] (./MH-S2_paper.fff
-<figures/MMS_diffusion_limit_e_convergence.pdf, id=471, 524.2586pt x 402.00188p
+<figures/MMS_diffusion_limit_e_convergence.pdf, id=404, 524.2586pt x 402.00188p
 t>
 File: figures/MMS_diffusion_limit_e_convergence.pdf Graphic file (type pdf)
  <use figures/MMS_diffusion_limit_e_convergence.pdf>
@@ -509,7 +610,7 @@ input line 3.
 
 
  <./figures/MMS_diffusion_limit_e_convergence.pdf>]
-<figures/MMS_diffusion_limit_rhou_convergence.pdf, id=543, 524.2586pt x 402.001
+<figures/MMS_diffusion_limit_rhou_convergence.pdf, id=476, 524.2586pt x 402.001
 88pt>
 File: figures/MMS_diffusion_limit_rhou_convergence.pdf Graphic file (type pdf)
  <use figures/MMS_diffusion_limit_rhou_convergence.pdf>
@@ -519,7 +620,7 @@ on input line 11.
  [31
 
  <./figures/MMS_diffusion_limit_rhou_convergence.pdf>]
-<figures/MMS_streaming_e_convergence.pdf, id=610, 524.2586pt x 402.00188pt>
+<figures/MMS_streaming_e_convergence.pdf, id=544, 524.2586pt x 402.00188pt>
 File: figures/MMS_streaming_e_convergence.pdf Graphic file (type pdf)
 
 <use figures/MMS_streaming_e_convergence.pdf>
@@ -529,7 +630,7 @@ line 19.
  [32
 
  <./figures/MMS_streaming_e_convergence.pdf>]
-<figures/MMS_streaming_rhou_convergence.pdf, id=675, 525.76424pt x 402.00188pt>
+<figures/MMS_streaming_rhou_convergence.pdf, id=611, 525.76424pt x 402.00188pt>
 File: figures/MMS_streaming_rhou_convergence.pdf Graphic file (type pdf)
 <use figures/MMS_streaming_rhou_convergence.pdf>
 Package pdftex.def Info: figures/MMS_streaming_rhou_convergence.pdf used on inp
@@ -538,7 +639,7 @@ ut line 26.
  [33
 
  <./figures/MMS_streaming_rhou_convergence.pdf>]
-<figures/radshock_mach_1_2.pdf, id=741, 578.16pt x 433.62pt>
+<figures/radshock_mach_1_2.pdf, id=678, 578.16pt x 433.62pt>
 File: figures/radshock_mach_1_2.pdf Graphic file (type pdf)
 
 <use figures/radshock_mach_1_2.pdf>
@@ -547,7 +648,7 @@ Package pdftex.def Info: figures/radshock_mach_1_2.pdf used on input line 33.
  [34
 
  <./figures/radshock_mach_1_2.pdf>]
-<figures/radshock_mach_3_0.pdf, id=771, 578.16pt x 433.62pt>
+<figures/radshock_mach_3_0.pdf, id=708, 578.16pt x 433.62pt>
 File: figures/radshock_mach_3_0.pdf Graphic file (type pdf)
 
 <use figures/radshock_mach_3_0.pdf>
@@ -562,27 +663,36 @@ Package pdftex.def Info: figures/radshock_mach_3_0.pdf used on input line 40.
 ] [37
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1659.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1659.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1668.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1668.
  (./MH-S2_paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1659.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1659.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1668.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1668.
 
-Package rerunfilecheck Info: File `MH-S2_paper.out' has not changed.
-(rerunfilecheck)             Checksum: 6DEDE2CDE7FCB27E09B622AFCEA9A8D6;1642.
 
+
+Package rerunfilecheck Warning: File `MH-S2_paper.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `MH-S2_paper.out':
+(rerunfilecheck)             Before: E2A565114D18A0E2BF2E385200DCC62D;796
+(rerunfilecheck)             After:  AD595D20A3488EB84765AB134446ACC9;1722.
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 8788 strings out of 493304
- 122593 string characters out of 6139871
- 230200 words of memory out of 5000000
- 11918 multiletter control sequences out of 15000+600000
+ 8778 strings out of 493304
+ 122424 string characters out of 6139871
+ 225861 words of memory out of 5000000
+ 11907 multiletter control sequences out of 15000+600000
  13870 words of font info for 52 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 34i,17n,32p,809b,584s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 34i,17n,32p,809b,582s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texl
@@ -603,10 +713,10 @@ ts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmti7.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
 ic/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/h
 elvetic/uhvr8a.pfb>
-Output written on MH-S2_paper.pdf (37 pages, 527149 bytes).
+Output written on MH-S2_paper.pdf (37 pages, 525967 bytes).
 PDF statistics:
- 909 PDF objects out of 1000 (max. 8388607)
- 687 compressed objects within 7 object streams
- 205 named destinations out of 1000 (max. 500000)
- 207 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 849 PDF objects out of 1000 (max. 8388607)
+ 627 compressed objects within 7 object streams
+ 206 named destinations out of 1000 (max. 500000)
+ 119 words of extra memory for PDF output out of 10000 (max. 10000000)
 
