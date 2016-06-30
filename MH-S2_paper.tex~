@@ -1188,8 +1188,7 @@ step, and the step goes from $t^n$ to $t^{n+\half}$ instead
 of $t^n$ to $t^{n+\fourth}$. No new hydrodynamic slopes are computed;
 evaluation of edge densities and velocities use
 $\Delta^n$.  However, evaluation of edge internal energies
-in the nonlinear iteration use $\delta e^{n+1/4}$ (CURRENTLY WE JUST USE $\delta
-e^{n}$, NEED TO CHECK THIS). At the end
+in the nonlinear iteration use $\delta e^{n+1/4}$. At the end
 of the cycle, the new internal energy slopes $\delta e^{n+\half}$
 are saved for the next cycle.
 
@@ -1231,9 +1230,12 @@ are saved for the next time step.
 %===============================================================================
 \section{The Time-Discretized Equations}\lsec{full}
 
-In this section, we detail each of the equations for the MH solver and implicit radiation solves. We will use a $*$ superscript to denote
-the intermediate states of variables resulting from the operator-splitting treatment of the radiation and hydrodynamic operators.  The MH solver advances hydrodynamic unknowns from a previous time step to an intermediate state
-denoted by $*$.  The radiation implicit solves then advance from the state $*$ to the appropriate time.
+In this section, we detail each of the equations for the MH solver and implicit radiation
+solves.  The radiative transfer and hydrodynamic operators are treated independently via
+operator-splitting.  Within the predictor and corrector step of each cycle (which we refer
+to as a stage), there is an explicit hydrodynamic solve, followed by an associated implicit radiation solve. 
+We will use a $*$ superscript to denote the intermediate states of variables resulting
+from the hydrodynamic solves. 
 
 Using a standard estimate of numerical wave speeds~\cite{toro}, our time step size for the $n$-th time
 step is estimated as
@@ -1245,9 +1247,10 @@ and sound speed for each cell $i$.
 
 %===============================================================================
 %===============================================================================
-\subsection{MUSCL-Hancock Predictor Step: $t^n$ to $t^{n+1/4}$}
+\subsection{The MUSCL-Hancock Method}
 %================================================================== 
-The MH solver handles the fluid advection portion of the equations by advancing the homogeneous Euler equations
+
+The MH solver handles the fluid advection portion of the RH equations by advancing the homogeneous Euler equations
 in time.   The homogeneous Euler equations may be expressed in conservative form as
 \begin{equation}
   \dydt{\H} + \nabla\cdot\Flux(\H) = \mathbf{0} \pec
@@ -1260,39 +1263,47 @@ and $\Flux(\H)$ is the flux associated with each, i.e.,
   \rho u^2 + p\\
   (E+p)u\end{array}\right] \pep
 \end{equation}
-There are two MH steps, per time step. Thus, the first predictor step advances the hydrodynamic unknowns
-from $H^{n}$ to $H^{*n+1/4}$.
-The predictor step begins by constructing a linear representation of the solution
-using slopes $\Delta_i^n$:
+There is a predictor and corrector MH step for each cycle. For example, the first predictor step advances the hydrodynamic unknowns
+from $H^{n}$ to $H^{*,n+1/4}$.
+The predictor step begins by constructing a cell-wise linear representation of the solution
+using reconstructed slopes $\Delta_i^n$:
 \begin{equation}\label{eq:muscl_slopes}
-  \Delta_i^n = \half\Delta\H_{i-\half}^n + \half\Delta\H_{i+\half}^n \pec
+  \Delta_i^n = \half\left(\Delta\H_{i-\half}^n + \Delta\H_{i+\half}^n\right) \pec
 \end{equation}
 \begin{equation}\label{eq:muscl_differences}
   \Delta\H_{i-\half}^n = \H_i^n - \H_{i-1}^n \pec\quad
   \Delta\H_{i+\half}^n = \H_{i+1}^n - \H_i^n \pec
 \end{equation}
-These slopes are optionally limited via a factor $\xi_i$:
-\begin{equation}
-  \bar{\Delta}_i = \xi_i \Delta_i \pep
-\end{equation}
-We have chosen to use the double-minmod slope limiter~\cite{ref???}.
-The linear representation
-of the solution within each cell is constructed as
+The slopes are modified using a double-minmod slope
+limiter to ensure positivity and stability~\cite{NEED_SLOPE_LIMITER_REFERENCE???}.
+A linear representation
+of the solution within each cell is then constructed as
 \begin{equation}\label{eq:edge_hydro}
-  \H\iL^n = \H_i^n - \frac{\bar{\Delta}_i^n}{2} \pec
+  \H\iL^n = \H_i^n - \frac{{\Delta}_i^n}{2} \pec
   \quad
-  \H\iR^n = \H_i^n + \frac{\bar{\Delta}_i^n}{2} \pec
+  \H\iR^n = \H_i^n + \frac{{\Delta}_i^n}{2} \pec
 \end{equation}
 This representation is then evolved by a quarter of a time step:
 \hydroPredictor{n}{*n+\fourth}{\fourth}{\label{eq:muscl_predictor}}
 
-\subsection{MUSCL-Hancock Corrector Step: $t^n$ to $t^{n+1/2}$}
+At this point, an implicit Euler radiation solve advances the system from $t^{*,n+\fourth}$
+to $t^{n+\fourth}$, as detailed in Sec.~\ref{}.  Then, the corrector step of the
+MUSCL-Hancock method is applied.  The corrector step employs an approximate Riemann solver
+to compute the fluxes based on the predicted hydrodynamic variables, i.e.,
+\hydroCorrector{n}{n+\fourth}{*n+\half}{}{\label{eq:muscl_corrector}},
+where the fluxes are computed using an HLLC approximate Riemann solver~\cite{toro}.  At
+each edge, the Riemann solver uses linearly extrapolated values, based on the slopes.  For example, at the edge
+$x_{i-\half}$, the Riemann solver computes fluxes with the states
+$\H_{i}^{n+1/4}-\frac{\Delta_i^n}{2}$ and $\H_{i-1}^{n+\fourth}+\frac{\Delta_{i-1}^n}{2}$.
+The predictor and corrector steps for the second cycle proceed exactly the same.
 
-The second cycle of a MUSCL-Hancock step employs a Riemann solver
-to compute the fluxes at the intermediate point of the time step:
-\hydroCorrector{n}{n+\fourth}{*n+\half}{}{\label{eq:muscl_corrector}}
-where the fluxes are computed using an HLLC approximate Riemann solver~\cite{toro}
-based on the two states from each linear extrapolation to that edge.
+\subsection{The Implicit Radiation Solves}
+
+During an implicit radiation solve, the momentum deposition due to radiation, and the
+energy exchange due to black-body emission must be resolved.  An outer fixed-point
+iteration is performed for the velocity update, whereas an analytic Newton iteration is used for the 
+radiative transfer terms.
+
 
 %-------------------------------------------------------------------------------
 \subsection{Fluid Momentum Source Update Equations}
