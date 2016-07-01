@@ -372,7 +372,7 @@
 \newcommand{\hydroCorrector}[5]{
 \begin{equation}#5
   \H_i^{#3} = \H_i^{#1} - \frac{#4\dt}{\dx}
-  \left(\Flux_{i+\half}^{#2} - \Flux_{i-\half}^{#2}\right) \pep
+  \left(\Flux_{i+\half}^{#2} - \Flux_{i-\half}^{#2}\right) \pec
 \end{equation}
 }
 
@@ -754,7 +754,7 @@ the predictor stages, a standard Backward Euler discretization is used, e.g.,
 \ee.
 Explicitly, Eq. \requ{be1} is used for the radiation/internal energy during the first and second 
 cycle predictor steps.  Eq. and the first cycle corrector step.  Eq. \requ{tbdf22} is used for the radiation/internal energy during the 
-second cycle corrector step.
+second cycle corrector step.  This ensures total energy conservation over each time step.
 
 %\textit{Cycle 1}
 %\begin{enumerate}
@@ -1232,10 +1232,9 @@ are saved for the next time step.
 
 In this section, we detail each of the equations for the MH solver and implicit radiation
 solves.  The radiative transfer and hydrodynamic operators are treated independently via
-operator-splitting.  Within the predictor and corrector step of each cycle (which we refer
-to as a stage), there is an explicit hydrodynamic solve, followed by an associated implicit radiation solve. 
-We will use a $*$ superscript to denote the intermediate states of variables resulting
-from the hydrodynamic solves. 
+operator-splitting.  Within the predictor and corrector stage of each cycle, there is an explicit hydrodynamic solve, followed by an associated implicit radiation solve. 
+We will use a $*$ superscript to denote the intermediate operator-splitting states of variables resulting
+from the hydrodynamic steps. 
 
 Using a standard estimate of numerical wave speeds~\cite{toro}, our time step size for the $n$-th time
 step is estimated as
@@ -1275,8 +1274,7 @@ using reconstructed slopes $\Delta_i^n$:
   \Delta\H_{i+\half}^n = \H_{i+1}^n - \H_i^n \pec
 \end{equation}
 The slopes are modified using a double-minmod slope
-limiter to ensure positivity and stability~\cite{NEED_SLOPE_LIMITER_REFERENCE???}.
- ???Implemented from McClarren Lowrie paper in JCP 227 (2008) 9711-9726
+limiter to ensure positivity and stability~\cite{mclow2008}.
 A linear representation
 of the solution within each cell is then constructed as
 \begin{equation}\label{eq:edge_hydro}
@@ -1291,24 +1289,22 @@ At this point, an implicit Euler radiation solve advances the system from $t^{*,
 to $t^{n+\fourth}$, as detailed in Sec.~\ref{}.  Then, the corrector step of the
 MUSCL-Hancock method is applied.  The corrector step employs an approximate Riemann solver
 to compute the fluxes based on the predicted hydrodynamic variables, i.e.,
-\hydroCorrector{n}{n+\fourth}{*n+\half}{}{\label{eq:muscl_corrector}},
+\hydroCorrector{n}{n+\fourth}{*n+\half}{}{\label{eq:muscl_corrector}}
 where the fluxes are computed using an HLLC approximate Riemann solver~\cite{toro}.  At
-each edge, the Riemann solver uses linearly extrapolated values, based on the slopes.  For example, at the edge
+each edge, the Riemann solver uses linearly extrapolated values, based on lagged
+hydrodynamic slopes.  For example, at the edge
 $x_{i-\half}$, the Riemann solver computes fluxes with the states
 $\H_{i}^{n+1/4}-\frac{\Delta_i^n}{2}$ and $\H_{i-1}^{n+\fourth}+\frac{\Delta_{i-1}^n}{2}$.
-The predictor and corrector steps for the second cycle proceed exactly the same.
+The predictor and corrector steps for the second cycle proceed in the same manner.
 
 \subsection{The Implicit Radiation Solves}
 
 During an implicit radiation solve, the momentum deposition due to radiation, and the
-energy exchange due to black-body emission must be resolved.  An outer fixed-point
-iteration is performed for the velocity update, whereas an analytic Newton iteration is used for the 
-radiative transfer terms.
+energy exchange due to black-body emission must be iteratively solved.  An outer fixed-point
+iteration is performed for the velocity update, with analytic Newton iterations for the 
+radiative transfer terms.  
 
-
-%-------------------------------------------------------------------------------
-\subsection{Fluid Momentum Source Update Equations}
-%-------------------------------------------------------------------------------
+For the $k$-th iteration, theThe momentum equation, is defined as 
 The Crank-Nicolson discretization of the velocity update equation is the
 following:
 \momentumUpdateCN{n}{}{_i}{\lequ{hydromCNfull}}
@@ -1324,9 +1320,6 @@ average of the momentum source expressions evaluated at the edges, e.g.,
    \pep
 \end{multline}
 
-%-------------------------------------------------------------------------------
-\subsection{Fluid Energy Source Update Equation}
-%-------------------------------------------------------------------------------
 The energy source update equations are evaluated at the edges and thus hydrodynamic
 quantities need to be evaluated at the edges. The stored solution values
 consist of the cell average unknowns for the conservative variables $[\rho,\rho u,E]$
@@ -1374,7 +1367,8 @@ The BDF2 discretization of the energy update equation is
 The energy update to the 
 Note that these energy update equations are not in the form in which they
 are actually solved in practice; the implicit term $\sigma_a^k a c (T^{k+1})^4$
-must be linearized. This procedure is detailed in Section \ref{sec:linearization}.
+must be linearized. The procedure for linearizing the thermal radiative transfer 
+terms can be found in~\cite{morelldsn}.
 The final form of the energy update equation is a direct update to the
 edge internal energies $\{e\iL^{k+1},e\iR^{k+1}\}$.
 
@@ -1592,63 +1586,63 @@ convergence, beginning with a solve of Eq.~\eqref{eq:vel_update} with updated
 radiation quantities.  Once the system is converged, the EOS can be used to
 update $p^{n+1}$.
 
-%===============================================================================
-\section{Conservation}
-%===============================================================================
-In the homogeneous hydrodynamics case (where there is no coupling to radiation),
-one can arrive at a conservation statement for a time step for each conserved
-quantity $H$ by summing the MUSCL-Hancock update equation, Eq.
-\eqref{eq:muscl_corrector}, multiplied by cell volume $h_i$, for all elements:
-\begin{equation}
-   \sum\limits_i h_i H_i^* = \sum\limits_i h_i H_i^n
-   + \Delta t^n\left(F_{\half}^{H,n+\half} - F_{N+\half}^{H,n+\half}\right) \pep
-\end{equation}
-The conservation statement for the momentum source update, obtained for
-Crank-Nicolson by summing Eq. \eqref{eq:hydromCNfull} multiplied by cell
-volume $h_i$ for all elements, is
-\begin{equation}
-   \sum\limits_i h_i \rho_i^* u_i^{k+1} = \sum\limits_i h_i (\rho u)_i^*
-   +\dt^n\left(
-   \half\sum\limits_i h_i \frac{\sigma_{t,i}^n}{c}\F_{0,i}^n
-   + \half\sum\limits_i h_i \frac{\sigma_{t,i}^n}{c}\F_{0,i}^k
-   \right) \pep
-\end{equation}
-The conservation statement for the radiation momentum is obtained by
-manipulating the discretized S-2 equations:
-\begin{multline}
-   \sum\limits_i h_i \frac{\F_i^{k+1}}{c^2} = \sum\limits_i h_i \frac{\F_i^n}{c^2}
-   + \dt^n\Bigg(
-   \half\frac{1}{3c}\fn{\Psi^{+,n}_{inc} - \Psi^{-,n}_{inc}
-   + \Psi^{-,n}_{1,L} - \Psi^{+,n}_{N,R}}\\
-   + \half\frac{1}{3c}\fn{\Psi^{+,k+1}_{inc} - \Psi^{-,k+1}_{inc}
-   + \Psi^{-,k+1}_{1,L} - \Psi^{+,k+1}_{N,R}}\\
-   - \half\sum\limits_i h_i\fn{\half\frac{\sigma_{t,i,L}^n}{c}\F_{0,i,L}^n
-   + \half\frac{\sigma_{t,i,R}^n}{c}\F_{0,i,R}^n}\\
-   - \half\sum\limits_i h_i\fn{\half\frac{\sigma_{t,i,L}^k}{c}\F_{0,i,L}^{k+1}
-   + \half\frac{\sigma_{t,i,R}^k}{c}\F_{0,i,R}^{k+1}}
-   \Bigg) \pep
-\end{multline}
-Combining this with the hydrodynamics momentum conservation statement
-gives the total momentum conservation statement for Crank-Nicolson:
-\begin{multline}
-   \sum\limits_i h_i\fn{\rho_i^* u_i^{k+1} + \frac{\F_i^{k+1}}{c^2}} =
-   \sum\limits_i h_i\fn{\rho_i^* u_i^n + \frac{\F_i^n}{c^2}}\\
-   + \dt^n\bigg(
-   F_{\half}^{n+\half} - F_{N+\half}^{n+\half}
-   + \half\frac{1}{3c}\fn{\Psi^{+,n}_{inc} - \Psi^{-,n}_{inc}
-   + \Psi^{-,n}_{1,L} - \Psi^{+,n}_{N,R}}\\
-   + \half\frac{1}{3c}\fn{\Psi^{+,k+1}_{inc} - \Psi^{-,k+1}_{inc}
-   + \Psi^{-,k+1}_{1,L} - \Psi^{+,k+1}_{N,R}}
-   \bigg) \pep
-\end{multline}
-It is noted that if one is interested in checking the radiation momentum balance for
-a problem with no fluid motion (thermal radiative transfer only), then there is
-the extra momentum deposition terms that do not cancel out in the $S_2$ equations
-that must be accounted for.  To include MMS sources, the hydro sources can be added directly.  The radiation
-sources must also be included in the momentum.  The moments of the extra source are taken in the same way
-as they are for arriving at the radiation balance equation, resulting in an extra
-term of $\frac{1}{2c}[\mu^+(Q_L^+ + Q_R^+) - \mu^-(Q_L^- + Q_R^-)]$ to be added to
-the balance.
+%%===============================================================================
+%\section{Conservation}
+%%===============================================================================
+%In the homogeneous hydrodynamics case (where there is no coupling to radiation),
+%one can arrive at a conservation statement for a time step for each conserved
+%quantity $H$ by summing the MUSCL-Hancock update equation, Eq.
+%\eqref{eq:muscl_corrector}, multiplied by cell volume $h_i$, for all elements:
+%\begin{equation}
+%   \sum\limits_i h_i H_i^* = \sum\limits_i h_i H_i^n
+%   + \Delta t^n\left(F_{\half}^{H,n+\half} - F_{N+\half}^{H,n+\half}\right) \pep
+%\end{equation}
+%The conservation statement for the momentum source update, obtained for
+%Crank-Nicolson by summing Eq. \eqref{eq:hydromCNfull} multiplied by cell
+%volume $h_i$ for all elements, is
+%\begin{equation}
+%   \sum\limits_i h_i \rho_i^* u_i^{k+1} = \sum\limits_i h_i (\rho u)_i^*
+%   +\dt^n\left(
+%   \half\sum\limits_i h_i \frac{\sigma_{t,i}^n}{c}\F_{0,i}^n
+%   + \half\sum\limits_i h_i \frac{\sigma_{t,i}^n}{c}\F_{0,i}^k
+%   \right) \pep
+%\end{equation}
+%The conservation statement for the radiation momentum is obtained by
+%manipulating the discretized S-2 equations:
+%\begin{multline}
+%   \sum\limits_i h_i \frac{\F_i^{k+1}}{c^2} = \sum\limits_i h_i \frac{\F_i^n}{c^2}
+%   + \dt^n\Bigg(
+%   \half\frac{1}{3c}\fn{\Psi^{+,n}_{inc} - \Psi^{-,n}_{inc}
+%   + \Psi^{-,n}_{1,L} - \Psi^{+,n}_{N,R}}\\
+%   + \half\frac{1}{3c}\fn{\Psi^{+,k+1}_{inc} - \Psi^{-,k+1}_{inc}
+%   + \Psi^{-,k+1}_{1,L} - \Psi^{+,k+1}_{N,R}}\\
+%   - \half\sum\limits_i h_i\fn{\half\frac{\sigma_{t,i,L}^n}{c}\F_{0,i,L}^n
+%   + \half\frac{\sigma_{t,i,R}^n}{c}\F_{0,i,R}^n}\\
+%   - \half\sum\limits_i h_i\fn{\half\frac{\sigma_{t,i,L}^k}{c}\F_{0,i,L}^{k+1}
+%   + \half\frac{\sigma_{t,i,R}^k}{c}\F_{0,i,R}^{k+1}}
+%   \Bigg) \pep
+%\end{multline}
+%Combining this with the hydrodynamics momentum conservation statement
+%gives the total momentum conservation statement for Crank-Nicolson:
+%\begin{multline}
+%   \sum\limits_i h_i\fn{\rho_i^* u_i^{k+1} + \frac{\F_i^{k+1}}{c^2}} =
+%   \sum\limits_i h_i\fn{\rho_i^* u_i^n + \frac{\F_i^n}{c^2}}\\
+%   + \dt^n\bigg(
+%   F_{\half}^{n+\half} - F_{N+\half}^{n+\half}
+%   + \half\frac{1}{3c}\fn{\Psi^{+,n}_{inc} - \Psi^{-,n}_{inc}
+%   + \Psi^{-,n}_{1,L} - \Psi^{+,n}_{N,R}}\\
+%   + \half\frac{1}{3c}\fn{\Psi^{+,k+1}_{inc} - \Psi^{-,k+1}_{inc}
+%   + \Psi^{-,k+1}_{1,L} - \Psi^{+,k+1}_{N,R}}
+%   \bigg) \pep
+%\end{multline}
+%It is noted that if one is interested in checking the radiation momentum balance for
+%a problem with no fluid motion (thermal radiative transfer only), then there is
+%the extra momentum deposition terms that do not cancel out in the $S_2$ equations
+%that must be accounted for.  To include MMS sources, the hydro sources can be added directly.  The radiation
+%sources must also be included in the momentum.  The moments of the extra source are taken in the same way
+%as they are for arriving at the radiation balance equation, resulting in an extra
+%term of $\frac{1}{2c}[\mu^+(Q_L^+ + Q_R^+) - \mu^-(Q_L^- + Q_R^-)]$ to be added to
+%the balance.
 
 
 
