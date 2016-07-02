@@ -1297,17 +1297,20 @@ $x_{i-\half}$, the Riemann solver computes fluxes with the states
 $\H_{i}^{n+1/4}-\frac{\Delta_i^n}{2}$ and $\H_{i-1}^{n+\fourth}+\frac{\Delta_{i-1}^n}{2}$.
 The predictor and corrector steps for the second cycle proceed in the same manner.
 
-\subsection{The Implicit Radiation Solves}
+\subsection{The Iterative Radiation Solves}
 
-During an implicit radiation solve, the momentum deposition due to radiation, and the
+During each implicit radiation solve, the momentum deposition due to radiation and the
 energy exchange due to black-body emission must be iteratively solved.  An outer fixed-point
 iteration is performed for the velocity update, with analytic Newton iterations for the 
-radiative transfer terms.  
+radiative transfer terms.  The equations below are for the $k+1$-st iteration within
+each stage of the algorithm.
 
-For the $k$-th iteration, theThe momentum equation, is defined as 
-The Crank-Nicolson discretization of the velocity update equation is the
-following:
-\momentumUpdateCN{n}{}{_i}{\lequ{hydromCNfull}}
+A  lagged estimate of the radiation is used to compute a new
+material momentum.  
+Noting that, in the absence of a momentum source, $\rho^{*,n+1/4}=\rho^{n+1/4}$. In the
+presence of MMS sources, $\rho$ is updated prior to entering the iteration loops.
+
+
 The BDF2 discretization of the velocity update equation is the
 following:
 \momentumUpdateBDFTwo{n-1}{n}{}{_i}{\lequ{hydromBDF2full}}
@@ -1318,23 +1321,24 @@ average of the momentum source expressions evaluated at the edges, e.g.,
    \half\left[\frac{\sigma_{t,i,L}}{c}\left(\F\iL - \frac{4}{3}\E\iL u\iL\right)\right]\\
    + \half\left[\frac{\sigma_{t,i,R}}{c}\left(\F\iR - \frac{4}{3}\E\iR u\iR\right)\right]
    \pep
-\end{multline}
+\end{multline}.
+The Crank-Nicolson discretization of the velocity update equation is
+\momentumUpdateCN{n}{}{_i}{\lequ{hydromCNfull}}
+The Backward-Euler discretizations for the predictor steps are analagously defined.
 
-The energy source update equations are evaluated at the edges and thus hydrodynamic
-quantities need to be evaluated at the edges. The stored solution values
+The lumped linear discontinuous discretization is used for the radiation equations, and
+thus inherently the update equations are uncoupled?. Thus, the hydrodynamic
+quantities need to be evaluated at cell edges. The stored solution values
 consist of the cell average unknowns for the conservative variables $[\rho,\rho u,E]$
-and their slopes $\Delta$, which come from the predictor step of MUSCL-Hancock,
-as given by Eq. \eqref{eq:muscl_slopes}. Evaluation of edge densities is achieved
+and their slopes $\Delta$, which were evaluated during a predictor step of the
+MUSCL-Hancock method, as given by Eq. \eqref{eq:muscl_slopes}. Evaluation of edge densities is achieved
 by applying the slopes as given by Eq. \eqref{eq:edge_hydro}:
 \begin{equation}
    \rho\iL^k = \rho_i^k - \frac{\Delta\rho_i^n}{2} \pep
 \end{equation}
 Note that the slopes $\Delta$ are only updated in the MUSCL-Hancock predictor
-step. Thus, quantities at $t^{n+1}$ also use the $\Delta^n$ slopes. For the
-BDF2 discretization, where evaluation of quantities at $t^{n-1}$ is required,
-the old slopes $\Delta^{n-1}$ are used. Evaluation of edge velocities is
-achieved by evaluating the edge conservative variables $\rho$ and $\rho u$
-and then computing velocity from these, e.g.,
+step. Evaluation of edge velocities is
+achieved based on the conservative variables $\rho$ and $\rho u$ at edges, e.g.,
 \begin{equation}
    u\iL^k = \frac{(\rho u)\iL^k}{\rho\iL^k}
           = \frac{(\rho u)_i^k - \frac{\Delta(\rho u)_i^n}{2}}
@@ -1347,10 +1351,6 @@ of edge internal energies is thus performed as follows:
 \begin{equation}
    e\iL^k = e_i^k - \frac{\delta e_i^n}{2} \pep
 \end{equation}
-Edge temperatures are computed from the edge internal energies:
-\begin{equation}
-   T\iL^k = \frac{e\iL^k}{c_v} \pep
-\end{equation}
 Again, quantities at $t^{n+1}$ still use old slopes $\delta e^n$. These
 slopes are updated at the end of each full MUSCL-Hancock step, i.e.,
 when the nonlinear iteration for the corrector step converges, the
@@ -1358,6 +1358,7 @@ slopes $\delta e_i^{n+1}$ are computed from the converged edge internal energies
 \begin{equation}
    \delta e_i^{n+1} = e\iR^{k+1} - e\iL^{k+1} \pep
 \end{equation}
+
 The Crank-Nicolson discretization of the energy update equation is
 \energyUpdateCN{n}{}{\iL}{\lequ{hydroECNfull}}
 The right edge equations are identical in form, obtained by replacing ``$L$'' with
