@@ -280,13 +280,13 @@
 % #2: coefficient for time step size
 % #3: spatial differencing subscript command
 % #4: optional label command
-\newcommand{\momentumUpdateCN}[4]{
+\newcommand{\momentumUpdateCN}[5]{
 \begin{equation}
-  \frac{\rho^*#3\left(u^{k+1}#3-u^*#3\right)}{#2\dt} = 
+    \frac{#2\rho^{#4}#3\left(u^{#4,k+1}#3-u^{*#4}#3\right)}{\dt} = 
    \half\momentumSource^{#1}#3
-  +\half\momentumSource^k#3
+   +\half\momentumSource^{#4,k}#3
   \pep
-#4
+#5
 \end{equation}
 }
 
@@ -295,14 +295,14 @@
 % #3: coefficient for time step size
 % #4: spatial differencing subscript command
 % #5: optional label command
-\newcommand{\momentumUpdateBDFTwo}[5]{
+\newcommand{\momentumUpdateBDFTwo}[6]{
 \begin{equation}\begin{split}
-  \frac{\rho^*#4\left(u^{k+1}#4-u^*#4\right)}{#3\dt} =  
+    \frac{#3\rho^{#5}#4\left(u^{#5,k+1}#4-u^{*#5}#4\right)}{\dt} =  
   & \sixth\momentumSource^{#1}#4
    +\sixth\momentumSource^{#2}#4\\
-  &+\frac{2}{3}\momentumSource^k#4
-  \pep
-#5
+   &+\frac{2}{3}\momentumSource^{#5,k}#4
+  \pec
+#6
 \end{split}\end{equation}
 }
 
@@ -959,7 +959,7 @@ varies rapidly enough that changes in the fluid temperature are suppressed. In t
 fluid temperature is a constant.
 
 All problem parameters are fixed and then the  space and time discretizations are refined uniformly.  The problem is fully defined
-with the parameters $\mathbb{C}=10$, $\mathbb{P}=0.1$, $\rho_{infty}=1$ g cm$^{-3}$, $\gamma=5/3$, $\sigma_a=\sigma_t=1$ cm$^{-1}$,
+with the parameters $\mathbb{C}=100$, $\mathbb{P}=0.1$, $\rho_{infty}=1$ g cm$^{-3}$, $\gamma=5/3$, $\sigma_a=\sigma_t=1$ cm$^{-1}$,
 $\alpha=0.5$ and $M=0.9$.  The relatively high value of $\mathbb{P}$ and low value of $\mathbb{C}$ produce a more
 difficult problem to simulate, requiring convergence of the implicit solves. As before, the initial $\Delta
 t$ is based on the Courant condition of 0.6. The simulation is performed until the initial radiation have advanced two periods, i.e., until
@@ -1050,13 +1050,13 @@ $F_r$ & 0.00000000e+00 & 0.00000000e+00 & Jks cm$^{-2}$ s$^{-1}$ \\
 \end{table}
 \begin{figure}[ht!]
 \centering
-\includegraphics[scale=0.60]{figures/radshock_mach_1_2.pdf}
+\includegraphics[width=\textwidth]{figures/radshock_mach_1_2.pdf}
 \caption{\label{fig:mach1.2T}\bf Mach 1.2 radiative shock fluid and radiation temperatures.} 
 \end{figure}
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[scale=0.60]{figures/radshock_mach_3_0.pdf}
+\includegraphics[width=\textwidth]{figures/radshock_mach_3_0.pdf}
 \caption{\label{fig:mach3.0T}\bf Mach 3.0 radiative shock fluid and radiation temperatures.} 
 \end{figure}
 
@@ -1239,9 +1239,9 @@ from the hydrodynamic steps.
 Using a standard estimate of numerical wave speeds~\cite{toro}, our time step size for the $n$-th time
 step is estimated as
 \begin{equation}\label{eq:cfl}
-    \Delta t^n = \max_{i} 2\text{CFL} \max_{i}\left(|u_i| + |a_{i,\infty}|\right))
+    \Delta t^n = \max_{i} 2\,\text{CFL} \max_{i}\left(|u_i| + |a_{i,s}|\right))
 \end{equation}
-where CFL is a chosen parameter, $\Delta t$ is the full time step, and $u_i$ and $a_{i,\infty}$ are the fluid velocity
+where CFL is a chosen parameter, $\Delta t$ is the full time step, and $u_i$ and $a_{i,s}$ are the fluid velocity
 and sound speed for each cell $i$.
 
 %===============================================================================
@@ -1289,7 +1289,7 @@ At this point, an implicit Euler radiation solve advances the system from $t^{*,
 to $t^{n+\fourth}$, as detailed in Sec.~\ref{}.  Then, the corrector step of the
 MUSCL-Hancock method is applied.  The corrector step employs an approximate Riemann solver
 to compute the fluxes based on the predicted hydrodynamic variables, i.e.,
-\hydroCorrector{n}{n+\fourth}{*n+\half}{}{\label{eq:muscl_corrector}}
+\hydroCorrector{n}{n+\fourth}{*n+\half}{2}{\label{eq:muscl_corrector}}
 where the fluxes are computed using an HLLC approximate Riemann solver~\cite{toro}.  At
 each edge, the Riemann solver uses linearly extrapolated values, based on lagged
 hydrodynamic slopes.  For example, at the edge
@@ -1301,57 +1301,58 @@ The predictor and corrector steps for the second cycle proceed in the same manne
 
 During each implicit radiation solve, the momentum deposition due to radiation and the
 energy exchange due to black-body emission must be iteratively solved.  An outer fixed-point
-iteration is performed for the velocity update, with analytic Newton iterations for the 
-radiative transfer terms.  The equations below are for the $k+1$-st iteration within
-each stage of the algorithm.
+iteration is performed for the velocity update.  Within each outer iteration, an analytic Newton iteration for the 
+radiative transfer terms is performed.   The equations below are for the $k+1$-st iteration within
+each stage of the algorithm. 
 
-A  lagged estimate of the radiation is used to compute a new
-material momentum.  
-Noting that, in the absence of a momentum source, $\rho^{*,n+1/4}=\rho^{n+1/4}$. In the
+During the iteration loop, a lagged estimate of the radiation is used to compute a new
+material velocity.  
+The lumped linear discontinuous (LLD) discretization is used for the radiation unknowns~\cite{???}. The
+linear representation is represented by edge unknowns with in a cell $i$, such as $\E_{L,i}$ and $\E_{R,i}$.
+In the absence of an extraneous momentum source, $\rho^{*,n+1/4}=\rho^{n+1/4}$. In the
 presence of MMS sources, $\rho$ is updated prior to entering the iteration loops.
-
-
-The BDF2 discretization of the velocity update equation is the
-following:
-\momentumUpdateBDFTwo{n-1}{n}{}{_i}{\lequ{hydromBDF2full}}
-The cell-averaged momentum source terms in these equations are computed by taking the linear
-average of the momentum source expressions evaluated at the edges, e.g., 
+The BDF2 discretization of the velocity update equation for the cycle 2 corrector
+step is
+\momentumUpdateBDFTwo{n}{n+1/2}{2}{_i}{n+1}{\lequ{hydromBDF2full}}
+where the $*$ terms came from the MH predictor stage.
+The cell-averaged terms on the right hand side are are computed by taking the linear
+average of the corresponding expressions evaluated at the edges, e.g., 
 \begin{multline}
    \left[\frac{\sigma_t}{c}\left(\F - \frac{4}{3}\E u\right)\right]_i =
    \half\left[\frac{\sigma_{t,i,L}}{c}\left(\F\iL - \frac{4}{3}\E\iL u\iL\right)\right]\\
    + \half\left[\frac{\sigma_{t,i,R}}{c}\left(\F\iR - \frac{4}{3}\E\iR u\iR\right)\right]
    \pep
 \end{multline}.
-The Crank-Nicolson discretization of the velocity update equation is
-\momentumUpdateCN{n}{}{_i}{\lequ{hydromCNfull}}
-The Backward-Euler discretizations for the predictor steps are analagously defined.
+The Crank-Nicolson discretization of the velocity update equation for the Cycle 1
+corrector is
+\momentumUpdateCN{n}{2}{_i}{n+1/2}{\lequ{hydromCNfull}}
+The Backward-Euler discretization of the velocity update for the predictor stages are analogously defined.
 
-The lumped linear discontinuous discretization is used for the radiation equations, and
-thus inherently the update equations are uncoupled?. Thus, the hydrodynamic
-quantities need to be evaluated at cell edges. The stored solution values
-consist of the cell average unknowns for the conservative variables $[\rho,\rho u,E]$
-and their slopes $\Delta$, which were evaluated during a predictor step of the
-MUSCL-Hancock method, as given by Eq. \eqref{eq:muscl_slopes}. Evaluation of edge densities is achieved
-by applying the slopes as given by Eq. \eqref{eq:edge_hydro}:
+With the updated momentum, a kinetic energy can be defined, allowing for new internal
+energies to be obtained.  However, to simultaneously solve the radiation and material energy balance equations,
+hydrodynamic quantities need to be evaluated at cell edges. The slopes $\Delta_i$
+evaluated during the predictor step of the cycle, as given in Eq.~\eqref{eq:muscl_slopes}, are used
+to extrapolate edge quantities during that cycle.  Evaluation of edge
+densities is achieved by applying the slopes as given by Eq. \eqref{eq:edge_hydro}:
 \begin{equation}
    \rho\iL^k = \rho_i^k - \frac{\Delta\rho_i^n}{2} \pep
 \end{equation}
-Note that the slopes $\Delta$ are only updated in the MUSCL-Hancock predictor
-step. Evaluation of edge velocities is
-achieved based on the conservative variables $\rho$ and $\rho u$ at edges, e.g.,
+Evaluation of edge velocities is
+achieved based on $\rho$ and $\rho u$ at edges, e.g.,
 \begin{equation}
    u\iL^k = \frac{(\rho u)\iL^k}{\rho\iL^k}
           = \frac{(\rho u)_i^k - \frac{\Delta(\rho u)_i^n}{2}}
                  {\rho_i^k - \frac{\Delta\rho_i^n}{2}} \pep
 \end{equation}
 As explained in Section~\ref{sec:e_slopes}, internal energy unknowns, and thus material
-temperature, use slopes that are independent of the MUSCL-Hancock slopes.
-These internal energy slopes are denoted by $\delta e$. Evaluation
+temperature, use slopes that are independent of the MUSCL-Hancock slopes.  This modifies
+the $E^*$ terms within a cycle.
+These radiation internal energy slopes are denoted by $\delta e$. Evaluation
 of edge internal energies is thus performed as follows:
 \begin{equation}
    e\iL^k = e_i^k - \frac{\delta e_i^n}{2} \pep
 \end{equation}
-Again, quantities at $t^{n+1}$ still use old slopes $\delta e^n$. These
+ These
 slopes are updated at the end of each full MUSCL-Hancock step, i.e.,
 when the nonlinear iteration for the corrector step converges, the
 slopes $\delta e_i^{n+1}$ are computed from the converged edge internal energies:
@@ -1359,10 +1360,33 @@ slopes $\delta e_i^{n+1}$ are computed from the converged edge internal energies
    \delta e_i^{n+1} = e\iR^{k+1} - e\iL^{k+1} \pep
 \end{equation}
 
-The Crank-Nicolson discretization of the energy update equation is
+A lumped linear discontinuous (LLD) spatial discretization is employed
+for the S$_2$ equations.  The angular intensity
+unknowns are the left and right edge values $\psi_{i,L}^\pm$ and
+$\psi_{i,R}^\pm$, for each cell $i$.
+The LLD discretization is a standard discretization of the radiative transfer equations and can be found in literature~\cite{???}. 
+Standard upwinding is used to define face terms in the spatial gradient term for the radiation equations.  
+For reference, the radiation equation for
+the positive direction of flow, the left unknown, and the Crank-Nicolson stage is
+\begin{equation}
+\lequ{S2CNfullL}\begin{split}
+  \frac{1}{c}\frac{\psi\iL^{+,k+1}-\psi\iL^{+,n}}{\dt} = &
+  -\half\frac{2\mu^+}{h_i}\fn{\psi^{+,n}_i - \psi^{+,n}_{R,i-1}}
+  -\half\frac{2\mu^+}{h_i}\fn{\psi^{+,k+1}_i - \psi^{+,k+1}_{i-\half}}\\
+  &-\half\sigma_{t,i,L}^n\psi\iL^{+,n}
+   -\half\sigma_{t,i,L}^k\psi\iL^{+,k+1}\\
+  &+\half\frac{\sigma_{s,i,L}^n}{2}\phi\iL^n
+   +\half\frac{\sigma_{s,i,L}^k}{2}\phi\iL^{k+1}\\
+  &+\half\Q_{i,L}^{+,n}
+   +\half\Q_{i,L}^{+,k} \pep
+\end{split}
+\end{equation}
+where $\psi_{i}^+ = (\psi_{i,L}^+ + \psi_{i,R}^+)/2$.
+
+The Crank-Nicolson discretization of the material energy balance equation is
 \energyUpdateCN{n}{}{\iL}{\lequ{hydroECNfull}}
 The right edge equations are identical in form, obtained by replacing ``$L$'' with
-``$R$'' in the left edge equations.
+``$R$'' in the left edge equations.  The equations are uncoupled because of the lumped forms.
 The BDF2 discretization of the energy update equation is
 \energyUpdateBDFTwo{n-1}{n}{}{\iL}{\lequ{hydroEBDF2full}}
 The energy update to the 
@@ -1372,6 +1396,18 @@ must be linearized. The procedure for linearizing the thermal radiative transfer
 terms can be found in~\cite{morelldsn}.
 The final form of the energy update equation is a direct update to the
 edge internal energies $\{e\iL^{k+1},e\iR^{k+1}\}$.
+
+
+
+
+The radiation and material energy equations must be linearized to be solved.  We use
+a standard linearization where temperature dependent material properties are lagged
+~\cite{morelldsn}.  Upon linearization, the radiation unknowns can be solved for,
+followed by an update to the internal energy.  To conserve energy, the new edge total
+material energies, $E_{L,i}^{k+1}$ and $E_{R,i}^{k+1}$ are averaged to compute a new
+total energy.  Again, we are only interested in cell-averaged quanties for the
+hydrodynamic unknowns, so no modifications are made to the slopes. 
+
 
 \subsection{Using Radiation Internal Energy Slopes}
 \label{sec:e_slopes}
@@ -1423,25 +1459,6 @@ where all variables are at time $t^{n+1/2}$. The internal energy slopes are comp
 and stored for the next nonlinear solve.  For the first solve, the internal energy
 slopes are assumed zero.
 
-
-%-------------------------------------------------------------------------------
-\subsection{\texorpdfstring{S$_2$}{S-2} Equations}
-%-------------------------------------------------------------------------------
-
-A lumped linear discontinuous (LLD) spatial discretization is employed
-for the S$_2$ equations, so the angular flux
-unknowns are the left and right values $\Psi_{i,L}^\pm$ and
-$\Psi_{i,R}^\pm$ for each cell $i$. The spatially
-discretized equations result from integrating each half cell
-$(x_i-\frac{h_i}{2},x_i)$ and $(x_i,x_i+\frac{h_i}{2})$,
-where $x_i$ is the cell center, $h_i$ is the cell width,
-and the cell average and edge fluxes are defined as
-\begin{equation}
-  \Psi_i^\pm=\half\fn{\Psi_{i,L}^\pm + \Psi_{i,R}^\pm} \pec
-\end{equation}
-\begin{equation}
-  \Psi_{i+\half}^+=\Psi_{i,R}^+ \pec\qquad \Psi_{i+\half}^-=\Psi_{i+1,L}^- \pep
-\end{equation}
 
 %===============================================================================
 \subsubsection{Steady-State}\lsec{S2ssdisc}

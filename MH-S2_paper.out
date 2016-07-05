@@ -13,8 +13,7 @@
 \BOOKMARK [2][-]{subsection.B.1}{The MUSCL-Hancock Method}{appendix.B}% 13
 \BOOKMARK [2][-]{subsection.B.2}{The Iterative Radiation Solves}{appendix.B}% 14
 \BOOKMARK [2][-]{subsection.B.3}{Using Radiation Internal Energy Slopes}{appendix.B}% 15
-\BOOKMARK [2][-]{subsection.B.4}{S-2 Equations}{appendix.B}% 16
-\BOOKMARK [3][-]{subsubsection.B.4.1}{Steady-State}{subsection.B.4}% 17
-\BOOKMARK [3][-]{subsubsection.B.4.2}{Crank-Nicolson}{subsection.B.4}% 18
-\BOOKMARK [3][-]{subsubsection.B.4.3}{TR/BDF-2}{subsection.B.4}% 19
-\BOOKMARK [2][-]{subsection.B.5}{Linearization of Equations for General Temporal Discretization}{appendix.B}% 20
+\BOOKMARK [3][-]{subsubsection.B.3.1}{Steady-State}{subsection.B.3}% 16
+\BOOKMARK [3][-]{subsubsection.B.3.2}{Crank-Nicolson}{subsection.B.3}% 17
+\BOOKMARK [3][-]{subsubsection.B.3.3}{TR/BDF-2}{subsection.B.3}% 18
+\BOOKMARK [2][-]{subsection.B.4}{Linearization of Equations for General Temporal Discretization}{appendix.B}% 19
