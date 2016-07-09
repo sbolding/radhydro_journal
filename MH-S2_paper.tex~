@@ -547,11 +547,13 @@ $F_r$ is the radiation energy flux,
 F_r = \frac{2\pi}{\sqrt{3}}\fn{\psi^{+}-\psi^{-}}
 \lequ{flux}
 \ee
-and $F_{r,0}$ is an approximation to the comoving-frame flux,
+and 
 \be
 \lequ{F_nu_0}
-F_{r,0} = F_r-\frac{4}{3} E_r u \pep
+F_{r,0} = F_r-\frac{4}{3} E_r u 
 \ee
+is an approximation to the comoving-frame flux.
+
 Note that if we multiply Eqs.~(\requ{intp}) and \requ{intm} by $2\pi$ and sum them, we obtain the radiation energy equation:
 \begin{subequations}
 \be
@@ -612,7 +614,7 @@ accurate solutions will be obtained whenever the spatial variation of the soluti
 a consistent transport discretization scheme in a highly diffusive problem will not guarantee such behavior.  To ensure it, a consistent 
 discretization scheme must ``preserve'' the diffusion limit or ``be asymptotic preserving'' \cite{larsenmorel}.  A consistent discretization 
 that does not preserve the diffusion limit will only yield accurate results in highly diffusive problems if the spatial cells are small with 
-respect to a mean-free-path.  Since the diffusion length can a arbitarily large with respect to a mean-free-path, discretization schemes that 
+respect to a mean-free-path.  Since the diffusion length can a arbitrarily large with respect to a mean-free-path, discretization schemes that 
 are not asymptotic preserving can be prohibitively expensive to use in problems with highly diffusive regions due to the need to arbitrarily 
 over-resolve the solution. Thus preservation of the radiation diffusion limit is an essential property of any radiation-hydrodynamics scheme.  
 Although we only use an S$_2$ radiation treatment, our overall coupling and solution scheme is applicable to an S$_n$ treatment of arbitrary 
@@ -693,12 +695,17 @@ The second cycle proceeds as follows:
   \item Continue iteration until fluid momenta, internal energies, and radiation intensities converge.
   \end{enumerate}
 \end{enumerate}
-Note that the combination of Crank-Nicolson and BDF2 discretization results in a TR/BDF2 discretization over the full time step.  We use a standard Backward Euler discretziaton for the radiation solves during the predictor stages, which only require first-order accuracy.  One
-advantage to applying the full MHM over each half time step is that, if the time step size is being determined by the Courant limit, we can
-take twice the usual time step.  In this
-case, the cost of four radiation solves per time step per iteration is mitigated.  Alternatively, this algorithm could be viewed as a mixed,
-two-stage algorithm with alternating Crank-Nicolson and BDF2 solves over time steps (from this viewpoint, the time step sizes are governed
-by the standard Courant limit and there is only two radiation solves per time step).  
+Note that the combination of Crank-Nicolson and BDF2 discretization results in
+a TR/BDF2 discretization over the full time step.  We use a standard Backward
+Euler discretization for the radiation solves during the predictor stages,
+which only requires first-order accuracy.  One advantage to applying the full
+MHM over each half time step is that, if the time step size is being determined
+by the Courant limit, we can take twice the usual time step.  In this case, the
+cost of four radiation solves per time step per iteration is mitigated.
+Alternatively, this algorithm could be viewed as a mixed, two-stage algorithm
+with alternating Crank-Nicolson and BDF2 solves over time steps (from this
+viewpoint, the time step sizes are governed by the standard Courant limit and
+there is only two radiation solves per time step).  
 
 Our scheme is designed in such a way that, 
 if the radiation contributions to the hydrodynamics are negligible, the standard MHM solution is obtained over each half time step, and if the hydrodynamics contributions to 
