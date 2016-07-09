@@ -490,7 +490,7 @@ done for time integration of radiation diffusion and transport \cite{mcclarren,l
 dynamics \cite{toro}, research in second-order methods that couple the two has only recently been carried out \cite{lowrie,bates,dai}.  Because of the 
 dramatically different time scales of radiation diffusion/transport and fluid advection, RH calculations are usually treated using an implicit-explicit 
 (IMEX) scheme \cite{lowrie, bates,dai}.  In such algorithms, the fluid advection component, which changes at a much slower rate, is treated explicitly; 
-whereas, the radiation diffusion and radiation energy exchange terms are treated implicitly.  
+whereas the radiation transport and energy exchange terms are treated implicitly.  
 
 Sekora and Stone developed a scheme for RH that uses second-order Godunov methods to achieve second-order accuracy in space and time.  This scheme is 
 entirely explicit so that the time step is limited by the more rapidly varying radiation time scale \cite{sekora}.  Sekora's method is intended for the 
@@ -602,9 +602,9 @@ be solved within each time step in a discretization scheme.} implicit method tha
 actually a family of such schemes, but one member of the family can be shown to be optimal in a certain sense.  A simple version 
 of this method that is near-optimal was applied to the equations of radiative transfer in \cite{EM2011}, where it is shown to be 
 both L-stable, accurate, and efficient.  In \cite{EM2011}, the near-optimal TR/BDF2 scheme is used to solve the equations of 
-radiative transfer. It consists of a Crank-Nicolson step over half the time step and, using that solution, a BDF2 step over 
+radiative transfer. It consists of a Crank-Nicolson step over half the time step and a BDF2 step over 
 the remainder of the time step.  The TR/BDF2 method has a computational cost that is roughly equivalent to that of solving two 
-Crank-Nicolson systems sequentially over each time step.  Here we introduce an alternative form of 
+Crank-Nicolson systems sequentially over each time step.  Here we introduce an alternative form 
 of the simple TR/BDF2 method that is particularly useful for our purposes.  
 
   
@@ -662,7 +662,7 @@ spans the second half.  The first cycle proceeds as follows:
     \item Update the fluid momentum using lagged radiation momentum deposition
     \item Simultaneously solve the total energy equation and the S$_2$ equations for the new radiation intensities and updated fluid internal energies 
 		using an LDG discretization in space and a Backward Euler discretization in time.
-    \item Continue the iteration until the fluid momenta, internal energies, and radiation intensities converge.
+    \item Iterate until the fluid momenta, internal energies, and radiation intensities converge.
   \end{enumerate}
   \item Do a standard MHM corrector step.
   \item Initialize internal energy slopes to previous radiation solve values.
@@ -671,7 +671,7 @@ spans the second half.  The first cycle proceeds as follows:
     \item Update the fluid momentum using lagged radiation momentum deposition
     \item Simultaneously solve the total energy equation and the S$_2$ equations for the new radiation intensities and updated fluid internal energies 
 		using an LDG discretization in space and a Crank-Nicolson discretization in time.
-    \item Continue iteration until the fluid momenta, internal energies, and radiation intensities converge.
+    \item Iterate until the fluid momenta, internal energies, and radiation intensities converge.
   \end{enumerate}
 \end{enumerate}
 The second cycle proceeds as follows:
@@ -683,7 +683,7 @@ The second cycle proceeds as follows:
     \item Simultaneously solve the total energy equation and the S$_2$ equations for the new radiation 
         intensities and updated fluid internal energies using an LDG discretization 
     in space and a Backward Euler discretization in time.
-    \item Continue iteration until fluid momenta, internal energies, and radiation intensities converge.
+    \item Iterate until fluid momenta, internal energies, and radiation intensities converge.
   \end{enumerate}
   \item Do a standard MHM corrector step.
   \item Initialize internal energy slopes to previous radiation solve values.
@@ -695,6 +695,7 @@ The second cycle proceeds as follows:
   \item Continue iteration until fluid momenta, internal energies, and radiation intensities converge.
   \end{enumerate}
 \end{enumerate}
+<<<<<<< HEAD
 Note that the combination of Crank-Nicolson and BDF2 discretization results in
 a TR/BDF2 discretization over the full time step.  We use a standard Backward
 Euler discretization for the radiation solves during the predictor stages,
@@ -706,6 +707,16 @@ Alternatively, this algorithm could be viewed as a mixed, two-stage algorithm
 with alternating Crank-Nicolson and BDF2 solves over time steps (from this
 viewpoint, the time step sizes are governed by the standard Courant limit and
 there is only two radiation solves per time step).  
+=======
+Note that the combination of Crank-Nicolson and BDF2 discretization results in a TR/BDF2
+discretization over the full time step.  We use a standard Backward Euler discretization
+for the radiation solves during the predictor stages, which is first-order accurate.  One
+advantage to applying the full MHM over each half time step is that, if the time step size is being determined by the Courant limit, we can
+take twice the usual time step.  In this
+case, the cost of four radiation solves per time step per iteration is mitigated.  Alternatively, this algorithm could be viewed as a mixed,
+two-stage algorithm with alternating Crank-Nicolson and BDF2 solves over time steps (from this viewpoint, the time step sizes are governed
+by the standard Courant limit and there is only two radiation solves per time step).  
+>>>>>>> a301c31ed9cf0c4d77779d9e4bee945d485bbc54
 
 Our scheme is designed in such a way that, 
 if the radiation contributions to the hydrodynamics are negligible, the standard MHM solution is obtained over each half time step, and if the hydrodynamics contributions to 
@@ -715,12 +726,12 @@ The radiation momentum deposition is usually small in the high energy density la
 momentum deposition is adequate.  In problems 
 with stronger radiation momentum deposition, a better iteration scheme might be required. 
 
-The explicit hydrodynamic solver imposes a limit on the maximum time step size our
+The explicit hydrodynamic steps imposes a limit on the maximum time step size our
 algorithm can take.
 Using a standard estimate of numerical wave speeds~\cite{toro}, our time step size for the $n$-th time
 step is estimated as
 \begin{equation}\label{eq:cfl}
-    \Delta t^n = \max_{i} 2\,\text{CFL} \max_{i}\left(|u_i| + |a_{i,s}|\right))
+    \Delta t^n = 2\,\text{CFL} \max_{i}\left(|u_i| + |a_{i,s}|\right))
 \end{equation}
 where CFL is a chosen parameter, $\Delta t$ is the full time step, and $u_i$ and $a_{i,s}$ are the fluid velocity
 and sound speed for each cell $i$.
@@ -732,21 +743,20 @@ Of importance to obtaining the diffusion limit is using the correct initial inte
 S$_2$ intensities and the updated internal energies.  Each MHM step provides slopes for the mass densities, the fluid momentum densities, 
 and the fluid total energies.  From the mass and fluid momentum slopes one can compute kinetic energy slopes.  These slopes are used 
 together with the fluid internal energy slopes determined from the previous-cycle radiation/internal energy solve to initialize the left and right 
-fluid total energies. A detailed description of how we modify the internal energy slopes can be found in Section~\ref{sec:e_slopes}.
+fluid total energies. A detailed description of how we modify the internal energy slopes can be found in~\ref{sec:e_slopes}.
 
 \subsection{Slope limiting}
 McClarren and Lowrie \cite{mclow2008} investigated the impact of slope limiting on asymptotic-preserving methods for hyperbolic systems with stiff 
 relaxation terms that reduce to a parabolic description when relaxation dominates.  This work is relevant to our radiation-hydrodynamics method. 
 They found that a slope limiter must not introduce discontinuities at cell edges if asymptotic preservation is to be maintained.  The minmod limiter 
 has this property and is thus not suitable for radiation-hydrodynamics in general.  However, the double minmod and the ``sawtooth-free'' limiter 
-introduced by Lowrie do not have this property.  Here we use the double minmod limiter.   
+introduced do not have this property.  Here we use the double minmod limiter.   
 
 
 \subsection{Alternate Form of TBDF2 Method}
 \label{sec:Alternate}
-Consider a partial differential equation of the form $\dxdy{f}{t} = \mA f(t)$.  We have derived the following non-standard form of the TR/BDF2
-solution method to facilitate determining the form 
-of the radiation coupling terms in the hydrodynamics equations:
+  We have derived a non-standard form of the TR/BDF2
+method to facilitate radiation coupling terms in the hydrodynamics equations:
 \be
 \frac{2\fn{f^{n+1/2}-f^{n}}}{\Delta t} = \half (\mA f)^{n+1/2} + \half (\mA f)^{n} \pec
 \lequ{tbdf21}
@@ -772,6 +782,8 @@ the predictor stages, a standard Backward Euler discretization is used, e.g.,
 Explicitly, Eq. \requ{be1} is used for the radiation/internal energy during the first and second 
 cycle predictor steps.  Eq. and the first cycle corrector step.  Eq. \requ{tbdf22} is used for the radiation/internal energy during the 
 second cycle corrector step.  This ensures total energy conservation over each time step.
+A
+NEED TO DISCUSS BC FOR HYDRO AND PROBABLY RADIATION 
 
 %\textit{Cycle 1}
 %\begin{enumerate}
@@ -826,7 +838,7 @@ equations are satisfied analytically.  We compare our numerical solution to the 
 solution in space and time to examine to determine the order-accuracy of the algorithm.  
 Two MMS problems, one for the streaming limit and one for the equilibrium diffusion limit, were taken from \cite{mcclarren2}.  These
 solutions are composed of a combination of trigonometric functions with periodic boundary conditions.  The solutions in~\cite{mcclarren2}
-were modified to account for our S$_2$ model versus the P$_1$ radiation model. Additionally, our algorithm was implemented in a
+were used, with sources modified to account for our S$_2$ model versus the P$_1$ radiation model. Additionally, our algorithm was implemented in a
 dimensionalized code, whereas the test problems are nondimensional. 
 
 An extraneous source is added
