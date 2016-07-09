@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.28)  5 JUL 2016 10:29
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.28)  7 JUL 2016 10:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -424,7 +424,7 @@ ynamics model
 [7] [8] [9]
 
 LaTeX Warning: Reference `radhydro_system' on page 10 undefined on input line 8
-26.
+29.
 
 [10] [11]
 \openout4 = `MH-S2_paper.fff'.
@@ -432,136 +432,136 @@ LaTeX Warning: Reference `radhydro_system' on page 10 undefined on input line 8
  (MH-S2_paper.fff) [12]
 
 Package natbib Warning: Citation `jim???' on page 13 undefined on input line 10
-02.
+05.
 
 
-Package natbib Warning: Citation `???' on page 13 undefined on input line 1008.
+Package natbib Warning: Citation `???' on page 13 undefined on input line 1011.
 
 
 [13]
 
 LaTeX Warning: Reference `tab:mach3.0_shock_IC' on page 14 undefined on input l
-ine 1018.
+ine 1021.
 
 \openout5 = `MH-S2_paper.ttt'.
 
 (MH-S2_paper.ttt) [14] (./MH-S2_paper.bbl [15] [16]
 Missing character: There is no – in font cmr12!
- [17]) [18]
+) [17]
 
-LaTeX Warning: Reference `' on page 19 undefined on input line 1293.
+LaTeX Warning: Reference `' on page 18 undefined on input line 1296.
 
-[19
+[18
 
 ]
-Overfull \hbox (6.25294pt too wide) in paragraph at lines 1296--1303
+Overfull \hbox (6.25294pt too wide) in paragraph at lines 1299--1306
 \OT1/cmr/m/n/12 where the fluxes are com-puted us-ing an HLLC ap-prox-i-mate Ri
 e-mann solver [[]].
  []
 
 
-Overfull \hbox (18.66386pt too wide) in paragraph at lines 1322--1322
+Overfull \hbox (18.66386pt too wide) in paragraph at lines 1325--1325
 [] 
  []
 
-[20]
-Overfull \hbox (56.42815pt too wide) detected at line 1335
+[19]
+Overfull \hbox (56.42815pt too wide) detected at line 1338
 [][] \OT1/cmr/m/n/12 = [] [][] + [] [][]  \OML/cmm/m/it/12 :
  []
 
+[20]
+
+Package natbib Warning: Citation `???' on page 21 undefined on input line 1379.
+
+
+
+Package natbib Warning: Citation `???' on page 21 undefined on input line 1381.
+
+
 [21]
+Overfull \hbox (44.29353pt too wide) in paragraph at lines 1413--1413
+[] 
+ []
 
-Package natbib Warning: Citation `???' on page 22 undefined on input line 1376.
 
-
-
-Package natbib Warning: Citation `???' on page 22 undefined on input line 1378.
-
+Overfull \hbox (32.27629pt too wide) in paragraph at lines 1415--1415
+[] 
+ []
 
 [22]
-Overfull \hbox (44.29353pt too wide) in paragraph at lines 1410--1410
-[] 
- []
-
-
-Overfull \hbox (32.27629pt too wide) in paragraph at lines 1412--1412
-[] 
- []
-
-[23]
 
 Package natbib Warning: There were undefined citations.
 
-AED endfloat: Processing end Figures and Tables [24] (./MH-S2_paper.fff
-<figures/MMS_diffusion_limit_e_convergence.pdf, id=382, 524.2586pt x 402.00188p
+AED endfloat: Processing end Figures and Tables [23] (./MH-S2_paper.fff
+<figures/MMS_diffusion_limit_e_convergence.pdf, id=378, 524.2586pt x 402.00188p
 t>
 File: figures/MMS_diffusion_limit_e_convergence.pdf Graphic file (type pdf)
  <use figures/MMS_diffusion_limit_e_convergence.pdf>
 Package pdftex.def Info: figures/MMS_diffusion_limit_e_convergence.pdf used on 
 input line 3.
 (pdftex.def)             Requested size: 390.0pt x 299.05318pt.
- [25
+ [24
 
 
  <./figures/MMS_diffusion_limit_e_convergence.pdf>]
-<figures/MMS_diffusion_limit_rhou_convergence.pdf, id=454, 524.2586pt x 402.001
+<figures/MMS_diffusion_limit_rhou_convergence.pdf, id=449, 524.2586pt x 402.001
 88pt>
 File: figures/MMS_diffusion_limit_rhou_convergence.pdf Graphic file (type pdf)
  <use figures/MMS_diffusion_limit_rhou_convergence.pdf>
 Package pdftex.def Info: figures/MMS_diffusion_limit_rhou_convergence.pdf used 
 on input line 11.
 (pdftex.def)             Requested size: 390.0pt x 299.05318pt.
- [26
+ [25
 
  <./figures/MMS_diffusion_limit_rhou_convergence.pdf>]
-<figures/MMS_streaming_e_convergence.pdf, id=520, 524.2586pt x 402.00188pt>
+<figures/MMS_streaming_e_convergence.pdf, id=516, 524.2586pt x 402.00188pt>
 File: figures/MMS_streaming_e_convergence.pdf Graphic file (type pdf)
 
 <use figures/MMS_streaming_e_convergence.pdf>
 Package pdftex.def Info: figures/MMS_streaming_e_convergence.pdf used on input 
 line 19.
 (pdftex.def)             Requested size: 390.0pt x 299.05318pt.
- [27
+ [26
 
  <./figures/MMS_streaming_e_convergence.pdf>]
-<figures/MMS_streaming_rhou_convergence.pdf, id=585, 525.76424pt x 402.00188pt>
+<figures/MMS_streaming_rhou_convergence.pdf, id=581, 525.76424pt x 402.00188pt>
 File: figures/MMS_streaming_rhou_convergence.pdf Graphic file (type pdf)
 <use figures/MMS_streaming_rhou_convergence.pdf>
 Package pdftex.def Info: figures/MMS_streaming_rhou_convergence.pdf used on inp
 ut line 26.
 (pdftex.def)             Requested size: 390.0pt x 298.20055pt.
- [28
+ [27
 
  <./figures/MMS_streaming_rhou_convergence.pdf>]
-<figures/radshock_mach_1_2.pdf, id=652, 578.16pt x 433.62pt>
+<figures/radshock_mach_1_2.pdf, id=648, 578.16pt x 433.62pt>
 File: figures/radshock_mach_1_2.pdf Graphic file (type pdf)
 
 <use figures/radshock_mach_1_2.pdf>
 Package pdftex.def Info: figures/radshock_mach_1_2.pdf used on input line 33.
 (pdftex.def)             Requested size: 390.0pt x 292.4956pt.
- [29
+ [28
 
  <./figures/radshock_mach_1_2.pdf>]
-<figures/radshock_mach_3_0.pdf, id=681, 578.16pt x 433.62pt>
+<figures/radshock_mach_3_0.pdf, id=677, 578.16pt x 433.62pt>
 File: figures/radshock_mach_3_0.pdf Graphic file (type pdf)
 
 <use figures/radshock_mach_3_0.pdf>
 Package pdftex.def Info: figures/radshock_mach_3_0.pdf used on input line 40.
 (pdftex.def)             Requested size: 390.0pt x 292.4956pt.
- [30
+ [29
 
  <./figures/radshock_mach_3_0.pdf>])
-(./MH-S2_paper.ttt [31
+(./MH-S2_paper.ttt [30
 
 
-] [32
+] [31
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1611.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1611.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1614.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1614.
  (./MH-S2_paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1611.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1611.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1614.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1614.
 
 Package rerunfilecheck Info: File `MH-S2_paper.out' has not changed.
 (rerunfilecheck)             Checksum: 6C9D7150346F7ED2D008A991FDAD2402;1209.
@@ -571,8 +571,8 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 8731 strings out of 493304
- 121926 string characters out of 6139871
+ 8730 strings out of 493304
+ 121919 string characters out of 6139871
  224740 words of memory out of 5000000
  11902 multiletter control sequences out of 15000+600000
  13870 words of font info for 52 fonts, out of 8000000 for 9000
@@ -598,10 +598,10 @@ ts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmti7.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
 ic/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/h
 elvetic/uhvr8a.pfb>
-Output written on MH-S2_paper.pdf (32 pages, 503755 bytes).
+Output written on MH-S2_paper.pdf (31 pages, 503086 bytes).
 PDF statistics:
- 809 PDF objects out of 1000 (max. 8388607)
- 593 compressed objects within 6 object streams
- 164 named destinations out of 1000 (max. 500000)
+ 805 PDF objects out of 1000 (max. 8388607)
+ 590 compressed objects within 6 object streams
+ 163 named destinations out of 1000 (max. 500000)
  159 words of extra memory for PDF output out of 10000 (max. 10000000)
 
