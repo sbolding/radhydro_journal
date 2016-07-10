@@ -9,8 +9,9 @@
 \BOOKMARK [1][-]{section.4}{Results for Radiation-Hydrodynamic Shocks}{}% 9
 \BOOKMARK [1][-]{section.5}{Conclusions and Future Work}{}% 10
 \BOOKMARK [1][-]{appendix.A}{The Time-Discretized Equations}{}% 11
-\BOOKMARK [2][-]{subsection.A.1}{The MUSCL-Hancock Method}{appendix.A}% 12
-\BOOKMARK [2][-]{subsection.A.2}{The Iterative Radiation Solves}{appendix.A}% 13
-\BOOKMARK [3][-]{subsubsection.A.2.1}{Velocity Update Equation}{subsection.A.2}% 14
-\BOOKMARK [3][-]{subsubsection.A.2.2}{Radiation and Material Energy Equations}{subsection.A.2}% 15
-\BOOKMARK [2][-]{subsection.A.3}{Using Radiation Internal Energy Slopes}{appendix.A}% 16
+\BOOKMARK [2][-]{subsection.A.1}{Notation for Edge Values}{appendix.A}% 12
+\BOOKMARK [2][-]{subsection.A.2}{The MUSCL-Hancock Method}{appendix.A}% 13
+\BOOKMARK [2][-]{subsection.A.3}{The Iterative Radiation Solves}{appendix.A}% 14
+\BOOKMARK [3][-]{subsubsection.A.3.1}{Momentum Update Equation}{subsection.A.3}% 15
+\BOOKMARK [3][-]{subsubsection.A.3.2}{Radiation and Material Energy Equations}{subsection.A.3}% 16
+\BOOKMARK [2][-]{subsection.A.4}{Using Radiation Internal Energy Slopes}{appendix.A}% 17

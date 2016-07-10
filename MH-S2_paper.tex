@@ -489,8 +489,8 @@ Second-order accuracy in time for radiation-hydrodynamics calculations is curren
 done for time integration of radiation diffusion and transport \cite{mcclarren,lowrie2,knoll,olson,axelrod,stone,brown}, and likewise for fluid 
 dynamics \cite{toro}, research in second-order methods that couple the two has only recently been carried out \cite{lowrie,bates,dai}.  Because of the 
 dramatically different time scales of radiation diffusion/transport and fluid advection, RH calculations are usually treated using an implicit-explicit 
-(IMEX) scheme \cite{lowrie, bates,dai}.  In such algorithms, the fluid advection component, which changes at a much slower rate, is treated explicitly; 
-whereas the radiation transport and energy exchange terms are treated implicitly.  
+(IMEX) scheme \cite{lowrie, bates,dai}.  In such algorithms, the fluid advection component is treated explicitly, whereas the radiation transport and energy exchange
+terms are treated implicitly; these time discretizations are appropriate for the behavior and time scales of each physics.
 
 Sekora and Stone developed a scheme for RH that uses second-order Godunov methods to achieve second-order accuracy in space and time.  This scheme is 
 entirely explicit so that the time step is limited by the more rapidly varying radiation time scale \cite{sekora}.  Sekora's method is intended for the 
@@ -711,7 +711,7 @@ Our scheme is designed in such a way that,
 if the radiation contributions to the hydrodynamics are negligible, the standard MHM solution is obtained over each half time step, and if the hydrodynamics contributions to 
 the radiation diffusion are negligible, the standard TR/BDF2 solution for radiative transfer is obtained over the full time step.  The process of iterating 
 between the radiation momentum deposition to the fluid and the nonlinear radiation/internal energy solves is necessary to conserve total momentum.  
-The radiation momentum deposition is usually small in the high energy density laboratory physics (HEDLP) regime, so a Picard-type iteration for the
+The radiation momentum deposition is usually small in the high energy density laboratory physics  regime, so a Picard-type iteration for the
 momentum deposition is adequate.  In problems 
 with stronger radiation momentum deposition, a better iteration scheme might be required. 
 
@@ -739,13 +739,18 @@ McClarren and Lowrie \cite{mclow2008} investigated the impact of slope limiting 
 relaxation terms that reduce to a parabolic description when relaxation dominates.  This work is relevant to our radiation-hydrodynamics method. 
 They found that a slope limiter must not introduce discontinuities at cell edges if asymptotic preservation is to be maintained.  The minmod limiter 
 has this property and is thus not suitable for radiation-hydrodynamics in general.  However, the double minmod and the ``sawtooth-free'' limiter 
-introduced do not have this property.  Here we use the double minmod limiter.   
+introduced in~\cite{mclow2008} do not have this property.  Here we use the double minmod limiter.   
 
 
 \subsection{Alternate Form of TBDF2 Method}
 \label{sec:Alternate}
-  We have derived a non-standard form of the TR/BDF2
-method to facilitate radiation coupling terms in the hydrodynamics equations:
+  We have derived a non-standard form of the TR/BDF2 time differencing scheme 
+to facilitate determining the form of radiation coupling terms in the hydrodynamics equations.  Applying
+this difference scheme to
+\begin{equation}
+    \dxdy{f}{t} = \mA f(t)
+\end{equation}
+we obtain
 \be
 \frac{2\fn{f^{n+1/2}-f^{n}}}{\Delta t} = \half (\mA f)^{n+1/2} + \half (\mA f)^{n} \pec
 \lequ{tbdf21}
@@ -762,16 +767,8 @@ The usual expression that \equ{tbdf22} replaces is
 (\mA f)^{n+1} \pec
 \lequ{tbdf23}
 \ee
-which is clearly not a conservation statement. The MHM over each half-time step require a first-order accurate predictor stage. For the radiation coupling terms during
-the predictor stages, a standard Backward Euler discretization is used, e.g.,
-\be
-\frac{2\fn{f^{n+1/2}-f^{n}}}{\Delta t} = (\mA f)^{n+1/2} \pec
-\lequ{be1}
-\ee.
-Explicitly, Eq. \requ{be1} is used for the radiation/internal energy during the first and second 
-cycle predictor steps.  Eq. and the first cycle corrector step.  Eq. \requ{tbdf22} is used for the radiation/internal energy during the 
-second cycle corrector step.  This ensures total energy conservation over each time step.
-A
+which is clearly not a conservation statement. Equation~\eqref{eq:tbdf22} is derived from Eq.~\eqref{eq:tbdf21} and Eq.~\eqref{eq:tbdf23}.
+
 NEED TO DISCUSS BC FOR HYDRO AND PROBABLY RADIATION 
 
 %\textit{Cycle 1}
@@ -829,12 +826,12 @@ Two MMS problems, one for the streaming limit and one for the equilibrium diffus
 solutions are composed of a combination of trigonometric functions with periodic boundary conditions.  The solutions in~\cite{mcclarren2}
 were used, with sources modified to account for our S$_2$ model versus the P$_1$ radiation model. Additionally, our algorithm was implemented in a
 dimensionalized code, whereas the test problems are nondimensional. 
+ADD MORELS COMMENT FROM HANDWRITTEN NOTES
 
 An extraneous source is added
-to each equation in Eq.~\eqref{radhydro_system} to test the MMS problems. The analytic,
+to each equation of Eq.~\eqref{eq:radhydro_system} to test the MMS problems. The analytic,
 dimensionalized forms of  sources are determined from the resulting equations using symbolic computations, based on the chosen functional solution.
-These sources are then included in the discretized equations by evaluating spatial moments of the sources with high-accuracy quadrature.  The sources are
-evaluated with the same time discretization of the appropriate step in the algorithm.  
+These sources are then included in the discretized equations by evaluating spatial moments of the sources with high-accuracy quadrature. 
 We quantify the error between exact and numerical solutions using a relative L$_2$ norm of cell-averaged quantities, defined as
 \begin{equation}
     \left.  L^{\mathrm{rel}}_2(u) = \sqrt{\sum\limits_i^{N_x} \left(u_i - u_i^{\text{ex}} \right)^2 \Delta x_i} \middle / 
@@ -895,7 +892,7 @@ For the diffusion limit problem, the following dimensionalized solutions were pr
    \end{equation}
 \end{subequations}
 where $\alpha$ and $M$ are constants.  The factor $M/2$ was introduced to ensure
-that the material velocity is below sound speed.
+that the material velocity is below the material sound speed.
 Using the perfect gas equation of state relations (Eq.~\eqref{eq:mattemp} and~\eqref{eq:pressure}), an expression for material temperature $T$ can be derived.
  The dimensionalized radiation energy density and flux are the following in the equilibrium diffusion limit:
 \begin{subequations}
@@ -908,7 +905,7 @@ Using the perfect gas equation of state relations (Eq.~\eqref{eq:mattemp} and~\e
 \pec \end{equation} 
 \end{subequations}
 Eqs.~\eqref{eq:Erad} and~\eqref{eq:flux} are used to derive corresponding expressions for $\psi^+$ and $\psi^-$ from the above expressions.
-Symbolic manipulation can then be used to derive the analytic MMS sources for each equation by substituting the solution into the left side
+Symbolic computations can then be used to derive the analytic MMS sources for each equation by substituting the solution into the left side
 of Eq.~\eqref{eq:radhydro_system}.
 
 Following~\cite{mcclarren2}, we explore convergence of the solution as the cell optical thickness $\tau=\sigma \Delta x$ and
@@ -919,16 +916,17 @@ $\alpha=0.5$, $M=0.9$, $\mathbb{P}=0.001$,
 and $\gamma=\frac{5}{3}$.    It is noted that because of how we have dimensionalized the solutions, the magnitude of reference parameters, and
 thus the solution, must change as $\mathbb{C}$ is modified.  However, since our error norm is defined relative to the solution
 norm, we observe the proper
-convergence order. The simulation end time is $2\pi$ sh. The initial $\Delta t$ is
-chosen based on a Courant condition of 0.6 to ensure stability
+convergence order. The simulation end time is $2\pi$ sh (1 sh = 10$^{-8}$ s). The $\Delta t$ for the coarsest mesh spacing is
+chosen based on a Courant condition, given by Eq.~\eqref{eq:cfl}, and CFL=0.6.   This ensures stability
 of the MHM algorithm. We
-then uniformly refine in space and time to demonstrate convergence in the two variables.  It is worth noting that our initial time step size is chosen based on
-the Courant condition given in Eq.~\eqref{eq:cfl}, which is based on material velocity speeds.  This is a much larger and more physically reasonable
+then uniformly refine in space and time for each following simulation to demonstrate convergence in the two variables.  It is worth noting that
+our first time step size is chosen based on the Courant condition given in Eq.~\eqref{eq:cfl}, which is based on material velocity speeds. 
+This is a much larger and more physically reasonable
 time step size for an IMEX scheme than those in~\cite{mcclarren2}, which based the
-Courant condition on a non-dimensional speed of light.   The nonlinear
-convergence of each implicit solve is set to 1.E-10 for all remaining simulations.
+Courant condition on a non-dimensional speed of light.   The relative, iterative
+convergence tolerance of each nonlinear implicit solve is 1.E-10 for all simulations.
 
-Figures~\ref{fig:diff_limit_e} and~\ref{fig:diff_limit_mom} plots the error convergence as a function of $\Delta x$ and $\Delta t$ for
+Figures~\ref{fig:diff_limit_e} and~\ref{fig:diff_limit_mom} depict the error convergence as a function of $\Delta x$ and $\Delta t$ for
 internal energy and momentum, respectively.  As demonstrated, the algorithm is second-order accurate in space and time for the equilibrium diffusion limit problem.  Although not plotted here,
 second-order convergence
 was verified for $\E$, $\F$, and the other conserved and primitive hydrodynamic unknowns.
@@ -976,14 +974,14 @@ by a factor of $\mathbb{C}$.  This solution is also defined to mimic an isotherm
 varies rapidly enough that changes in the fluid temperature are suppressed. In this case, the exact solution for the
 fluid temperature is a constant.
 
-All problem parameters are fixed and then the  space and time discretizations are refined uniformly.  The problem is fully defined
-with the parameters $\mathbb{C}=100$, $\mathbb{P}=0.1$, $\rho_{infty}=1$ g cm$^{-3}$, $\gamma=5/3$, $\sigma_a=\sigma_t=1$ cm$^{-1}$,
+All problem parameters are fixed and then the  space and time discretizations are refined uniformly, for each simulation.  The problem is fully defined
+with the parameters $\mathbb{C}=100$, $\mathbb{P}=0.1$, $\rho_{infty}=1$ g cm$^{-3}$, $\gamma=5/3$, $\sigma_a=\sigma_t=u$ cm$^{-1}$,
 $\alpha=0.5$ and $M=0.9$.  The relatively high value of $\mathbb{P}$ and low value of $\mathbb{C}$ produce a more
 difficult problem to simulate, requiring convergence of the implicit solves. As before, the initial $\Delta
-t$ is based on the Courant condition of 0.6. The simulation is performed until the initial radiation have advanced two periods, i.e., until
+t$ is based on a CFL of 0.6. The simulation is performed until the initial radiation have advanced two periods, i.e., until
 $t=4\pi/10$.
 
-Figures~\ref{fig:streaming_e} and~\ref{fig:streaming_mom} plots the error convergence as a function of $\Delta x$ and $\Delta t$ for
+Figures~\ref{fig:streaming_e} and~\ref{fig:streaming_mom} depict the error convergence as a function of $\Delta x$ and $\Delta t$ for
 internal energy and momentum, respectively.  
 The convergence in the streaming
 limit is closer to 1.8 for the momentum variable. A finer time step size may be required to resolve the radiation unknowns more accurately than the
@@ -1255,6 +1253,13 @@ operator-splitting.  Within the predictor and corrector stage of each cycle, the
 We will use a $*$ superscript to denote the intermediate operator-splitting states of variables resulting
 from the hydrodynamic steps. 
 
+\subsection{Notation for Edge Values}
+
+Here, we define our notation to differentiate between interior-edge unknowns and true face unknowns.  Within a cell, interior-edge unknowns
+are used to represent a linear solution, wheras true face values are needed in integration of spatial derivatives.  For example, the Riemann solver used
+in corrector steps produces a true face value for the flux, where as the predictor step uses interior-edge unknowns to estimate the
+flux within a cell.  For the radiation balance equations, the interior-edge unknowns are used to define face unknowns depending on direction of travel.
+
 
 %===============================================================================
 %===============================================================================
@@ -1306,8 +1311,10 @@ where the fluxes are computed using an HLLC approximate Riemann solver~\cite{tor
 each edge, the Riemann solver uses linearly extrapolated values, based on lagged
 hydrodynamic slopes.  For example, at the edge
 $x_{i-\half}$, the Riemann solver computes fluxes with the states
-$\H_{i}^{n+1/4}-\frac{\Delta_i^n}{2}$ and $\H_{i-1}^{n+\fourth}+\frac{\Delta_{i-1}^n}{2}$.
-The predictor and corrector steps for the second cycle proceed in the same manner.
+$\H_{i}^{n+1/4}-\frac{\Delta_i^n}{2}$ and $\H_{i-1}^{n+\fourth}+\frac{\Delta_{i-1}^n}{2}$.  At a boundary,
+the Riemann solver uses either a specified far-stream state or a predicted state from the previous stage for periodic boundary conditions.  For instance,
+at the edge $x_{1/2}$ the two states are $\H_{1}^{n+1/4} - \frac{\Delta_1^n}{2}$ and $\H_{N}^{n+\fourth}+\frac{\Delta_{N}^{n}}{2}$, for periodic 
+boundary conditions.
 
 \subsection{The Iterative Radiation Solves}
 
@@ -1318,7 +1325,7 @@ Newton step is taken for the radiative transfer terms.  The iterations are repea
 convergence.  The equations below are for the $k+1$-st iteration within
 each stage of the algorithm. 
 
-\subsubsection{Velocity Update Equation}
+\subsubsection{Momentum Update Equation}
 
 During the iteration loop, a lagged estimates of the radiation unknowns are used to compute a new
 material velocity.  The discretization of the radiation equations produces a linear
@@ -1328,8 +1335,8 @@ velocity.
 The BDF2 discretization of the velocity update equation for the cycle 2 corrector
 step is
 \momentumUpdateBDFTwo{n}{n+1/2}{2}{_i}{n+1}{\lequ{hydromBDF2full}}
-where the $*$ terms came from the MHM corrector stage.  The cell-averaged terms on the right hand side are are computed by taking the linear
-average of the corresponding expressions evaluated at the edges, e.g., 
+where the $*$ terms come from the MHM corrector stage.  The cell-averaged terms on the right hand side are are computed by taking the linear
+average of the corresponding expressions evaluated at the interior edges, e.g., 
 \begin{multline}
    \left[\frac{\sigma_t}{c}\left(\F - \frac{4}{3}\E u\right)\right]_i =
    \half\left[\frac{\sigma_{t,i,L}}{c}\left(\F\iL - \frac{4}{3}\E\iL u\iL\right)\right]\\
@@ -1349,7 +1356,7 @@ The radiation and material energy equations must be linearized to be solved.  We
 a standard Newton linearization, with temperature dependent material properties lagged one
 iteration~\cite{morelldsn}.  Upon linearization, the radiation unknowns can be directly
 determined, followed by solution for new internal energies.  The linearization process is
-tedious but straight forward.  For brevity, we provide the non-linear equations here.
+tedious but straightforward.  For brevity, we provide the non-linear equations here.
 
 With the updated momentum, a kinetic energy can be defined, allowing for new internal
 energies to be obtained.  However, to simultaneously solve the radiation and material energy balance equations,
@@ -1381,11 +1388,11 @@ when the nonlinear iteration for the corrector step have been converged.
 With hydrodynamic variables defined, discretized equations for the radiation and material
 energy balance equations can be defined.
 A lumped linear discontinuous (LLDG) spatial discretization is employed
-for the S$_2$ equations~\cite{???}.  The lumping of the equations produces strictly
-positive intensities in
-1D~\cite{???}. Standard upwinding is used to define face terms in the spatial gradient term for the radiation equations.  
+for the S$_2$ equations~\cite{???}.  The lumping of the equations is strongly resistant 
+to negative solutions in 1D~\cite{???}. Standard upwinding is used to define true face intensities in terms of interior-edge
+intensities that define the linear dependence of the intensity within a cell.
 For reference, the radiation equation for
-the positive direction of flow, the left unknown, and the first Backward-Euler stage is
+the positive direction of flow, the left interior-edge unknown, and the first Backward-Euler stage is
 \begin{equation}
 \lequ{S2BEfullL}\begin{split}
   \frac{4}{c}\frac{\psi\iL^{+,n+1/4,k+1}-\psi\iL^{+,n}}{\dt} = &
