@@ -43,6 +43,8 @@
 %% or use the epsfig package if you prefer to use the old commands
 %% \usepackage{epsfig}
 
+\graphicspath{{figures/}}
+
 %% The amssymb package provides various useful mathematical symbols
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -823,10 +825,9 @@ With MMS, we assume a functional form of the exact solution and  derive extraneo
 equations are satisfied analytically.  We compare our numerical solution to the MMS problem to the exact solution as we refine the
 solution in space and time to examine to determine the order-accuracy of the algorithm.  
 Two MMS problems, one for the streaming limit and one for the equilibrium diffusion limit, were taken from \cite{mcclarren2}.  These
-solutions are composed of a combination of trigonometric functions with periodic boundary conditions.  The solutions in~\cite{mcclarren2}
-were used, with sources modified to account for our S$_2$ model versus the P$_1$ radiation model. Additionally, our algorithm was implemented in a
+solutions are composed of a combination of trigonometric functions with periodic boundary conditions.  The sources were re-expressed in
+to account for our  S$_2$ model versus the P$_1$ radiation model. Additionally, our algorithm was implemented in a
 dimensionalized code, whereas the test problems are nondimensional. 
-ADD MORELS COMMENT FROM HANDWRITTEN NOTES
 
 An extraneous source is added
 to each equation of Eq.~\eqref{eq:radhydro_system} to test the MMS problems. The analytic,
@@ -934,13 +935,13 @@ was verified for $\E$, $\F$, and the other conserved and primitive hydrodynamic 
 \begin{figure}[ht]
    \centering
    \includegraphics[width=\textwidth]{figures/MMS_diffusion_limit_e_convergence.pdf}
-   \caption{Convergence of internal energy $e$ in space for the equilibrium diffusion limit MMS problem}
+   \caption{Convergence in space of internal energy $e$ for the equilibrium diffusion limit MMS problem}
    \label{fig:diff_limit_e}
 \end{figure}
 \begin{figure}[ht]
    \centering
    \includegraphics[width=\textwidth]{figures/MMS_diffusion_limit_rhou_convergence.pdf}
-   \caption{Convergence of momentum $\rho u$ in time for the equilibrium diffusion limit MMS problem}
+   \caption{Convergence in time of momentum $\rho u$ for the equilibrium diffusion limit MMS problem}
    \label{fig:diff_limit_mom}
 \end{figure}
 
@@ -990,12 +991,12 @@ Courant condition requires. The time step size may not yet be in the asymptotica
 \begin{figure}[ht]
    \centering
    \includegraphics[width=\textwidth]{figures/MMS_streaming_e_convergence.pdf}
-   \caption{\label{fig:streaming_e}Convergence of internal energy $e$ in space for the MMS streaming problem}
+   \caption{\label{fig:streaming_e}Convergence in space of internal energy $e$ for the MMS streaming problem}
 \end{figure}
 \begin{figure}[ht]
    \centering
-   \includegraphics[width=\textwidth]{figures/MMS_streaming_rhou_convergence.pdf}
-   \caption{\label{fig:streaming_mom}Convergence of momentum $\rho u$ in time for the MMS streaming problem}
+   \includegraphics[width=\textwidth]{figures/MMS_streaming_erad_convergence.pdf}
+   \caption{\label{fig:streaming_mom}Convergence in time of radiation energy density $\E$ for the MMS streaming problem}
 \end{figure}
 
 
@@ -1102,8 +1103,8 @@ In future work, we recommend extending our radiation solver to incorporate a rad
 of our radiation-hydrodynamics algorithm should make this extension straightforward.  Since our algorithm only requires
 the angle-integrated radiation energy density and radiation current, the radiation solver may, in some sense, be treated
 as a black box module to compute these quantities.  Of course, the angular intensities will need to be preserved across
-time steps. Momentum is already conserved by the chosen implicit statements.  It is likely not necessary to fully
-converge the nonlinear solves in the predictor steps.
+time steps. Momentum is already conserved by the chosen implicit statements.  It may not be necessary to fully
+converge the nonlinear solves in the predictor steps, but this will be problem dependent.
 
 
 \bibliographystyle{model1-num-names}
@@ -1260,6 +1261,14 @@ are used to represent a linear solution, wheras true face values are needed in i
 in corrector steps produces a true face value for the flux, where as the predictor step uses interior-edge unknowns to estimate the
 flux within a cell.  For the radiation balance equations, the interior-edge unknowns are used to define face unknowns depending on direction of travel.
 
+\begin{figure}
+    \centering
+    \resizebox{0.50\textwidth}{!}{
+        \input{figures/face_definitions.pdf_tex}
+    }
+    \caption{Illustration of face and interior unknowns.}
+\end{figure}
+
 
 %===============================================================================
 %===============================================================================
@@ -1328,7 +1337,7 @@ each stage of the algorithm.
 \subsubsection{Momentum Update Equation}
 
 During the iteration loop, a lagged estimates of the radiation unknowns are used to compute a new
-material velocity.  The discretization of the radiation equations produces a linear
+material momentum and velocity.  The discretization of the radiation equations produces a linear
 solution within a cell, which is represented with edge unknowns, e.g., $\E_{L,i}$ and
 $\E_{R,i}$.  The edge values for radiation momentum deposition are spatially averaged to update the cell-averaged material
 velocity.  

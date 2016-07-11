@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  10 JUL 2016 11:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  10 JUL 2016 21:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -335,20 +335,20 @@ nd (jdm)
 (./MH-S2_paper.aux)
 \openout1 = `MH-S2_paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 410.
-LaTeX Font Info:    ... okay on input line 410.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 410.
-LaTeX Font Info:    ... okay on input line 410.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 410.
-LaTeX Font Info:    ... okay on input line 410.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 410.
-LaTeX Font Info:    ... okay on input line 410.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 410.
-LaTeX Font Info:    ... okay on input line 410.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 410.
-LaTeX Font Info:    ... okay on input line 410.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 410.
-LaTeX Font Info:    ... okay on input line 410.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 412.
+LaTeX Font Info:    ... okay on input line 412.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 412.
+LaTeX Font Info:    ... okay on input line 412.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 412.
+LaTeX Font Info:    ... okay on input line 412.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 412.
+LaTeX Font Info:    ... okay on input line 412.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 412.
+LaTeX Font Info:    ... okay on input line 412.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 412.
+LaTeX Font Info:    ... okay on input line 412.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 412.
+LaTeX Font Info:    ... okay on input line 412.
 
 (/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -380,7 +380,7 @@ e
 ))
 \c@lstlisting=\count136
 \AtBeginShipoutBox=\box35
-Package hyperref Info: Link coloring ON on input line 410.
+Package hyperref Info: Link coloring ON on input line 412.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -390,25 +390,25 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count137
 )
-LaTeX Info: Redefining \ref on input line 410.
-LaTeX Info: Redefining \pageref on input line 410.
-LaTeX Info: Redefining \nameref on input line 410.
+LaTeX Info: Redefining \ref on input line 412.
+LaTeX Info: Redefining \pageref on input line 412.
+LaTeX Info: Redefining \nameref on input line 412.
 
 (./MH-S2_paper.out) (./MH-S2_paper.out)
 \@outlinefile=\write6
 \openout6 = `MH-S2_paper.out'.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 458.
+LaTeX Font Info:    Try loading font information for U+msa on input line 460.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 458.
+LaTeX Font Info:    Try loading font information for U+msb on input line 460.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (2.4024pt too wide) in paragraph at lines 454--466
+Overfull \hbox (2.4024pt too wide) in paragraph at lines 456--468
 \OT1/cmr/m/n/12 second-order ac-cu-rate in space and time. Our radiation-hydrod
 ynamics model
  []
@@ -423,65 +423,59 @@ ynamics model
  (MH-S2_paper.fff) [12]
 
 Package natbib Warning: Citation `jim???' on page 13 undefined on input line 10
-08.
+09.
 
 
-Package natbib Warning: Citation `???' on page 13 undefined on input line 1014.
+Package natbib Warning: Citation `???' on page 13 undefined on input line 1015.
 
 
 [13]
 
 LaTeX Warning: Reference `tab:mach3.0_shock_IC' on page 14 undefined on input l
-ine 1024.
+ine 1025.
 
 \openout5 = `MH-S2_paper.ttt'.
 
 (MH-S2_paper.ttt) [14] (./MH-S2_paper.bbl [15] [16]
 Missing character: There is no – in font cmr12!
-) [17]
-Overfull \hbox (3.94313pt too wide) in paragraph at lines 1258--1261
-[]\OT1/cmr/m/n/12 Here, we de-fine our no-ta-tion to dif-fer-en-ti-ate be-tween
- interior-edge uknowns
- []
-
-[18
+) [17] [18
 
 ]
 
-LaTeX Warning: Reference `' on page 19 undefined on input line 1305.
+LaTeX Warning: Reference `' on page 19 undefined on input line 1315.
 
 
-Overfull \hbox (6.25294pt too wide) in paragraph at lines 1308--1317
+Overfull \hbox (6.25294pt too wide) in paragraph at lines 1318--1327
 \OT1/cmr/m/n/12 where the fluxes are com-puted us-ing an HLLC ap-prox-i-mate Ri
 e-mann solver [[]].
  []
 
 [19]
-Overfull \hbox (18.66386pt too wide) in paragraph at lines 1336--1336
+Overfull \hbox (18.66386pt too wide) in paragraph at lines 1346--1346
 [] 
  []
 
 
-Overfull \hbox (56.42815pt too wide) detected at line 1349
+Overfull \hbox (56.42815pt too wide) detected at line 1359
 [][] \OT1/cmr/m/n/12 = [] [][] + [] [][]  \OML/cmm/m/it/12 :
  []
 
 [20]
 
-Package natbib Warning: Citation `???' on page 21 undefined on input line 1390.
+Package natbib Warning: Citation `???' on page 21 undefined on input line 1400.
 
 
 
-Package natbib Warning: Citation `???' on page 21 undefined on input line 1391.
+Package natbib Warning: Citation `???' on page 21 undefined on input line 1401.
 
 
 [21]
-Overfull \hbox (44.29353pt too wide) in paragraph at lines 1424--1424
+Overfull \hbox (44.29353pt too wide) in paragraph at lines 1434--1434
 [] 
  []
 
 
-Overfull \hbox (32.27629pt too wide) in paragraph at lines 1426--1426
+Overfull \hbox (32.27629pt too wide) in paragraph at lines 1436--1436
 [] 
  []
 
@@ -521,16 +515,16 @@ line 19.
  [27
 
  <./figures/MMS_streaming_e_convergence.pdf>]
-<figures/MMS_streaming_rhou_convergence.pdf, id=592, 525.76424pt x 402.00188pt>
-File: figures/MMS_streaming_rhou_convergence.pdf Graphic file (type pdf)
-<use figures/MMS_streaming_rhou_convergence.pdf>
-Package pdftex.def Info: figures/MMS_streaming_rhou_convergence.pdf used on inp
+<figures/MMS_streaming_erad_convergence.pdf, id=592, 525.76424pt x 402.00188pt>
+File: figures/MMS_streaming_erad_convergence.pdf Graphic file (type pdf)
+<use figures/MMS_streaming_erad_convergence.pdf>
+Package pdftex.def Info: figures/MMS_streaming_erad_convergence.pdf used on inp
 ut line 26.
 (pdftex.def)             Requested size: 390.0pt x 298.20055pt.
  [28
 
- <./figures/MMS_streaming_rhou_convergence.pdf>]
-<figures/radshock_mach_1_2.pdf, id=659, 578.16pt x 433.62pt>
+ <./figures/MMS_streaming_erad_convergence.pdf>]
+<figures/radshock_mach_1_2.pdf, id=664, 578.16pt x 433.62pt>
 File: figures/radshock_mach_1_2.pdf Graphic file (type pdf)
 
 <use figures/radshock_mach_1_2.pdf>
@@ -539,7 +533,7 @@ Package pdftex.def Info: figures/radshock_mach_1_2.pdf used on input line 33.
  [29
 
  <./figures/radshock_mach_1_2.pdf>]
-<figures/radshock_mach_3_0.pdf, id=688, 578.16pt x 433.62pt>
+<figures/radshock_mach_3_0.pdf, id=693, 578.16pt x 433.62pt>
 File: figures/radshock_mach_3_0.pdf Graphic file (type pdf)
 
 <use figures/radshock_mach_3_0.pdf>
@@ -547,28 +541,55 @@ Package pdftex.def Info: figures/radshock_mach_3_0.pdf used on input line 40.
 (pdftex.def)             Requested size: 390.0pt x 292.4956pt.
  [30
 
- <./figures/radshock_mach_3_0.pdf>])
-(./MH-S2_paper.ttt [31
+ <./figures/radshock_mach_3_0.pdf>]
+(./figures/face_definitions.pdf_tex
+<figures/face_definitions.pdf, id=715, page=1, 146.06528pt x 97.6377pt>
+File: figures/face_definitions.pdf Graphic file (type pdf)
+
+<use figures/face_definitions.pdf, page 1>
+Package pdftex.def Info: figures/face_definitions.pdf, page1 used on input line
+ 54.
+(pdftex.def)             Requested size: 146.06526pt x 97.63892pt.
+
+<figures/face_definitions.pdf, id=716, page=2, 146.06528pt x 97.6377pt>
+File: figures/face_definitions.pdf Graphic file (type pdf)
+
+<use figures/face_definitions.pdf, page 2>
+Package pdftex.def Info: figures/face_definitions.pdf, page2 used on input line
+ 57.
+(pdftex.def)             Requested size: 146.06526pt x 97.63892pt.
+
+<figures/face_definitions.pdf, id=717, page=3, 146.06528pt x 97.6377pt>
+File: figures/face_definitions.pdf Graphic file (type pdf)
+
+<use figures/face_definitions.pdf, page 3>
+Package pdftex.def Info: figures/face_definitions.pdf, page3 used on input line
+ 60.
+(pdftex.def)             Requested size: 146.06526pt x 97.63892pt.
+) [31 <./figures/face_definitions.pdf> <./figures/face_definitions.pdf
+
+pdfTeX warning: pdflatex (file ./figures/face_definitions.pdf): PDF inclusion: 
+multiple pdfs with page group included in a single page
+> <./figures/face_definitions.pdf
+
+pdfTeX warning: pdflatex (file ./figures/face_definitions.pdf): PDF inclusion: 
+multiple pdfs with page group included in a single page
+>]) (./MH-S2_paper.ttt [32
 
 
-] [32
+
+] [33
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1625.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1625.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1635.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1635.
  (./MH-S2_paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1625.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1625.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1635.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1635.
 
+Package rerunfilecheck Info: File `MH-S2_paper.out' has not changed.
+(rerunfilecheck)             Checksum: 5F6A052E3C7BE64F30C82EA43C6A631B;1284.
 
-
-Package rerunfilecheck Warning: File `MH-S2_paper.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `MH-S2_paper.out':
-(rerunfilecheck)             Before: 6A26A1E2801DB6FEC471F999BD301C6D;1209
-(rerunfilecheck)             After:  5F6A052E3C7BE64F30C82EA43C6A631B;1284.
 
 LaTeX Warning: There were undefined references.
 
@@ -577,25 +598,20 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 8675 strings out of 493089
- 121795 string characters out of 6134842
- 225754 words of memory out of 5000000
- 11873 multiletter control sequences out of 15000+600000
+ 8694 strings out of 493089
+ 122284 string characters out of 6134842
+ 225766 words of memory out of 5000000
+ 11888 multiletter control sequences out of 15000+600000
  13870 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  34i,17n,32p,809b,487s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{subsubsection.A.2.2} has been referenced but does
- not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsubsection.A.2.1} has been referenced but does n
-ot exist, replaced by a fixed one
-
-</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><
-/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></
-usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></u
-sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
-r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr
-/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/l
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
+/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
+usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr
+/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/l
 ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/loc
 al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local
 /texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/t
@@ -611,10 +627,10 @@ f-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2015/texmf
 dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texlive/2015/texmf-di
 st/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2015/texm
 f-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on MH-S2_paper.pdf (32 pages, 504917 bytes).
+Output written on MH-S2_paper.pdf (33 pages, 535702 bytes).
 PDF statistics:
- 816 PDF objects out of 1000 (max. 8388607)
- 600 compressed objects within 6 object streams
+ 834 PDF objects out of 1000 (max. 8388607)
+ 613 compressed objects within 7 object streams
  167 named destinations out of 1000 (max. 500000)
- 159 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 182 words of extra memory for PDF output out of 10000 (max. 10000000)
 
