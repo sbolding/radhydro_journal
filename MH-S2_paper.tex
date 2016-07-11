@@ -1013,7 +1013,7 @@ and run the simulation until steady state is reached.
 At the boundary, we compute the fluxes using our
 standard Riemann solver, setting the hydrodynamic unknowns on the outside of the boundary equal to the far-stream conditions.  
 Our algorithm will not be second-order globally due to the discontinuity at the shock~\cite{???}.  Thus, we are not interested in
-order-accuracy here but are ensuring our code produce accurate solutions.
+order-accuracy here but are ensuring our code produces accurate solutions.
 %We initialize each radiative shock calculation by setting the left half of the
 %spatial domain equal to the far-upstream condition and the right half equal to
 %the downstream condition. 
@@ -1037,8 +1037,7 @@ further.
 
 \begin{table}[ht]
   \centering
-  \caption{Initial condition values for the Mach 1.2 radiative shock problem}
-  \label{tab:mach1.2_shock_IC}
+  \caption{\label{tab:mach1.2_shock_IC}Initial condition values for the Mach 1.2 radiative shock problem}
   \begin{tabular}{l l l l}\hline
       \emph{Parameter} & \emph{Pre-shock Value} & \emph{Post-shock Value} & \emph{Units}\\\hline
 $\rho$ & 1.00000000e+00 & 1.29731782e+00 & g cm$^{-3}$ \\
@@ -1052,8 +1051,9 @@ $F_r$ & 0.00000000e+00 & 0.00000000e+00 & Jks cm$^{-2}$ s$^{-1}$ \\
 \end{table}
 \begin{table}[ht]
   \centering
-  \caption{Initial condition values for the Mach 3 radiative shock problem}
-  \label{tab:mach3_shock_IC}
+  \caption{
+  \label{tab:mach3.0_shock_IC}
+  Initial condition values for the Mach 3 radiative shock problem}
   \begin{tabular}{l l l l}\hline
       \emph{Parameter} & \emph{Pre-shock Value} & \emph{Post-shock Value} & \emph{Units}\\\hline
 $\rho$ & 1.00000000e+00 & 3.00185103e+00 & g cm$^{-3}$ \\
@@ -1093,7 +1093,7 @@ and radiation temperature equilibrate. Here, we can see that our results still s
 
 We develop a new IMEX method for solving the equations of radiation-hydrodynamics that is second-order accurate in space
 and time.  In addition to accuracy, we meet the goals outlined in Section \ref{sec:Introduction}: it reliably converges
-non-linearities, rapidly damps oscillations, incorporates modern algorithms used by the hydrodynamics and radiation
+non-linearities, rapidly damps oscillations, couples modern algorithms used by the hydrodynamics and radiation
 transport communities, appears to have straightforward extensibility to a full radiation transport model, preserves the
 diffusion limit in 1D in such a way that it is expected to preserve this limit in 2D and 3D, accurately computes
 radiative shocks, and reduces to fundamental algorithms when the effects of coupled physics are negligible.  Thus, it
@@ -1312,12 +1312,12 @@ This representation is then evolved by a quarter of a time step:
 \hydroPredictor{n}{*n+\fourth}{\fourth}{\label{eq:muscl_predictor}}
 
 At this point, an implicit Euler radiation solve advances the system from $t^{*n+\fourth}$
-to $t^{n+\fourth}$, as detailed in Sec.~\ref{}.  Then, the corrector step of the
+to $t^{n+\fourth}$, as detailed in \ref{sec:rad_solves}.  Then, the corrector step of the
 MUSCL-Hancock method is applied.  The corrector step employs an approximate Riemann solver
 to compute the fluxes based on the predicted hydrodynamic variables, i.e.,
 \hydroCorrector{n}{n+\fourth}{*n+\half}{2}{\label{eq:muscl_corrector}}
 where the fluxes are computed using an HLLC approximate Riemann solver~\cite{toro}.  At
-each edge, the Riemann solver uses linearly extrapolated values, based on lagged
+each edge, the Riemann solver uses linearly extrapolated interior-edge values, based on lagged
 hydrodynamic slopes.  For example, at the edge
 $x_{i-\half}$, the Riemann solver computes fluxes with the states
 $\H_{i}^{n+1/4}-\frac{\Delta_i^n}{2}$ and $\H_{i-1}^{n+\fourth}+\frac{\Delta_{i-1}^n}{2}$.  At a boundary,
@@ -1326,6 +1326,7 @@ at the edge $x_{1/2}$ the two states are $\H_{1}^{n+1/4} - \frac{\Delta_1^n}{2}$
 boundary conditions.
 
 \subsection{The Iterative Radiation Solves}
+\label{sec:rad_solves}
 
 During each implicit radiation solve, the momentum deposition due to radiation and the
 energy exchange due to black-body emission must be iteratively solved.  An outer fixed-point
@@ -1336,10 +1337,10 @@ each stage of the algorithm.
 
 \subsubsection{Momentum Update Equation}
 
-During the iteration loop, a lagged estimates of the radiation unknowns are used to compute a new
+Within the iteration loop, lagged estimates of the radiation unknowns are used to compute a new
 material momentum and velocity.  The discretization of the radiation equations produces a linear
-solution within a cell, which is represented with edge unknowns, e.g., $\E_{L,i}$ and
-$\E_{R,i}$.  The edge values for radiation momentum deposition are spatially averaged to update the cell-averaged material
+solution within a cell, which is represented with interior-edge unknowns, e.g., $\E_{L,i}$ and
+$\E_{R,i}$.  The interior-edge values for radiation momentum deposition are spatially averaged to update the cell-averaged material
 velocity.  
 The BDF2 discretization of the velocity update equation for the cycle 2 corrector
 step is
@@ -1354,7 +1355,7 @@ average of the corresponding expressions evaluated at the interior edges, e.g.,
 \end{multline}
 It is noted that in the absence of an extraneous momentum source, $\rho^{*n+1}=\rho^{n+1}$. In the
 presence of MMS sources, $\rho$ is updated prior to entering the iteration loops.
-The Crank-Nicolson discretization of the velocity update equation for the Cycle 1
+The Crank-Nicolson discretization of the momentum update equation for the Cycle 1
 corrector is
 \momentumUpdateCN{n}{2}{_i}{n+1/2}{\lequ{hydromCNfull}}
 The Backward-Euler discretization of the velocity update for the predictor stages are analogously defined.
@@ -1369,25 +1370,25 @@ tedious but straightforward.  For brevity, we provide the non-linear equations h
 
 With the updated momentum, a kinetic energy can be defined, allowing for new internal
 energies to be obtained.  However, to simultaneously solve the radiation and material energy balance equations,
-hydrodynamic quantities need to be evaluated at cell edges. The slopes $\Delta_i$
+hydrodynamic quantities need to be evaluated at interior edges. The slopes $\Delta_i$
 evaluated during the predictor step of the cycle, as given in Eq.~\eqref{eq:muscl_slopes}, are used
-to extrapolate edge quantities during that cycle.  Evaluation of edge
+to extrapolate edge quantities during that cycle.  Evaluation of interior-edge
 densities is achieved by applying the slopes as given by Eq. \eqref{eq:edge_hydro}:
 \begin{equation}
    \rho\iL^k = \rho_i^k - \frac{\Delta\rho_i^n}{2} \pep
 \end{equation}
-Evaluation of edge velocities is
+Evaluation of interior-edge velocities is
 achieved based on $\rho$ and $\rho u$ at edges, e.g.,
 \begin{equation}
    u\iL^k = \frac{(\rho u)\iL^k}{\rho\iL^k}
           = \frac{(\rho u)_i^k - \frac{\Delta(\rho u)_i^n}{2}}
                  {\rho_i^k - \frac{\Delta\rho_i^n}{2}} \pep
 \end{equation}
-As explained in Section~\ref{sec:e_slopes}, internal energy unknowns, and thus material
+As explained in~\ref{sec:e_slopes}, internal energy unknowns, and thus material
 temperature, use slopes that are independent of the MUSCL-Hancock slopes.  This modifies
 the $E^*$ terms within a cycle.
 These radiation internal energy slopes are denoted by $\delta e$. Evaluation
-of edge internal energies is thus performed as follows:
+of interior-edge internal energies is thus performed as follows:
 \begin{equation}
    e\iL^k = e_i^k - \frac{\delta e_i^n}{2} \pep
 \end{equation}
@@ -1401,7 +1402,7 @@ for the S$_2$ equations~\cite{???}.  The lumping of the equations is strongly re
 to negative solutions in 1D~\cite{???}. Standard upwinding is used to define true face intensities in terms of interior-edge
 intensities that define the linear dependence of the intensity within a cell.
 For reference, the radiation equation for
-the positive direction of flow, the left interior-edge unknown, and the first Backward-Euler stage is
+the positive direction of flow, the left interior-edge intensity, and the first Backward-Euler stage is
 \begin{equation}
 \lequ{S2BEfullL}\begin{split}
   \frac{4}{c}\frac{\psi\iL^{+,n+1/4,k+1}-\psi\iL^{+,n}}{\dt} = &
@@ -1427,7 +1428,8 @@ for the right unknown is
 For 1D, the $S_2$ equations can be
 directly solved efficiently.     
 
-The material energy balance equations are also discretized in space to determine new edge
+The material energy balance equations are also discretized in space to determine new
+interior-edge
 values. 
 The Crank-Nicolson discretization of the material energy balance equation for the $L$
 unknowns is
@@ -1437,15 +1439,14 @@ The BDF2 discretization of the energy update equation is
 To conserve total energy, the newly estimated edge total
 material energies, $E_{L,i}^{k+1}$ and $E_{R,i}^{k+1}$, are averaged to compute new
 cell-averaged total energies $E_{i}^{k+1}$; no modifications are made to the hydrodynamic slopes
-$\Delta_i$.  Averaging the total energy in this manner produces an unavoidable discrepancy between cell-averaged and edge
-internal energies. 
+$\Delta_i$.  
 
 \subsection{Using Radiation Internal Energy Slopes}
 \label{sec:e_slopes}
 
 As discussed in the introduction, the radiation solver and hydro solver use different
-internal energy slopes as an approach to preserve the equilibrium diffusion limit.   The
-implementation of separate slopes is a proof of concept for higher dimensions.
+internal energy slopes as an approach to preserve the equilibrium diffusion limit in a
+manner that can be extended to higher spatial dimensions.
 To mitigate confusion, in this section we will denote the hydro-state internal energy variables as $e$ and
 the internal energy variables coming from the non-linear radiation solves as $e^r$. Care must be taken to
 ensure that total energy is conserved.  The modified slopes are only applied to the implicit terms in each
@@ -1455,7 +1456,7 @@ During the MHM solve, we
 use the standard slope reconstruction formulas to advect variables to
 state $U^*$ (or $U^{**}$), including total energy $E$.  Then, in the non-linear iteration loop for the radiation
 and internal energy densities we use a modified slope for $E^*$, denoted $\Delta E^{r*}$, that will preserve the diffusion
-limit.  This $\Delta E^{r*}$ is based on the edge values of $e^r$ of \emph{the last iteration of the previous
+limit.  This $\Delta E^{r*}$ is based on the edge values of $e^r$ from \emph{the last iteration of the previous
 nonlinear radiation solve}.  For example, if we are solving the cycle 1 corrector from state $e^*$ to
 $e^{n+1/2}$, we use the edge values of $e^r$ from the last iteration of the solve for
 $e^{r,n+1/4}$ to construct the slopes for $\Delta E^{r,*}$. The value of $\Delta
@@ -1463,7 +1464,7 @@ E^{r,*}$ does not change over the duration of the nonlinear solve.
 
 Slopes
 $\Delta^{n+\half}$ and $\delta e^{n+\frac{3}{4}}$  are again
-used to evaluate edge quantities. At the end
+used to evaluate interior-edge quantities. At the end
 of the cycle, the new internal energy slopes $\delta e^{n+1}$
 are saved for the next cycle.
 
@@ -1481,7 +1482,7 @@ where
     \delta e^{r,n+1/4}\right),
 \end{equation}
 \begin{equation}\label{estarl}
-    E^{r*}_L = \rho^*_R\left((u_L^*)^2 + e^*_i -
+    E^{r*}_L = \rho^*_L\left((u_L^*)^2 + e^*_i -
     \delta e^{r,n+1/4}\right),
 \end{equation}
 and subscript $i$ denotes cell average quantities.  The edge values of $\rho$ and
@@ -1494,8 +1495,7 @@ cell-averaged total energy for the next MHM solve, such that total energy is con
     +\rho_R\left(\frac{1}{2}u_R^2 + e_R^r\right)\right]^{n+1/2}
 \end{equation}
 where all variables are at time $t^{n+1/2}$. The internal energy slopes are computed
-and stored for the next nonlinear solve.  For the first solve, the internal energy
-slopes are assumed zero.
+and stored for the next nonlinear solve.  
 
 %%===============================================================================
 %\subsection{Linearization of Equations for General Temporal Discretization}
