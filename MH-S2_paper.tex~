@@ -454,17 +454,19 @@
 %% ---------------------------------------------
 %% ---------------------------------------------
 \begin{abstract}
-Second-order accurate discretizations for radiation-hydrodynamics are currently an area of great interest.  Second-order methods used to solve the
-hydrodynamics equations and second-order methods used to solve the radiation transport equation often differ fundamentally, making it difficult to
-combine them in a second-order manner.  Here, we present a implicit-explicit (IMEX) method for solving the 1-D equations of radiation-hydrodynamics that is second-order
-accurate in space and time.  Our radiation-hydrodynamics model consist of the 1-D Euler equations coupled with a grey radiation S$_2$ approximation.
-Our RH method combines the MUSCL-Hancock method for solving the Euler equations with the TR/BDF2 time integration scheme and the linear-discontinuous
-Galerkin finite-element spatial discretization scheme for the S$_2$ radiation equations. The MUSCL-Hancock method is commonly used for hydrodynamic
-calculations and the linear-discontinuous Galerkin scheme is the standard for the S$_n$ equations of radiative transfer.  While somewhat similar,
-these schemes vary fundamentally with respect to the treatment of spatial slopes.  We address the challenges inherent to coupling these different
-numerical methods and demonstrate how these challenges can be overcome.  Using the method of manufactured solutions, we show that the method is
-second-order accurate in space and time for both the equilibrium diffusion and streaming limit, and we show that the method is capable of computing
-radiative shock solutions accurately by comparing our results with semi-analytic solutions.
+
+Second-order accurate discretizations for radiation-hydrodynamics are currently an area of interest in the high-energy density laboratory physics and
+astrophysics communities.  Second-order methods used to solve the hydrodynamics equations and second-order methods used to solve the radiation transport
+equation often differ fundamentally, making it difficult to combine them in a second-order manner.  Here, we present a implicit-explicit (IMEX)
+method for solving the 1-D equations of radiation-hydrodynamics that is second-order accurate in space and time.  Our radiation-hydrodynamics
+model consist of the 1-D Euler equations coupled with a grey radiation S$_2$ approximation.  Our RH method combines the MUSCL-Hancock method for
+solving the Euler equations with the TR/BDF2 time integration scheme and the linear-discontinuous Galerkin finite-element spatial discretization
+scheme for the S$_2$ radiation equations. The MUSCL-Hancock method is commonly used for hydrodynamic calculations and the linear-discontinuous
+Galerkin scheme is the standard for the S$_n$ equations of radiative transfer.  While somewhat similar, these schemes vary fundamentally with
+respect to the treatment of spatial slopes.  We address the challenges inherent to coupling these different numerical methods and demonstrate how
+these challenges can be overcome.  Using the method of manufactured solutions, we show that the method is second-order accurate in space and time
+for both the equilibrium diffusion and streaming limit, and we show that the method is capable of computing radiative shock solutions accurately
+by comparing our results with semi-analytic solutions.
 
 \end{abstract}
 
@@ -486,7 +488,7 @@ radiation-hydrodynamics \sep second-order accuracy \sep radiative shocks \sep ma
 \section{Introduction}
 \label{sec:Introduction}
 
-Radiation hydrodynamics (RH) describes thermal radiation propagating through a fluid and the effects of the radiation on the properties of that fluid.  
+Radiation hydrodynamics (RH) describes thermal radiation propagating through a fluid and the effects of the radiation on the motion and properties of that fluid.  
 Second-order accuracy in time for radiation-hydrodynamics calculations is currently an area of considerable interest.  Though detailed work has been 
 done for time integration of radiation diffusion and transport \cite{mcclarren,lowrie2,knoll,olson,axelrod,stone,brown}, and likewise for fluid 
 dynamics \cite{toro}, research in second-order methods that couple the two has only recently been carried out \cite{lowrie,bates,dai}.  Because of the 
