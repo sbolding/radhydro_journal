@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  11 JUL 2016 10:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  5 AUG 2016 16:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -398,17 +398,17 @@ LaTeX Info: Redefining \nameref on input line 412.
 \@outlinefile=\write6
 \openout6 = `MH-S2_paper.out'.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 460.
+LaTeX Font Info:    Try loading font information for U+msa on input line 462.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 460.
+LaTeX Font Info:    Try loading font information for U+msb on input line 462.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (2.4024pt too wide) in paragraph at lines 456--468
+Overfull \hbox (2.4024pt too wide) in paragraph at lines 458--470
 \OT1/cmr/m/n/12 second-order ac-cu-rate in space and time. Our radiation-hydrod
 ynamics model
  []
@@ -423,10 +423,10 @@ ynamics model
  (MH-S2_paper.fff) [12]
 
 Package natbib Warning: Citation `jim???' on page 13 undefined on input line 10
-09.
+11.
 
 
-Package natbib Warning: Citation `???' on page 13 undefined on input line 1015.
+Package natbib Warning: Citation `???' on page 13 undefined on input line 1017.
 
 
 [13]
@@ -437,37 +437,37 @@ Missing character: There is no – in font cmr12!
 ) [17] [18
 
 ]
-Overfull \hbox (6.25294pt too wide) in paragraph at lines 1318--1327
+Overfull \hbox (6.25294pt too wide) in paragraph at lines 1320--1329
 \OT1/cmr/m/n/12 where the fluxes are com-puted us-ing an HLLC ap-prox-i-mate Ri
 e-mann solver [[]].
  []
 
 [19]
-Overfull \hbox (18.66386pt too wide) in paragraph at lines 1347--1347
+Overfull \hbox (18.66386pt too wide) in paragraph at lines 1349--1349
 [] 
  []
 
 
-Overfull \hbox (56.42815pt too wide) detected at line 1360
+Overfull \hbox (56.42815pt too wide) detected at line 1362
 [][] \OT1/cmr/m/n/12 = [] [][] + [] [][]  \OML/cmm/m/it/12 :
  []
 
 [20]
 
-Package natbib Warning: Citation `???' on page 21 undefined on input line 1401.
+Package natbib Warning: Citation `???' on page 21 undefined on input line 1403.
 
 
 
-Package natbib Warning: Citation `???' on page 21 undefined on input line 1402.
+Package natbib Warning: Citation `???' on page 21 undefined on input line 1404.
 
 
 [21]
-Overfull \hbox (44.29353pt too wide) in paragraph at lines 1436--1436
+Overfull \hbox (44.29353pt too wide) in paragraph at lines 1438--1438
 [] 
  []
 
 
-Overfull \hbox (32.27629pt too wide) in paragraph at lines 1438--1438
+Overfull \hbox (32.27629pt too wide) in paragraph at lines 1440--1440
 [] 
  []
 
@@ -573,11 +573,11 @@ multiple pdfs with page group included in a single page
 ] [33
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1635.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1635.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1637.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1637.
  (./MH-S2_paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1635.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1635.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1637.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1637.
 
 Package rerunfilecheck Info: File `MH-S2_paper.out' has not changed.
 (rerunfilecheck)             Checksum: 5F6A052E3C7BE64F30C82EA43C6A631B;1284.
@@ -585,11 +585,11 @@ Package rerunfilecheck Info: File `MH-S2_paper.out' has not changed.
 Here is how much of TeX's memory you used:
  8693 strings out of 493089
  122278 string characters out of 6134842
- 225854 words of memory out of 5000000
+ 225856 words of memory out of 5000000
  11887 multiletter control sequences out of 15000+600000
  13870 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,17n,32p,809b,487s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 34i,17n,32p,809b,468s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -612,7 +612,7 @@ f-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2015/texmf
 dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texlive/2015/texmf-di
 st/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2015/texm
 f-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on MH-S2_paper.pdf (33 pages, 531324 bytes).
+Output written on MH-S2_paper.pdf (33 pages, 531718 bytes).
 PDF statistics:
  823 PDF objects out of 1000 (max. 8388607)
  615 compressed objects within 7 object streams
