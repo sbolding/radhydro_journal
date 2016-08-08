@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.28)  8 AUG 2016 09:16
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.28)  8 AUG 2016 13:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -424,116 +424,89 @@ ynamics model
 [7] [8] [9] [10] [11]
 \openout4 = `MH-S2_paper.fff'.
 
- (MH-S2_paper.fff) [12]
-
-Package natbib Warning: Citation `jim???' on page 13 undefined on input line 10
-12.
-
-
-Package natbib Warning: Citation `???' on page 13 undefined on input line 1018.
-
-
-[13]
-
-Package natbib Warning: Citation `jim???' on page 14 undefined on input line 10
-32.
-
+ (MH-S2_paper.fff) [12] [13]
 \openout5 = `MH-S2_paper.ttt'.
 
-(MH-S2_paper.ttt) [14] (./MH-S2_paper.bbl [15]
-Missing character: There is no – in font cmr12!
- [16]) [17] [18
+ (MH-S2_paper.ttt) [14]
+[15] [16
 
-] [19]
-Overfull \hbox (18.66386pt too wide) in paragraph at lines 1350--1350
+] [17]
+Overfull \hbox (18.66386pt too wide) in paragraph at lines 1352--1352
+[] 
+ []
+
+[18] [19]
+Overfull \hbox (44.29353pt too wide) in paragraph at lines 1444--1444
 [] 
  []
 
 
-Overfull \hbox (56.42815pt too wide) detected at line 1363
-[][] \OT1/cmr/m/n/12 = [] [][] + [] [][]  \OML/cmm/m/it/12 :
- []
-
-[20]
-
-Package natbib Warning: Citation `???' on page 21 undefined on input line 1405.
-
-
-[21]
-Overfull \hbox (44.29353pt too wide) in paragraph at lines 1441--1441
+Overfull \hbox (32.27629pt too wide) in paragraph at lines 1446--1446
 [] 
  []
 
-
-Overfull \hbox (32.27629pt too wide) in paragraph at lines 1443--1443
-[] 
- []
-
-[22]
-
-Package natbib Warning: There were undefined citations.
-
-AED endfloat: Processing end Figures and Tables [23] (./MH-S2_paper.fff
-<figures/MMS_diffusion_limit_e_convergence.pdf, id=386, 524.2586pt x 401.62547p
+[20] (./MH-S2_paper.bbl [21] [22] [23])
+AED endfloat: Processing end Figures and Tables [24] (./MH-S2_paper.fff
+<figures/MMS_diffusion_limit_e_convergence.pdf, id=397, 524.2586pt x 401.62547p
 t>
 File: figures/MMS_diffusion_limit_e_convergence.pdf Graphic file (type pdf)
  <use figures/MMS_diffusion_limit_e_convergence.pdf>
 Package pdftex.def Info: figures/MMS_diffusion_limit_e_convergence.pdf used on 
 input line 3.
 (pdftex.def)             Requested size: 390.0pt x 298.77316pt.
- [24
+ [25
 
 
  <./figures/MMS_diffusion_limit_e_convergence.pdf>]
-<figures/MMS_diffusion_limit_rhou_convergence.pdf, id=455, 524.2586pt x 401.625
+<figures/MMS_diffusion_limit_rhou_convergence.pdf, id=467, 524.2586pt x 401.625
 47pt>
 File: figures/MMS_diffusion_limit_rhou_convergence.pdf Graphic file (type pdf)
  <use figures/MMS_diffusion_limit_rhou_convergence.pdf>
 Package pdftex.def Info: figures/MMS_diffusion_limit_rhou_convergence.pdf used 
 on input line 11.
 (pdftex.def)             Requested size: 390.0pt x 298.77316pt.
- [25
+ [26
 
  <./figures/MMS_diffusion_limit_rhou_convergence.pdf>]
-<figures/MMS_streaming_e_convergence.pdf, id=517, 524.2586pt x 401.62547pt>
+<figures/MMS_streaming_e_convergence.pdf, id=528, 524.2586pt x 401.62547pt>
 File: figures/MMS_streaming_e_convergence.pdf Graphic file (type pdf)
 
 <use figures/MMS_streaming_e_convergence.pdf>
 Package pdftex.def Info: figures/MMS_streaming_e_convergence.pdf used on input 
 line 19.
 (pdftex.def)             Requested size: 390.0pt x 298.77316pt.
- [26
+ [27
 
  <./figures/MMS_streaming_e_convergence.pdf>]
-<figures/MMS_streaming_erad_convergence.pdf, id=579, 525.76424pt x 401.62547pt>
+<figures/MMS_streaming_erad_convergence.pdf, id=591, 525.76424pt x 401.62547pt>
 File: figures/MMS_streaming_erad_convergence.pdf Graphic file (type pdf)
 <use figures/MMS_streaming_erad_convergence.pdf>
 Package pdftex.def Info: figures/MMS_streaming_erad_convergence.pdf used on inp
 ut line 26.
 (pdftex.def)             Requested size: 390.0pt x 297.92133pt.
- [27
+ [28
 
  <./figures/MMS_streaming_erad_convergence.pdf>]
-<figures/radshock_mach_1_2.pdf, id=648, 578.16pt x 433.62pt>
+<figures/radshock_mach_1_2.pdf, id=659, 578.16pt x 433.62pt>
 File: figures/radshock_mach_1_2.pdf Graphic file (type pdf)
 
 <use figures/radshock_mach_1_2.pdf>
 Package pdftex.def Info: figures/radshock_mach_1_2.pdf used on input line 33.
 (pdftex.def)             Requested size: 390.0pt x 292.4956pt.
- [28
+ [29
 
  <./figures/radshock_mach_1_2.pdf>]
-<figures/radshock_mach_3_0.pdf, id=677, 578.16pt x 433.62pt>
+<figures/radshock_mach_3_0.pdf, id=688, 578.16pt x 433.62pt>
 File: figures/radshock_mach_3_0.pdf Graphic file (type pdf)
 
 <use figures/radshock_mach_3_0.pdf>
 Package pdftex.def Info: figures/radshock_mach_3_0.pdf used on input line 40.
 (pdftex.def)             Requested size: 390.0pt x 292.4956pt.
- [29
+ [30
 
  <./figures/radshock_mach_3_0.pdf>]
 (./figures/face_definitions.pdf_tex
-<figures/face_definitions.pdf, id=699, page=1, 146.06528pt x 97.6377pt>
+<figures/face_definitions.pdf, id=710, page=1, 146.06528pt x 97.6377pt>
 File: figures/face_definitions.pdf Graphic file (type pdf)
 
 <use figures/face_definitions.pdf, page 1>
@@ -541,7 +514,7 @@ Package pdftex.def Info: figures/face_definitions.pdf, page1 used on input line
  54.
 (pdftex.def)             Requested size: 146.06526pt x 97.63892pt.
 
-<figures/face_definitions.pdf, id=700, page=2, 146.06528pt x 97.6377pt>
+<figures/face_definitions.pdf, id=711, page=2, 146.06528pt x 97.6377pt>
 File: figures/face_definitions.pdf Graphic file (type pdf)
 
 <use figures/face_definitions.pdf, page 2>
@@ -549,14 +522,14 @@ Package pdftex.def Info: figures/face_definitions.pdf, page2 used on input line
  57.
 (pdftex.def)             Requested size: 146.06526pt x 97.63892pt.
 
-<figures/face_definitions.pdf, id=701, page=3, 146.06528pt x 97.6377pt>
+<figures/face_definitions.pdf, id=712, page=3, 146.06528pt x 97.6377pt>
 File: figures/face_definitions.pdf Graphic file (type pdf)
 
 <use figures/face_definitions.pdf, page 3>
 Package pdftex.def Info: figures/face_definitions.pdf, page3 used on input line
  60.
 (pdftex.def)             Requested size: 146.06526pt x 97.63892pt.
-) [30 <./figures/face_definitions.pdf> <./figures/face_definitions.pdf
+) [31 <./figures/face_definitions.pdf> <./figures/face_definitions.pdf
 
 pdfTeX warning: pdflatex (file ./figures/face_definitions.pdf): PDF inclusion: 
 multiple pdfs with page group included in a single page
@@ -564,27 +537,27 @@ multiple pdfs with page group included in a single page
 
 pdfTeX warning: pdflatex (file ./figures/face_definitions.pdf): PDF inclusion: 
 multiple pdfs with page group included in a single page
->]) (./MH-S2_paper.ttt [31
+>]) (./MH-S2_paper.ttt [32
 
 
 
-] [32
+] [33
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1629.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1629.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1636.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1636.
  (./MH-S2_paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1629.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1629.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1636.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1636.
 
 Package rerunfilecheck Info: File `MH-S2_paper.out' has not changed.
 (rerunfilecheck)             Checksum: 5F6A052E3C7BE64F30C82EA43C6A631B;1284.
  ) 
 Here is how much of TeX's memory you used:
- 8750 strings out of 493304
- 122448 string characters out of 6139871
- 225888 words of memory out of 5000000
- 11915 multiletter control sequences out of 15000+600000
+ 8749 strings out of 493304
+ 122442 string characters out of 6139871
+ 225891 words of memory out of 5000000
+ 11913 multiletter control sequences out of 15000+600000
  13870 words of font info for 52 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  34i,17n,32p,809b,486s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -609,10 +582,10 @@ s/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type
 ic/amsfonts/cm/cmti7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic
 /uhvr8a.pfb>
-Output written on MH-S2_paper.pdf (32 pages, 530130 bytes).
+Output written on MH-S2_paper.pdf (33 pages, 531124 bytes).
 PDF statistics:
- 816 PDF objects out of 1000 (max. 8388607)
- 609 compressed objects within 7 object streams
- 166 named destinations out of 1000 (max. 500000)
+ 827 PDF objects out of 1000 (max. 8388607)
+ 619 compressed objects within 7 object streams
+ 167 named destinations out of 1000 (max. 500000)
  182 words of extra memory for PDF output out of 10000 (max. 10000000)
 

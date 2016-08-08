@@ -283,13 +283,13 @@
 % #3: spatial differencing subscript command
 % #4: optional label command
 \newcommand{\momentumUpdateCN}[5]{
-\begin{equation}
+\begin{multline}
     \frac{#2\rho^{#4}#3\left(u^{#4,k+1}#3-u^{*#4}#3\right)}{\dt} = 
-   \half\momentumSource^{#1}#3
+   \half\momentumSource^{#1}#3 \\
    +\half\momentumSource^{#4,k}#3
   \pep
 #5
-\end{equation}
+\end{multline}
 }
 
 % #1: older time index
@@ -455,7 +455,7 @@
 %% ---------------------------------------------
 \begin{abstract}
 
-Second-order accurate discretizations for radiation-hydrodynamics are currently an area of interest in the high-energy density laboratory physics and
+Second-order accurate discretizations for radiation-hydrodynamics are currently an area of interest in the high energy density laboratory physics and
 astrophysics communities.  Second-order methods used to solve the hydrodynamics equations and second-order methods used to solve the radiation transport
 equation often differ fundamentally, making it difficult to combine them in a second-order manner.  Here, we present a implicit-explicit (IMEX)
 method for solving the 1-D equations of radiation-hydrodynamics that is second-order accurate in space and time.  Our radiation-hydrodynamics
@@ -489,7 +489,8 @@ radiation-hydrodynamics \sep second-order accuracy \sep radiative shocks \sep ma
 \label{sec:Introduction}
 
 Radiation hydrodynamics (RH) describes thermal radiation propagating through a fluid and the effects of the radiation on the motion and properties of that fluid.  
-Second-order accuracy in time for radiation-hydrodynamics calculations is currently an area of considerable interest.  Though detailed work has been 
+Second-order accuracy in time and space for radiation-hydrodynamics calculations is currently an area of considerable interest in the high energy density laboratory physics and
+astrophysics communities.  Though detailed work has been 
 done for time integration of radiation diffusion and transport \cite{mcclarren,lowrie2,knoll,olson,axelrod,stone,brown}, and likewise for fluid 
 dynamics \cite{toro}, research in second-order methods that couple the two has only recently been carried out \cite{lowrie,bates,dai}.  Because of the 
 dramatically different time scales of radiation diffusion/transport and fluid advection, RH calculations are usually treated using an implicit-explicit 
@@ -590,7 +591,7 @@ T = \frac{e}{C_v} \pec
 \end{subequations}
 where $\gamma$ is the adiabatic index, and $C_v$ is the specific heat.  However, our method is compatible with any valid EOS. 
 
-Our RH method combines the MUSCL-Hancock method (MHM) for solving the Euler equations with the TR/BDF2 time discretization 
+Our RH method combines the MUSCL-Hancock method (MHM) (e.g., see~\cite{toro}) for solving the Euler equations with the TR/BDF2 time discretization 
 scheme and the linear-discontinuous Galerkin finite-element (LDGFEM) spatial discretization scheme for the S$_2$ equations.  
 The MUSCL-Hancock method is commonly used for hydrodynamic calculations and the linear-discontinuous Galerkin scheme is the 
 standard for the S$_n$ radiation equations.  While somewhat similar, these schemes vary fundamentally with respect to the 
@@ -610,8 +611,8 @@ of this method that is near-optimal was applied to the equations of radiative tr
 both L-stable, accurate, and efficient.  In \cite{EM2011}, the near-optimal TR/BDF2 scheme is used to solve the equations of 
 radiative transfer. It consists of a Crank-Nicolson step over half the time step followed by a BDF2 step over 
 the remainder of the time step.  The TR/BDF2 method has a computational cost that is roughly equivalent to that of solving two 
-Crank-Nicolson systems sequentially over each time step.  Here we introduce an alternative form 
-of the simple TR/BDF2 method that is particularly useful for our purposes.  
+Crank-Nicolson systems sequentially over each time step.  Here we introduce an equivalent,
+alternative form of the simple TR/BDF2 method that is particularly useful for our purposes.  
 
   
 A critical issue for radiation transport spatial discretizations is the preservation of the diffusion limit.  
@@ -634,7 +635,7 @@ The MHM includes spatial differencing for the advection equations and incorporat
 the slopes.  However, Lowrie and Morel show in \cite{lowriemorel} that interpolation schemes which only depend on the mesh geometry and do not 
 incorporate additional physical data, e.g. cross-section values, fail to have the diffusion limit.  Furthermore, the differences in spatial 
 discretization between the advection and S$_2$ equations present considerable complications due to the fact that, in the MHM, the slopes are 
-determined from interpolations of the cell-centered unknowns; whereas, in the LDFEM, the slopes are computed as part of the solution to the 
+determined by differencing with neighboring cell-centered unknowns; whereas, in the LDFEM, the slopes are computed as part of the solution to the 
 discretized spatial moment equations.  To add to these complications, the internal energy of the fluid represents an unknown in both the 
 fluid advection and radiation equations.  The easy solution to this problem is to recompute the internal energy and radiation 
 slopes at the beginning of each time step using the MHM limiter.  Doing this, we were able to show that our method maintained the diffusion 
@@ -649,7 +650,7 @@ coupled physics are negligible, and we believe it will also allow us to preserve
 
 
 The remainder of this paper is structured as follows.    In Section~\ref{sec:Method}, we give an overview of our second-order accurate
-radiation-hydrodynamics method, and we give a detailed description in the Appendix.  In Section~\ref{sec:OrderAccuracy}, we use the
+radiation-hydrodynamics method, and we give a detailed description in~\ref{sec:full}.  In Section~\ref{sec:OrderAccuracy}, we use the
 method of manufactured solutions to show that our method is second-order accurate in both space and time in the equilibrium diffusion limit as well as
 in the streaming limit.  Then, in Section~\ref{sec:ShockSolutions}, we demonstrate the capability of our method to accurately compute
 radiation-hydrodynamic shocks by reproducing semi-analytic shock solutions.  Finally, in Section \ref{sec:Conclusions}, we summarize our results and
@@ -660,23 +661,25 @@ present our conclusions and recommendations for future work.
 \label{sec:Method}
 
 There are two cycles per time step.  The first cycle spans the first half of the time step and the second 
-spans the second half.  The first cycle proceeds as follows:
+spans the second half. The use of two cycles follows directly from use of the TR/BDF2
+method.  The equations for each step of the algorithm are detailed in~\ref{sec:full}.  The first cycle proceeds as follows:
 \begin{enumerate}
   \item Do a standard MHM predictor step. 
   \item Enter an iteration loop
   \begin{enumerate}
-    \item Update the fluid momentum using lagged radiation momentum deposition
-    \item Simultaneously solve the total energy equation and the S$_2$ equations for the new radiation intensities and updated fluid internal energies 
-		using an LDG discretization in space and a Backward Euler discretization in time.
+    \item Update the fluid momentum using lagged radiation momentum deposition.
+    \item Simultaneously solve the material energy equation (i.e.,
+        Eq.~\eqref{eq:cons_energy}) and the S$_2$ equations for the new radiation intensities and updated fluid internal energies 
+		using an LLDG discretization in space and a Backward Euler discretization in time.
     \item Iterate until the fluid momenta, internal energies, and radiation intensities converge.
   \end{enumerate}
   \item Do a standard MHM corrector step.
-  \item Initialize internal energy slopes to previous radiation solve values.
+  \item Initialize the internal energy slopes to the previous radiation solve values.
   \item Enter an iteration loop
   \begin{enumerate}
     \item Update the fluid momentum using lagged radiation momentum deposition
-    \item Simultaneously solve the total energy equation and the S$_2$ equations for the new radiation intensities and updated fluid internal energies 
-		using an LDG discretization in space and a Crank-Nicolson discretization in time.
+    \item Simultaneously solve the material energy equation and the S$_2$ equations for the new radiation intensities and updated fluid internal energies 
+		using an LLDG discretization in space and a Crank-Nicolson discretization in time.
     \item Iterate until the fluid momenta, internal energies, and radiation intensities converge.
   \end{enumerate}
 \end{enumerate}
@@ -686,30 +689,30 @@ The second cycle proceeds as follows:
   \item Enter an iteration loop.
   \begin{enumerate}
     \item Update the fluid momentum using lagged radiation momentum deposition.
-    \item Simultaneously solve the total energy equation and the S$_2$ equations for the new radiation 
-        intensities and updated fluid internal energies using an LDG discretization 
+    \item Simultaneously solve the material energy equation and the S$_2$ equations for the new radiation 
+        intensities and updated fluid internal energies using an LLDG discretization 
     in space and a Backward Euler discretization in time.
-    \item Iterate until fluid momenta, internal energies, and radiation intensities converge.
+    \item Iterate until the fluid momenta, internal energies, and radiation intensities converge.
   \end{enumerate}
   \item Do a standard MHM corrector step.
-  \item Initialize internal energy slopes to previous radiation solve values.
+  \item Initialize the internal energy slopes to the previous radiation solve values.
   \item Enter an iteration loop
   \begin{enumerate}
-  \item Update the fluid momentum using lagged radiation momentum deposition
-  \item Simultaneously solve the total energy equation and the S$_2$ equations for the new radiation intensities and updated fluid internal energies 
-	using an LDG discretization in space and a BDF2 discretization in time.
-  \item Continue iteration until fluid momenta, internal energies, and radiation intensities converge.
+  \item Update the fluid momentum using lagged radiation momentum deposition.
+  \item Simultaneously solve the material energy equation and the S$_2$ equations for the new radiation intensities and updated fluid internal energies 
+	using an LLDG discretization in space and a BDF2 discretization in time.
+  \item Iterate until the fluid momenta, internal energies, and radiation intensities converge.
   \end{enumerate}
 \end{enumerate}
-Note that the combination of Crank-Nicolson and BDF2 discretization results in
+Note that the combination of Crank-Nicolson and BDF2 discretization over two cycles results in
 a TR/BDF2 discretization over the full time step.  We use a standard Backward
 Euler discretization for the radiation solves during the predictor stages,
 which only requires first-order accuracy.  One advantage to applying the full
 MHM over each half time step is that, if the time step size is being determined
 by the Courant limit, we can take twice the usual time step.  In this case, the
 cost of four radiation solves per time step per iteration is mitigated.
-Alternatively, this algorithm could be viewed as a mixed, two-stage algorithm
-with alternating Crank-Nicolson and BDF2 solves over time steps (from this
+This algorithm could be viewed as a mixed, two-stage algorithm
+with alternating Crank-Nicolson and BDF2 solves over pairs of equal time steps (from this
 viewpoint, the time step sizes are governed by the standard Courant limit and
 there is only two radiation solves per time step).  
 
@@ -721,7 +724,7 @@ The radiation momentum deposition is usually small in the high energy density la
 momentum deposition is adequate.  In problems 
 with stronger radiation momentum deposition, a better iteration scheme might be required. 
 
-The explicit hydrodynamic steps imposes a limit on the maximum time step size our
+The explicit hydrodynamic steps impose a limit on the maximum time step size our
 algorithm can take.
 Using a standard estimate of numerical wave speeds~\cite{toro}, our time step size for the $n$-th time
 step is estimated as
@@ -736,7 +739,7 @@ sound speed is $a_{i,s}=\sqrt{p_i \gamma/\rho_i}$.
 
 \subsection{Diffusion Limit}
 \label{sec:diffusion-limit}
-Of importance to obtaining the diffusion limit is using the correct initial internal energy slopes in the simultaneous solve for the 
+For preservation of the diffusion limit it is important to use the correct initial internal energy slopes in the simultaneous solve for the 
 S$_2$ intensities and the updated internal energies.  Each MHM step provides slopes for the mass densities, the fluid momentum densities, 
 and the fluid total energies.  From the mass and fluid momentum slopes one can compute kinetic energy slopes.  These slopes are used 
 together with the fluid internal energy slopes determined from the previous-cycle radiation/internal energy solve to initialize the left and right 
@@ -826,7 +829,8 @@ which is clearly not a conservation statement. Equation~\eqref{eq:tbdf22} is der
 
 To demonstrate that our method is second-order accurate in space and time, we use the method of manufactured solutions (MMS).    
 With MMS, we assume a functional form of the exact solution and  derive extraneous sources for each equation that ensure the
-equations are satisfied analytically.  We compare our numerical solution to the MMS problem to the exact solution as we refine the
+equations are satisfied analytically.  We compare our numerical solution to the MMS
+problem with the exact solution as we refine the numerical
 solution in space and time to examine to determine the order-accuracy of the algorithm.  
 Two MMS problems, one for the streaming limit and one for the equilibrium diffusion limit, were taken from \cite{mcclarren2}.  These
 solutions are composed of a combination of trigonometric functions with periodic boundary
@@ -839,7 +843,7 @@ evolution of the functions in space and time.  We then
 nondimensionalize numerical results to compare to the original analytic solution.
 
 An extraneous source is added
-to each equation of Eq.~\eqref{eq:radhydro_system} to test the MMS problems. The analytic,
+to Eq.s~\eqref{eq:radhydro_system} to test the MMS problems. The analytic,
 dimensionalized forms of  sources are determined from the resulting equations using symbolic computations, based on the chosen functional solution.
 These sources are then included in the discretized equations by evaluating spatial moments of the sources with high-accuracy quadrature. 
 We quantify the error between exact and numerical solutions using a relative L$_2$ norm of cell-averaged quantities, defined as
@@ -903,7 +907,7 @@ for the hydrodynamic unknowns:
       \hat p = \alpha\left(\cos(x - t) + 2\right) ,
    \end{equation}
 \end{subequations}
-where $\alpha$ is a constant and $\hat \cdot$ quantities are nondimensional.  After
+where $\alpha$ is a constant and quantities with an accent `` $\hat{ }$ '' are nondimensional.  After
 scaling the nondimensional solutions, the EOS (Eq.~\eqref{eq:mattemp} and~\eqref{eq:pressure}) can be used
 to derive an expression for material temperature $T$.
  The radiation energy density and flux are the following in the equilibrium diffusion limit:
@@ -984,11 +988,12 @@ All problem parameters are fixed and then the  space and time discretizations ar
 uniformly, for each simulation.  The problem parameters are $\mathbb{C}=100$, $\mathbb{P}=0.1$, $\rho_{infty}=1$ g cm$^{-3}$, $\gamma=5/3$, $\sigma_a=\sigma_t=u$ cm$^{-1}$,
 and $\alpha=0.5$.  The relatively high value of $\mathbb{P}$ and low value of $\mathbb{C}$
 are at the upper limit of applicability for this algorithm. As before, the coarsest mesh $\Delta
-t$ is based on a CFL of 0.6. The simulation is performed until the initial radiation have advanced two periods, i.e., until
+t$ is based on a CFL of 0.6. The simulation is performed until the initial radiation
+solution has advanced two periods, i.e., until
 $t=4\pi/10$.
 
 Figures~\ref{fig:streaming_e} and~\ref{fig:streaming_mom} depict the error convergence as a function of $\Delta x$ and $\Delta t$ for
-internal energy and radiation energy density, respectively.  As before, we observed
+internal energy and radiation energy density, respectively.  As before, we observe
 second-order convergence.
 
 \begin{figure}[ht]
@@ -1009,13 +1014,13 @@ second-order convergence.
 Reproducing radiative shocks accurately, particularly in the optically thick
 regime, represents a challenging problem in the simulation of radiation
 hydrodynamics. A numerical scheme must be able to meet these
-challenges well.  We will compare simulated steady state, radiative shocks to semi-analytical solutions~\cite{jim???}. The
+challenges well.  We will compare simulated steady state, radiative shocks to semi-analytical solutions~\cite{lowrie3}. The
 semianalytic solutions are based on a diffusion radiation model, which is equivalent to our S$_2$ radiation model at steady state.
 To reduce simulation times, we initialize the shocks with the analytic steady state solution projected onto the cell centered meshes
 and run the simulation until steady state is reached.
 At the boundary, we compute the fluxes using our
 standard Riemann solver, setting the hydrodynamic unknowns on the outside of the boundary equal to the far-stream conditions.  
-Our algorithm will not be second-order globally due to the discontinuity at the shock~\cite{???}.  Thus, we are not interested in
+Our algorithm will not be second-order globally due to the discontinuity at the shock.  Thus, we are not interested in
 order-accuracy here but are ensuring our code produces accurate solutions.
 %We initialize each radiative shock calculation by setting the left half of the
 %spatial domain equal to the far-upstream condition and the right half equal to
@@ -1029,7 +1034,7 @@ and Table~\ref{tab:mach3.0_shock_IC} for the Mach 1.2 and Mach 3 shock, respecti
 Results are generated with a CFL condition of 0.6 and $N_x=500$ spatial cells.
 
 First, we compute the Mach 1.2 shock, which has a hydrodynamic shock but no
-visible Zel'dovich spike~\cite{jim???}.  Fig.~\ref{fig:mach1.2T} compares our
+visible Zel'dovich spike~\cite{lowrie3}.  Fig.~\ref{fig:mach1.2T} compares our
 results with the semi-analytic solutions for the fluid and
 radiation temperature.  We see good agreement between
 the two.  In this solution, we see a discontinuity in the fluid temperature due to the hydrodynamic shock, 
@@ -1105,9 +1110,6 @@ as a black box module to compute these quantities.  Of course, the angular inten
 time steps. Momentum is already conserved by the chosen implicit statements.  Also, it may not be necessary to fully
 converge the nonlinear solves in the predictor steps, but this will be problem dependent.
 
-
-\bibliographystyle{model1-num-names}
-\bibliography{References}
 
 
 \clearpage
@@ -1245,12 +1247,12 @@ converge the nonlinear solves in the predictor steps, but this will be problem d
 %\end{enumerate}
 
 %===============================================================================
-\section{The Time-Discretized Equations}\lsec{full}
+\section{The Time-Discretized Equations}\label{sec:full}
 
 In this section, we detail each of the equations for the MHM and iterative radiation
 solves.  The radiative transfer and hydrodynamic operators are treated independently via
 operator-splitting.  Within the predictor and corrector stage of each cycle, there is an explicit hydrodynamic solve, followed by an associated implicit radiation solve. 
-We will use a $*$ superscript to denote the intermediate operator-splitting states of variables resulting
+We will use a superscript ``$^*$'' to denote the intermediate operator-splitting states of variables resulting
 from the hydrodynamic steps. 
 
 \subsection{Notation for Edge Values}
@@ -1280,10 +1282,11 @@ quantity $U$ and cell $i$.}
 The MHM handles the fluid advection portion of the RH equations by advancing the homogeneous Euler equations
 in time.   The homogeneous Euler equations may be expressed in conservative form as
 \begin{equation}
-  \dydt{\H} + \nabla\cdot\Flux(\H) = \mathbf{0} \pec
+    \dydt{\H} + \dxdy{}{x}\Flux(\H) = \mathbf{0} \pec
 \end{equation}
 where $\H$ is a vector of the conservative unknowns
-and $\Flux(\H)$ is the flux associated with each, i.e.,
+and $\Flux(\H)$ is a vector of fluxes with each flux corresponding to a conservative
+unknown, i.e.,
 \begin{equation}
   \H=\left[\begin{array}{c}\rho\\\rho u\\E\end{array}\right] \pec\qquad
   \Flux(\H)=\left[\begin{array}{c}\rho u\\
@@ -1336,8 +1339,7 @@ During each implicit radiation solve, the momentum deposition due to radiation a
 energy exchange due to black-body emission must be iteratively solved.  An outer fixed-point
 iteration is performed for the velocity update.  Within each outer iteration, an analytic
 Newton step is taken for the radiative transfer terms.  The iterations are repeated until 
-convergence.  The equations below are for the $k+1$-st iteration within
-each stage of the algorithm. 
+convergence.  In the equations below, $k$ is the outer iteration index. 
 
 \subsubsection{Momentum Update Equation}
 
@@ -1356,19 +1358,20 @@ average of the corresponding expressions evaluated at the interior edges, e.g.,
    + \half\left[\frac{\sigma_{t,i,R}}{c}\left(\F\iR - \frac{4}{3}\E\iR u\iR\right)\right]
    \pep
 \end{multline}
-It is noted that in the absence of an extraneous momentum source, $\rho^{*n+1}=\rho^{n+1}$. In the
+For temperature-dependent cross sections, $\sigma_{t,i,L}$ and $\sigma_{t,i,R}$ are evaluated using the corresponding
+temperature, e.g., $\sigma_{t,i,L}\equiv\sigma_{t}(T_{i,L})$.  Also, in the absence of a mass source, $\rho^{*n+1}=\rho^{n+1}$. In the
 presence of MMS sources, $\rho^{*n+1}$ is updated to $\rho^{n+1}$ prior to iterating.
 The Crank-Nicolson discretization of the momentum update equation for the Cycle 1
 corrector is
 \momentumUpdateCN{n}{2}{_i}{n+1/2}{\lequ{hydromCNfull}}
-The Backward-Euler discretization of the velocity update for the predictor stages are analogously defined.
+The Backward-Euler discretizations of the velocity updates for the predictor stages are analogously defined.
 
 \subsubsection{Radiation and Material Energy Equations}
 
 The radiation and material energy equations must be linearized to be solved.  We use
 a standard Newton linearization, with temperature dependent material properties lagged one
 iteration~\cite{morelldsn}.  Upon linearization, the radiation unknowns can be directly
-determined, followed by solution for new internal energies.  The linearization process is
+computed, followed by solution for new internal energies.  The linearization process is
 tedious but straightforward.  For brevity, we only provide the non-linear equations here.
 
 With the updated momentum, a kinetic energy can be defined, allowing for new internal
@@ -1389,7 +1392,7 @@ achieved based on $\rho$ and $\rho u$ at edges, e.g.,
                  {\rho_i^k - \frac{\Delta\rho_i^n}{2}} \pep
 \end{equation}
 As explained in~\ref{sec:e_slopes}, internal energy unknowns, and thus material
-temperature, use slopes that are independent of the MUSCL-Hancock slopes.  This modifies
+temperatures, use slopes that are independent of the MUSCL-Hancock slopes.  This modifies
 the $E^*$ terms within a cycle.
 These radiation internal energy slopes are denoted by $\delta e$. Evaluation
 of interior-edge internal energies is thus performed as follows:
@@ -1402,7 +1405,7 @@ when the nonlinear iteration for the corrector step have been converged.
 With hydrodynamic variables defined, discretized equations for the radiation and material
 energy balance equations can be defined.
 A lumped linear discontinuous Galerkin (LLDG) spatial discretization is employed
-for the S$_2$ equations~\cite{???}.  The lumping of the equations is strongly resistant 
+for the S$_2$ equations~\cite{morelldsn}.  The lumping of the equations is strongly resistant 
 to negative solutions in 1D. Standard upwinding is used to define true face intensities in terms of interior-edge
 intensities.
 For reference, the radiation equation for
@@ -1453,13 +1456,14 @@ As discussed in the introduction, the radiation solver and hydro solver use diff
 internal energy slopes as an approach to preserve the equilibrium diffusion limit in a
 manner that can be extended to higher spatial dimensions.
 To mitigate confusion, in this section we will denote the MHM hydro-state internal energy variables as $e$ and
-the internal energy variables coming from the non-linear radiation solves as $e^r$.  The modified slopes are only applied to the implicit terms in each
+the internal energy variables coming from the non-linear radiation solves as $e^r$.  The
+LD radiation slopes are only applied to the implicit terms in each
 nonlinear solve.
 
 During the MHM solve, we
 use the standard slope reconstruction formulas to advect variables to
 state $\H^*$.  Then, for the iterative radiation
-solve equations, we use a modified slope for $E^*$, denoted $\Delta E^{r*}$, that will preserve the diffusion
+solve equations, we use an LD slope for $E^*$, denoted $\Delta E^{r*}$, that will preserve the diffusion
 limit.  This $\Delta E^{r*}$ is based on the edge values of $e^r$ from the last iteration of the previous
 nonlinear radiation solve.  For example, if we are solving the cycle 1 corrector from
 state $e^{*n+1/2}$ to
@@ -1467,7 +1471,7 @@ $e^{n+1/2}$, then we use $\delta e_i^{r,n+1/4}=e^{r,n+1/4}_{i,R} - e^{r,n+1/4}_{
 E^{r*}$ does not change over the duration of each iterative radiation solve.
 
 We now define the expressions for $\Delta E^{r*,n+1/2}$ for the cycle 1 corrector step.  We
-approximate the modified slope $\Delta E^{r*,n+1/2}$ based on constructed interior-edge
+approximate the LD slope $\Delta E^{r*,n+1/2}$ based on constructed interior-edge
 values as
 \begin{equation}
     \Delta E^{r*,n+1/2} = E^{r*,n+1/2}_{i,R} - E^{r*,n+1/2}_{i,L}
@@ -1488,9 +1492,7 @@ for the next iteration, such that total energy is conserved. The formula for the
     E^{n+1/2}_i = \frac{1}{2}\left[\rho_{i,L}\left(\frac{1}{2}u_{i,L}^2 + e_{L,i}^r\right)
     +\rho_R\left(\frac{1}{2}u_R^2 + e_R^r\right)\right]^{n+1/2}
 \end{equation}
-where all variables are at time $t^{n+1/2}$. The internal energy slopes are computed
-and stored for the next nonlinear solve.  
-
+where all variables are at time $t^{n+1/2}$. 
 
 
 %%===============================================================================
@@ -1624,6 +1626,9 @@ and stored for the next nonlinear solve.
 
 
 
+\bibliographystyle{model1-num-names}
+\bibliography{References}
+
 
 
 
@@ -1651,9 +1656,6 @@ and stored for the next nonlinear solve.
 %%   \citet{key}         ==>>  Author [#]
 
 %% References with bibTeX database:
-
-\bibliographystyle{model1-num-names}
-\bibliography{References}
 
 %% Authors are advised to submit their bibtex database files. They are
 %% requested to list a bibtex style file in the manuscript if they do

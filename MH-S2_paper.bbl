@@ -16,7 +16,7 @@
   Densmore}]{mcclarren}
 \bibinfo{author}{R.~G. McClarren}, \bibinfo{author}{T.~M. Evans},
   \bibinfo{author}{R.~B. Lowrie}, \bibinfo{author}{J.~D. Densmore},
-\newblock \bibinfo{title}{Semi-{I}mplicit {T}ime {I}ntegration for {P}n
+\newblock \bibinfo{title}{Semi-{I}mplicit {T}ime {I}ntegration for {P}$_n$
   {T}hermal {R}adiative {T}ransfer},
 \newblock \bibinfo{journal}{Journal of Computational Physics}
   \bibinfo{volume}{196} (\bibinfo{year}{2004}) \bibinfo{pages}{566--590}.
@@ -38,8 +38,8 @@
 %Type = Article
 \bibitem[{Olson(2009)}]{olson}
 \bibinfo{author}{G.~L. Olson},
-\newblock \bibinfo{title}{Second-{O}rder {T}ime {E}volution of {P}n {E}quations
-  for {R}adiation {T}ransport},
+\newblock \bibinfo{title}{Second-{O}rder {T}ime {E}volution of {P}$_n$
+  {E}quations for {R}adiation {T}ransport},
 \newblock \bibinfo{journal}{Journal of Computational Physics}
   \bibinfo{volume}{228} (\bibinfo{year}{2009}) \bibinfo{pages}{3027--3083}.
 %Type = Article
@@ -158,8 +158,8 @@
 %Type = Article
 \bibitem[{Wang(2007)}]{zjwang}
 \bibinfo{author}{Z.~J. Wang},
-\newblock \bibinfo{title}{High-order {M}ethods for the {E}uler and
-  {N}avier–{S}tokes {E}quations on {U}nstructured {G}rids},
+\newblock \bibinfo{title}{High-order {M}ethods for the {E}uler and {N}avier
+  {S}tokes {E}quations on {U}nstructured {G}rids},
 \newblock \bibinfo{journal}{Progress in Aerospace Science} \bibinfo{volume}{43}
   (\bibinfo{year}{2007}) \bibinfo{pages}{1--41}.
 %Type = Article

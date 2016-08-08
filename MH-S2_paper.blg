@@ -3,12 +3,10 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: MH-S2_paper.aux
 The style file: model1-num-names.bst
 Database file #1: References.bib
-Warning--I didn't find a database entry for "jim???"
-Warning--I didn't find a database entry for "???"
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 You've used 24 entries,
             2910 wiz_defined-function locations,
-            762 strings with 9027 characters,
+            760 strings with 9024 characters,
 and the built_in function-call counts, 14259 in all, are:
 = -- 1096
 > -- 513
@@ -47,4 +45,3 @@ warning$ -- 0
 while$ -- 96
 width$ -- 0
 write$ -- 324
-(There were 2 warnings)
