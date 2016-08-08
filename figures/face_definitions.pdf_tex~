@@ -55,10 +55,10 @@
     \put(0.02252393,0.01258289){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_{i-1/2}$}}}%
     \put(0.63399099,0.01561943){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$x_{i+1/2}$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{face_definitions.pdf}}%
-    \put(0.09515438,0.42956319){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$u_{i,L}$}}}%
-    \put(0.5781117,0.45537909){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$u_{i,R}$}}}%
+    \put(0.09515438,0.42956319){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$U_{i,L}$}}}%
+    \put(0.5781117,0.45537909){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$U_{i,R}$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{face_definitions.pdf}}%
-    \put(0.040379,0.62791635){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$u_{i-1/2}$}}}%
-    \put(0.69252578,0.245271287){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$u_{i+1/2}$}}}%
+    \put(0.040379,0.62791635){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$U_{i-1/2}$}}}%
+    \put(0.69252578,0.245271287){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$U_{i+1/2}$}}}%
   \end{picture}%
 \endgroup%
