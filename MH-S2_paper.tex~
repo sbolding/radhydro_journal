@@ -993,19 +993,19 @@ t$ is based on a CFL of 0.6. The simulation is performed until the initial radia
 solution has advanced two periods, i.e., until
 $t=4\pi/10$.
 
-Figures~\ref{fig:streaming_e} and~\ref{fig:streaming_mom} depict the error convergence as a function of $\Delta x$ and $\Delta t$ for
+Figures~\ref{fig:streaming_e} and~\ref{fig:streaming_erad} depict the error convergence as a function of $\Delta x$ and $\Delta t$ for
 internal energy and radiation energy density, respectively.  As before, we observe
 second-order convergence.
 
 \begin{figure}[ht]
    \centering
-   \includegraphics[width=\textwidth]{figures/MMS_streaming_e_convergence.pdf}
-   \caption{\label{fig:streaming_e}Convergence in space of internal energy $e$ for the MMS streaming problem}
+   \includegraphics[width=\textwidth]{figures/MMS_streaming_frad_convergence.pdf}
+   \caption{\label{fig:streaming_e}Convergence in space of velocity $u$ for the MMS streaming problem}
 \end{figure}
 \begin{figure}[ht]
    \centering
    \includegraphics[width=\textwidth]{figures/MMS_streaming_erad_convergence.pdf}
-   \caption{\label{fig:streaming_mom}Convergence in time of radiation energy density $\E$ for the MMS streaming problem}
+   \caption{\label{fig:streaming_erad}Convergence in time of radiation energy density $\E$ for the MMS streaming problem}
 \end{figure}
 
 
