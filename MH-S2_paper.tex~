@@ -993,14 +993,14 @@ t$ is based on a CFL of 0.6. The simulation is performed until the initial radia
 solution has advanced two periods, i.e., until
 $t=4\pi/10$.
 
-Figures~\ref{fig:streaming_e} and~\ref{fig:streaming_erad} depict the error convergence as a function of $\Delta x$ and $\Delta t$ for
-internal energy and radiation energy density, respectively.  As before, we observe
+Figures~\ref{fig:streaming_frad} and~\ref{fig:streaming_erad} depict the error convergence as a function of $\Delta x$ and $\Delta t$ for
+the radiation flux and energy density, respectively.  As before, we observe
 second-order convergence.
 
 \begin{figure}[ht]
    \centering
    \includegraphics[width=\textwidth]{figures/MMS_streaming_frad_convergence.pdf}
-   \caption{\label{fig:streaming_e}Convergence in space of velocity $u$ for the MMS streaming problem}
+   \caption{\label{fig:streaming_frad}Convergence in space of radiation flux density $\F$ for the MMS streaming problem}
 \end{figure}
 \begin{figure}[ht]
    \centering
@@ -1016,22 +1016,20 @@ Reproducing radiative shocks accurately, particularly in the optically thick
 regime, represents a challenging problem in the simulation of radiation
 hydrodynamics. A numerical scheme must be able to meet these
 challenges well.  We will compare simulated steady state, radiative shocks to semi-analytical solutions~\cite{lowrie3}. The
-semianalytic solutions are based on a diffusion radiation model, which is equivalent to our S$_2$ radiation model at steady state.
-To reduce simulation times, we initialize the shocks with the analytic steady state solution projected onto the cell centered meshes
-and run the simulation until steady state is reached.
+semi-analytic solutions are based on a diffusion radiation model, which is equivalent to our S$_2$ radiation model at steady state.
 At the boundary, we compute the fluxes using our
 standard Riemann solver, setting the hydrodynamic unknowns on the outside of the boundary equal to the far-stream conditions.  
 Our algorithm will not be second-order globally due to the discontinuity at the shock.  Thus, we are not interested in
 order-accuracy here but are ensuring our code produces accurate solutions.
-%We initialize each radiative shock calculation by setting the left half of the
-%spatial domain equal to the far-upstream condition and the right half equal to
-%the downstream condition. 
 
 We test our algorithm for two radiative shocks, similar to those presented in
 \cite{lowrie3}, which incorporate a variety of structural features.  For both shocks, we set $\gamma = 5/3$,
 $c_v=0.14472799784454$ Jks keV$^{-1}$ g$^{-1}$ (1 Jk$=10^9$ J), and $\sigma_a = \sigma_t = 577.35$ cm$^{-1}$. 
-The problem specifications for the farstream pre and post-shock regions are provided in Table~\ref{tab:mach1.2_shock_IC}.
+The problem specifications for the far-stream pre and post-shock regions are provided in Table~\ref{tab:mach1.2_shock_IC}
 and Table~\ref{tab:mach3.0_shock_IC} for the Mach 1.2 and Mach 3 shock, respectively.
+We initialize each radiative shock calculation by initializing the states in the left half of the
+spatial domain to the far-stream pre-shock state and the states in the right half to 
+the post-shock state.  The simulation was run until steady state is reached.
 Results are generated with a CFL condition of 0.6 and $N_x=500$ spatial cells.
 
 First, we compute the Mach 1.2 shock, which has a hydrodynamic shock but no
@@ -1305,8 +1303,11 @@ using reconstructed slopes $\Delta_i^n$:
   \Delta\H_{i-\half}^n = \H_i^n - \H_{i-1}^n \pec\quad
   \Delta\H_{i+\half}^n = \H_{i+1}^n - \H_i^n \pec
 \end{equation}
-The slopes are modified using a double-minmod slope
-limiter to ensure positivity and stability~\cite{mclow2008}.
+The slopes of the conserved variables are modified using a double-minmod slope
+limiter~\cite{mclow2008}.  Although limiting on the primitive variables would ensure positivity~\cite{toro}, we have
+chosen to limit on the conserved variables for simplicity.  However, our algorithm
+accomodates limiting on other sets of variables, and we intend to investigate this in the
+future.
 At boundaries, Eq.~\eqref{eq:muscl_differences} is evaluated using either a specified far-stream state or the state from the cell at
 the opposite side of the domain for a periodic boundary condition.
 A linear representation
