@@ -558,7 +558,10 @@ and
 \lequ{F_nu_0}
 F_{r,0} = F_r-\frac{4}{3} E_r u 
 \ee
-is an approximation to the comoving-frame flux.
+is an approximation to the comoving-frame flux.  This approximate RH model is based on
+Morel's source term from~\cite{morel2006discrete,lowriemorelrh}.  The model is not strictly accurate
+to $O(u/c)$ in general, but conserves total (radiation plus material) momentum and energy, and it is accurate to $O(u/c)$ in the equilibrium diffusion
+limit.
 
 Note that if we multiply Eqs.~(\requ{intp}) and \requ{intm} by $2\pi$ and sum them, we obtain the radiation energy equation:
 \begin{subequations}
@@ -662,25 +665,26 @@ present our conclusions and recommendations for future work.
 
 There are two cycles per time step.  The first cycle spans the first half of the time step and the second 
 spans the second half. The use of two cycles follows directly from use of the TR/BDF2
-method.  The equations for each step of the algorithm are detailed in~\ref{sec:full}.  The first cycle proceeds as follows:
+method.  The steps of the algorithm are described in detail in~\ref{sec:full}.  The first cycle proceeds as follows:
 \begin{enumerate}
   \item Do a standard MHM predictor step. 
   \item Enter an iteration loop
   \begin{enumerate}
     \item Update the fluid momentum using lagged radiation momentum deposition.
-    \item Simultaneously solve the material energy equation (i.e.,
-        Eq.~\eqref{eq:cons_energy}) and the S$_2$ equations for the new radiation intensities and updated fluid internal energies 
-		using an LLDG discretization in space and a Backward Euler discretization in time.
+    \item Perform a Newton iteration to determine new radiation intensities and updated fluid internal energies.  The material energy equation (i.e.,
+        Eq.~\eqref{eq:cons_energy}) and S$_2$ equations are solved using an LLDG discretization in space and a Backward Euler discretization in time.
     \item Iterate until the fluid momenta, internal energies, and radiation intensities converge.
+    \item Update cell-averaged momenta and total energy for next MHM step.
   \end{enumerate}
   \item Do a standard MHM corrector step.
   \item Initialize the internal energy slopes to the previous radiation solve values.
   \item Enter an iteration loop
   \begin{enumerate}
     \item Update the fluid momentum using lagged radiation momentum deposition
-    \item Simultaneously solve the material energy equation and the S$_2$ equations for the new radiation intensities and updated fluid internal energies 
-		using an LLDG discretization in space and a Crank-Nicolson discretization in time.
+    \item Perform a Newton iteration to determine new radiation intensities and updated fluid internal energies.  The material energy equation
+          and S$_2$ equations are solved using an LLDG discretization in space and a Crank-Nicolson discretization in time.
     \item Iterate until the fluid momenta, internal energies, and radiation intensities converge.
+    \item Update cell-averaged momenta and total energy for next MHM step.
   \end{enumerate}
 \end{enumerate}
 The second cycle proceeds as follows:
@@ -689,19 +693,20 @@ The second cycle proceeds as follows:
   \item Enter an iteration loop.
   \begin{enumerate}
     \item Update the fluid momentum using lagged radiation momentum deposition.
-    \item Simultaneously solve the material energy equation and the S$_2$ equations for the new radiation 
-        intensities and updated fluid internal energies using an LLDG discretization 
-    in space and a Backward Euler discretization in time.
+    \item Perform a Newton iteration to determine new radiation intensities and updated fluid internal energies.  The material energy equation
+          and S$_2$ equations are solved using an LLDG discretization in space and a Backward Euler discretization in time.
     \item Iterate until the fluid momenta, internal energies, and radiation intensities converge.
+    \item Update cell-averaged momenta and total energy for next MHM step.
   \end{enumerate}
   \item Do a standard MHM corrector step.
   \item Initialize the internal energy slopes to the previous radiation solve values.
   \item Enter an iteration loop
   \begin{enumerate}
   \item Update the fluid momentum using lagged radiation momentum deposition.
-  \item Simultaneously solve the material energy equation and the S$_2$ equations for the new radiation intensities and updated fluid internal energies 
-	using an LLDG discretization in space and a BDF2 discretization in time.
+    \item Perform a Newton iteration to determine new radiation intensities and updated fluid internal energies.  The material energy equation
+          and S$_2$ equations are solved using an LLDG discretization in space and a BDF2 discretization in time.
   \item Iterate until the fluid momenta, internal energies, and radiation intensities converge.
+    \item Update cell-averaged momenta and total energy for next time step.
   \end{enumerate}
 \end{enumerate}
 Note that the combination of Crank-Nicolson and BDF2 discretization over two cycles results in
@@ -726,7 +731,7 @@ with stronger radiation momentum deposition, a better iteration scheme might be 
 
 The explicit hydrodynamic steps impose a limit on the maximum time step size our
 algorithm can take.
-Using a standard estimate of numerical wave speeds~\cite{toro}, our time step size for the $n$-th time
+Using a standard estimate of numerical wave speeds for the material~\cite{toro}, our time step size for the $n$-th time
 step is estimated as
 \begin{equation}\label{eq:cfl}
     \Delta t^n = 2\,\text{CFL} \min_{i}\left(\frac{\Delta x_i}{|u_i| + |a_{i,s}|}\right)
@@ -927,13 +932,9 @@ $\mathbb{C}/\Delta x$ remain constant.  This is to ensure that the solution rema
 do not preserve the diffusion limit.  As in~\cite{mcclarren2}, we use $\sigma=10^5\frac{N_x}{20}$ and $\mathbb{C}=10^5\frac{N_x}{20}$,
 where $N_x$ is the number of spatial cells for each simulation.  The remaining problem specifications are $\alpha=0.5$, $\mathbb{P}=0.001$, 
 and ${\gamma=\frac{5}{3}}$.  The simulation end time and domain width are $2\pi$. The $\Delta t$ for the coarsest mesh spacing is
-chosen based on a Courant condition, given by Eq.~\eqref{eq:cfl}, with CFL$=0.6$.    We
+chosen based on the Courant condition for fluid velocities, given by Eq.~\eqref{eq:cfl}, with CFL$=0.6$.    We
 then uniformly refine in space and time for each following simulation to demonstrate convergence in the two variables. This ensures stability
-of the MHM algorithm. It is worth noting that
-our first time step size is chosen based on the Courant condition given in Eq.~\eqref{eq:cfl}, which is based on material velocity speeds. 
-This is a much larger and more physically reasonable
-time step size for an IMEX scheme than those in~\cite{mcclarren2}, which based the
-Courant condition on a non-dimensional speed of light.   The relative, iterative
+of the MHM algorithm. The relative, iterative
 convergence tolerance of each nonlinear implicit solve is 1.E-10 for all simulations.
 
 Figures~\ref{fig:diff_limit_e} and~\ref{fig:diff_limit_mom} depict the error convergence as a function of $\Delta x$ and $\Delta t$ for
@@ -985,7 +986,7 @@ varies rapidly enough that changes in the fluid temperature are suppressed. The 
 fluid temperature and momentum are constants for this problem.
 
 All problem parameters are fixed and then the  space and time discretizations are refined
-uniformly, for each simulation.  The problem parameters are $\mathbb{C}=100$, $\mathbb{P}=0.1$, $\rho_{infty}=1$ g cm$^{-3}$, $\gamma=5/3$, $\sigma_a=\sigma_t=u$ cm$^{-1}$,
+uniformly, for each simulation.  The problem parameters are $\mathbb{C}=100$, $\mathbb{P}=0.1$, $\gamma=5/3$, $\sigma_a=\sigma_t=1$,
 and $\alpha=0.5$.  The relatively high value of $\mathbb{P}$ and low value of $\mathbb{C}$
 are at the upper limit of applicability for this algorithm. As before, the coarsest mesh $\Delta
 t$ is based on a CFL of 0.6. The simulation is performed until the initial radiation
@@ -1306,6 +1307,8 @@ using reconstructed slopes $\Delta_i^n$:
 \end{equation}
 The slopes are modified using a double-minmod slope
 limiter to ensure positivity and stability~\cite{mclow2008}.
+At boundaries, Eq.~\eqref{eq:muscl_differences} is evaluated using either a specified far-stream state or the state from the cell at
+the opposite side of the domain for a periodic boundary condition.
 A linear representation
 of the solution within each cell is then constructed as
 \begin{equation}\label{eq:edge_hydro}
