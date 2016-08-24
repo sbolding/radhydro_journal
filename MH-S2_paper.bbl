@@ -105,22 +105,22 @@
   Mathematics} \bibinfo{volume}{4} (\bibinfo{year}{2009})
   \bibinfo{pages}{135--152}.
 %Type = Article
-\bibitem[{Kadioglu(2010{\natexlab{a}})}]{kadioglu}
-\bibinfo{author}{S.~Y. Kadioglu},
+\bibitem[{Kadioglu et~al.(2010)Kadioglu, Knoll, Lowrie, and
+  Rauenzahn}]{kadioglu}
+\bibinfo{author}{S.~Y. Kadioglu}, \bibinfo{author}{D.~A. Knoll},
+  \bibinfo{author}{R.~B. Lowrie}, \bibinfo{author}{R.~M. Rauenzahn},
 \newblock \bibinfo{title}{A {S}econd {O}rder {S}elf-{C}onsistent {IMEX}
   {M}ethod for {R}adiation {H}ydrodynamics},
 \newblock \bibinfo{journal}{Journal of Computational Physics}
-  \bibinfo{volume}{229} (\bibinfo{year}{2010}{\natexlab{a}})
-  \bibinfo{pages}{8313--8332}.
+  \bibinfo{volume}{229} (\bibinfo{year}{2010}) \bibinfo{pages}{8313--8332}.
 %Type = Article
-\bibitem[{Kadioglu(2010{\natexlab{b}})}]{kadioglu2}
-\bibinfo{author}{S.~Y. Kadioglu},
+\bibitem[{Kadioglu and Knoll(2010)}]{kadioglu2}
+\bibinfo{author}{S.~Y. Kadioglu}, \bibinfo{author}{D.~A. Knoll},
 \newblock \bibinfo{title}{A {F}ully {S}econd {O}rder {I}mplicit/{E}xplicit
   {T}ime {I}ntegration {T}echnique for {H}ydrodynamics {P}lus {N}onlinear
   {H}eat {C}onduction {P}roblems},
 \newblock \bibinfo{journal}{Journal of Computational Physics}
-  \bibinfo{volume}{9} (\bibinfo{year}{2010}{\natexlab{b}})
-  \bibinfo{pages}{3237--3249}.
+  \bibinfo{volume}{229} (\bibinfo{year}{2010}) \bibinfo{pages}{3237--3249}.
 %Type = Incollection
 \bibitem[{Morel(2006)}]{morel2006discrete}
 \bibinfo{author}{J.~E. Morel},
