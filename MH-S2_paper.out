@@ -2,7 +2,7 @@
 \BOOKMARK [1][-]{section.2}{Overview of the Radiation-Hydrodynamics Method}{}% 2
 \BOOKMARK [2][-]{subsection.2.1}{Diffusion Limit}{section.2}% 3
 \BOOKMARK [2][-]{subsection.2.2}{Slope limiting}{section.2}% 4
-\BOOKMARK [2][-]{subsection.2.3}{Alternate Form of TBDF2 Method}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.3}{Alternate Form of TR/BDF2 Method}{section.2}% 5
 \BOOKMARK [1][-]{section.3}{Second-Order Accuracy for the Method of Manufactured Solutions}{}% 6
 \BOOKMARK [2][-]{subsection.3.1}{Accuracy in the Diffusion Limit}{section.3}% 7
 \BOOKMARK [2][-]{subsection.3.2}{Streaming Limit}{section.3}% 8
