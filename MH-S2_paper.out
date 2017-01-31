@@ -1,17 +1,20 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Overview of the Radiation-Hydrodynamics Method}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Diffusion Limit}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Slope limiting}{section.2}% 4
+\BOOKMARK [1][-]{section.2}{Operator Splitting and Time Discretization}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Hydrodynamic Equations}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Radiation Equations}{section.2}% 4
 \BOOKMARK [2][-]{subsection.2.3}{Alternate Form of TR/BDF2 Method}{section.2}% 5
-\BOOKMARK [1][-]{section.3}{Second-Order Accuracy for the Method of Manufactured Solutions}{}% 6
-\BOOKMARK [2][-]{subsection.3.1}{Accuracy in the Diffusion Limit}{section.3}% 7
-\BOOKMARK [2][-]{subsection.3.2}{Streaming Limit}{section.3}% 8
-\BOOKMARK [1][-]{section.4}{Results for Radiation-Hydrodynamic Shocks}{}% 9
-\BOOKMARK [1][-]{section.5}{Conclusions and Future Work}{}% 10
-\BOOKMARK [1][-]{appendix.A}{The Time-Discretized Equations}{}% 11
-\BOOKMARK [2][-]{subsection.A.1}{Notation for Edge Values}{appendix.A}% 12
-\BOOKMARK [2][-]{subsection.A.2}{The MUSCL-Hancock Method}{appendix.A}% 13
-\BOOKMARK [2][-]{subsection.A.3}{The Iterative Radiation Solves}{appendix.A}% 14
-\BOOKMARK [3][-]{subsubsection.A.3.1}{Momentum Update Equation}{subsection.A.3}% 15
-\BOOKMARK [3][-]{subsubsection.A.3.2}{Radiation and Material Energy Equations}{subsection.A.3}% 16
-\BOOKMARK [2][-]{subsection.A.4}{Using Radiation Internal Energy Slopes}{appendix.A}% 17
+\BOOKMARK [1][-]{section.3}{The Radiation-Hydrodynamics Algorithm}{}% 6
+\BOOKMARK [2][-]{subsection.3.1}{Diffusion Limit}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.2}{Slope limiting}{section.3}% 8
+\BOOKMARK [1][-]{section.4}{Second-Order Accuracy for the Method of Manufactured Solutions}{}% 9
+\BOOKMARK [2][-]{subsection.4.1}{Accuracy in the Diffusion Limit}{section.4}% 10
+\BOOKMARK [2][-]{subsection.4.2}{Streaming Limit}{section.4}% 11
+\BOOKMARK [1][-]{section.5}{Results for Radiation-Hydrodynamic Shocks}{}% 12
+\BOOKMARK [1][-]{section.6}{Conclusions and Future Work}{}% 13
+\BOOKMARK [1][-]{appendix.A}{The Time-Discretized Equations}{}% 14
+\BOOKMARK [2][-]{subsection.A.1}{Notation for Edge Values}{appendix.A}% 15
+\BOOKMARK [2][-]{subsection.A.2}{The MUSCL-Hancock Method}{appendix.A}% 16
+\BOOKMARK [2][-]{subsection.A.3}{The Iterative Radiation Solves}{appendix.A}% 17
+\BOOKMARK [3][-]{subsubsection.A.3.1}{Momentum Update Equation}{subsection.A.3}% 18
+\BOOKMARK [3][-]{subsubsection.A.3.2}{Radiation and Material Energy Equations}{subsection.A.3}% 19
+\BOOKMARK [2][-]{subsection.A.4}{Using Radiation Internal Energy Slopes}{appendix.A}% 20
